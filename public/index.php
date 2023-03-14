@@ -12,9 +12,19 @@ require_once '../vendor/autoload.php';
 --- ROUTAGE ---
 -------------*/
 
+// On var dump pour savoir ce que contient $_SERVER
+// NB : si on avait un .htaccess, alors via la réécriture d'URL,
+// on aurait eu une clé BASE_URI
+// Ici, elle n'existe pas
+// var_dump($_SERVER);
+
+// D'où notre page en erreur 404
+// Solutions possibles :
+// - créer un .htaccess
+// - ou remplacer BASE_URI par REQUEST_URI
 
 // création de l'objet router
-// Cet objet va gérer les routes pour nous, et surtout il va
+// Cet objet va gérer les routes pour nous
 $router = new AltoRouter();
 
 // le répertoire (après le nom de domaine) dans lequel on travaille est celui-ci
@@ -45,11 +55,50 @@ $router->map(
     '/',
     [
         'method' => 'home',
-        'controller' => '\App\Controllers\MainController' // On indique le FQCN de la classe
+        'controller' => '\App\Controllers\MainController' // On indique le FQCN de la classe (FQCN = namespace + nom_de_la_classe)
     ],
     'main-home'
 );
 
+$router->map(
+    'GET',
+    '/category/list',
+    [
+        'method' => 'listCategories',
+        'controller' => '\App\Controllers\CategoryController'
+    ],
+    'category-list'
+);
+
+$router->map(
+    'GET',
+    '/category/add',
+    [
+        'method' => 'addCategory',
+        'controller' => '\App\Controllers\CategoryController'
+    ],
+    'category-add'
+);
+
+$router->map(
+    'GET',
+    '/product/list',
+    [
+        'method' => 'listProducts',
+        'controller' => '\App\Controllers\ProductController'
+    ],
+    'product-list'
+);
+
+$router->map(
+    'GET',
+    '/product/add',
+    [
+        'method' => 'addProduct',
+        'controller' => '\App\Controllers\ProductController'
+    ],
+    'product-add'
+);
 
 /* -------------
 --- DISPATCH ---

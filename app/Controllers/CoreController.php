@@ -9,7 +9,7 @@ class CoreController
      *
      * @param string $viewName Nom du fichier de vue
      * @param array $viewData Tableau des données à transmettre aux vues
-     * @return void
+     * @return void                                  // valeur par defaut array vide, parametre facultatif
      */
     protected function show(string $viewName, $viewData = [])
     {

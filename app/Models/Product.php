@@ -83,7 +83,7 @@ class Product extends CoreModel
      *
      * @return Product[]
      */
-    public function findAll()
+    public static function findAll()
     {
         $pdo = Database::getPDO();
         $sql = 'SELECT * FROM `product`';
@@ -91,6 +91,33 @@ class Product extends CoreModel
         $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'App\Models\Product');
 
         return $results;
+    }
+
+     /**
+     * Récupérer les 5 produits mises en avant sur la home
+     *
+     * @return Product[]
+     */
+    public static function findAllHomepage()
+    {
+        // On peut appeler direcrement getPDO() sur la classe Database 
+        // car getPDO() est une méthode statique (définie par : public static function ...)
+        $pdo = Database::getPDO();
+
+        // Sinon, on aurait dû faire :
+        // $database = new Database();
+        // $database->getPDO();
+
+        $sql = '
+            SELECT *
+            FROM `product`
+            ORDER BY `id`
+            LIMIT 5
+        ';
+        $pdoStatement = $pdo->query($sql);
+        $products = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'App\Models\Product');
+
+        return $products;
     }
 
     /**
