@@ -299,4 +299,39 @@ class Product extends CoreModel
     {
         $this->type_id = $type_id;
     }
+
+    //     /**
+    //  * Méthode permettant d'ajouter un enregistrement dans la table brand
+    //  * L'objet courant doit contenir toutes les données à ajouter : 1 propriété => 1 colonne dans la table
+    //  *
+    //  * @return bool
+    //  */
+    // public function insert()
+    // {
+    //     // Récupération de l'objet PDO représentant la connexion à la DB
+    //     $pdo = Database::getPDO();
+
+    //     // Ecriture de la requête INSERT INTO
+    //     $sql = "
+    //         INSERT INTO `product` (name)
+    //         VALUES ('{$this->name}')
+    //     ";
+
+    //     // Execution de la requête d'insertion (exec, pas query)
+    //     $insertedRows = $pdo->exec($sql);
+
+    //     // Si au moins une ligne ajoutée
+    //     if ($insertedRows > 0) {
+    //         // Alors on récupère l'id auto-incrémenté généré par MySQL
+    //         $this->id = $pdo->lastInsertId();
+
+    //         // On retourne VRAI car l'ajout a parfaitement fonctionné
+    //         return true;
+    //         // => l'interpréteur PHP sort de cette fonction car on a retourné une donnée
+    //     }
+
+    //     // Si on arrive ici, c'est que quelque chose n'a pas bien fonctionné => FAUX
+    //     return false;
+    // }
+ 
 }

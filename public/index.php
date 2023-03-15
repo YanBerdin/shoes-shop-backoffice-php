@@ -16,7 +16,7 @@ require_once '../vendor/autoload.php';
 // NB : si on avait un .htaccess, alors via la réécriture d'URL,
 // on aurait eu une clé BASE_URI
 // Ici, elle n'existe pas
-// var_dump($_SERVER);
+// dd($_SERVER);
 
 // D'où notre page en erreur 404
 // Solutions possibles :
@@ -51,8 +51,8 @@ if (array_key_exists('BASE_URI', $_SERVER)) {
 //      - "NomDuController-NomDeLaMéthode"
 //      - ainsi pour la route /, méthode "home" du MainController => "main-home"
 $router->map(
-    'GET',
-    '/',
+    'GET',  // méthode
+    '/',    // route
     [
         'method' => 'home',
         'controller' => '\App\Controllers\MainController' // On indique le FQCN de la classe (FQCN = namespace + nom_de_la_classe)
@@ -100,6 +100,17 @@ $router->map(
     'product-add'
 );
 
+// $router->map(
+//     'POST',
+//     '/product/add',
+//     [
+//         'method' => 'createProduct',
+//         'controller' => '\App\Controllers\ProductController'
+//     ],
+//     'product-add'
+// );
+
+
 /* -------------
 --- DISPATCH ---
 --------------*/
@@ -114,3 +125,5 @@ $match = $router->match();
 $dispatcher = new Dispatcher($match, '\App\Controllers\ErrorController::err404');
 // Une fois le "dispatcher" configuré, on lance le dispatch qui va exécuter la méthode du controller
 $dispatcher->dispatch();
+dd($match);
+// dd($viewData);
