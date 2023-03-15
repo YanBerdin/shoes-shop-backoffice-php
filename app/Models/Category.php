@@ -131,7 +131,7 @@ class Category extends CoreModel
         $sql = 'SELECT * FROM `category`';
         $pdoStatement = $pdo->query($sql);
         $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'App\Models\Category');
-        // Autre manière
+        // Autre manière (vue avec Renaud)
         // $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'Category::class');
 
         return $results;

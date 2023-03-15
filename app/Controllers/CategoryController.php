@@ -24,8 +24,9 @@ class CategoryController extends CoreController   //   <=   <=   extends pour he
         // via le model Category
         $categories = Category::findAll();
 
-        // On appelle show() en lui passant via l'array (second argument passé) les données
-        // contenues $categories
+        // On appelle show() 
+        // => en lui passant via l'array (second argument passé)
+        // => les données contenues dans $categories
         $this->show('category/category-list', [
             'categories' => $categories
         ]);

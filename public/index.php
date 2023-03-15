@@ -125,5 +125,17 @@ $match = $router->match();
 $dispatcher = new Dispatcher($match, '\App\Controllers\ErrorController::err404');
 // Une fois le "dispatcher" configuré, on lance le dispatch qui va exécuter la méthode du controller
 $dispatcher->dispatch();
+
 dd($match);
+
+dd($_SERVER);
+
 // dd($viewData);
+// array:3 [
+//   "target" => array:2 [
+//   "method" => "home"
+//   "controller" => "\App\Controllers\MainController"
+// ]
+// "params" => []
+// "name" => "main-home"
+// ]

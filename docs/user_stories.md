@@ -2,7 +2,7 @@
 
 Fiche récap : https://kourou.oclock.io/ressources/fiche-recap/user-stories/
 
-## Catalogue
+## Catalogue (=> S05)
 
 | En tant que | Je veux | Afin de (si besoin/nécessaire) |
 |--|--|--|
@@ -38,7 +38,7 @@ Fiche récap : https://kourou.oclock.io/ressources/fiche-recap/user-stories/
 | client | pouvoir payer ma commande | finaliser ma commande et la recevoir |
 | client | pouvoir visualiser si ma commande a bien été validée ou annulée | - |
 
-## BackOffice
+## BackOffice (=> S06)
 
 | En tant que | Je veux | Afin de (si besoin/nécessaire) |
 |--|--|--|
