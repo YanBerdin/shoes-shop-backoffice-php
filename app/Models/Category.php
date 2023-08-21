@@ -144,13 +144,15 @@ class Category extends CoreModel
      */
     public static function findAllHomepage()
     {
+        // RAPPEL
         // On peut appeler direcrement getPDO() sur la classe Database 
         // car getPDO() est une méthode statique (définie par : public static function ...)
         $pdo = Database::getPDO();
-
         // Sinon, on aurait dû faire :
         // $database = new Database();
         // $database->getPDO();
+
+        // ci-dessous => ASC n'est pas tres utile => c'est comme ça par defaut
 
         $sql = '
             SELECT *

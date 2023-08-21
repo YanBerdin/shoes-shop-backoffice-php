@@ -9,12 +9,15 @@ use App\Models\Product;
 class MainController extends CoreController
 {
     /**
-     * Méthode s'occupant de la page d'accueil
+     * Méthode s'occupant de la page d'accueil et Pages statiques
      *
      * @return void
      */
     public function home()
     {
+        // objets transmis dans home car besoin uniquement sur Home 
+        // Sinon on l'aurait mis dans show() de CoreController
+
         // On utilise le Model Category pour afficher les 5 catégories à mettre en avant
         $categories = Category::findAllHomepage();
 

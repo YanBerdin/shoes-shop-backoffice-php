@@ -20,7 +20,8 @@ require_once '../vendor/autoload.php';
 
 // dd($_SERVER);
 // var_dump($_SERVER);
-var_dump('BASE_URI');
+// var_dump('BASE_URI');
+
 // D'où notre page en erreur 404
 // Solutions possibles :
 // - créer un .htaccess
@@ -34,7 +35,7 @@ $router = new AltoRouter();
 // Mais on pourrait travailler sans sous-répertoire
 // Si il y a un sous-répertoire
 if (array_key_exists('BASE_URI', $_SERVER)) {
-    // Alors on définit le basePath d'AltoRouter
+    // Alors on définit le basePath d'AltoRouter (on le Set)
     $router->setBasePath($_SERVER['BASE_URI']);
     // ainsi, nos routes correspondront à l'URL, après la suite de sous-répertoire
 } else { // sinon
@@ -129,9 +130,9 @@ $dispatcher = new Dispatcher($match, '\App\Controllers\ErrorController::err404')
 // Une fois le "dispatcher" configuré, on lance le dispatch qui va exécuter la méthode du controller
 $dispatcher->dispatch();
 
-dd($match);
+// dd($match);
 
-dd($_SERVER);
+// dd($_SERVER);
 
 // dd($viewData);
 // array:3 [

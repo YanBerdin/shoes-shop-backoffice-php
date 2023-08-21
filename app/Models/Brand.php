@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Utils\Database;
-use PDO;
+use App\Utils\Database; // use => Chemin jusqu'à fichier (sans extension)
+use PDO; // Natif donc pas de chemin nécéssaire
 
 /**
  * Un modèle représente une table (un entité) dans notre base

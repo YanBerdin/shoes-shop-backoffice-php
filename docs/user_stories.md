@@ -2,7 +2,7 @@
 
 Fiche récap : https://kourou.oclock.io/ressources/fiche-recap/user-stories/
 
-## Catalogue (=> S05)
+## Catalogue (=> Vu en S05)
 
 | En tant que | Je veux | Afin de (si besoin/nécessaire) |
 |--|--|--|
@@ -16,7 +16,7 @@ Fiche récap : https://kourou.oclock.io/ressources/fiche-recap/user-stories/
 | visiteur | pouvoir accéder à 5 types de produit mises en avant sur toutes les page | naviguer plus rapidement sur le site |
 | visiteur | pouvoir changer la monnaie (EUR ou USD) des prix du site internet | voir les tarifs dans ma monnaie |
 
-## Panier
+## Panier => On verra pas
 
 | En tant que | Je veux | Afin de (si besoin/nécessaire) |
 |--|--|--|
@@ -26,7 +26,7 @@ Fiche récap : https://kourou.oclock.io/ressources/fiche-recap/user-stories/
 | visiteur | pouvoir supprimer un produit de mon panier | - |
 | visiteur | pouvoir visualiser le contenu de mon panier à tout moment sur le site | - |
 
-## Commande
+## Commande => On verra pas
 
 | En tant que | Je veux | Afin de (si besoin/nécessaire) |
 |--|--|--|

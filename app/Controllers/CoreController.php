@@ -9,7 +9,8 @@ class CoreController
      *
      * @param string $viewName Nom du fichier de vue
      * @param array $viewData Tableau des données à transmettre aux vues
-     * @return void                                  // valeur par defaut array vide, parametre facultatif
+     * valeur par defaut array vide, parametre facultatif
+     * @return void 
      */
     protected function show(string $viewName, $viewData = [])
     {
@@ -20,6 +21,7 @@ class CoreController
         // les vues y ont accès
         // ici une valeur dont on a besoin sur TOUTES les vues
         // donc on la définit dans show()
+
         $viewData['currentPage'] = $viewName;
 
         // définir l'url absolue pour nos assets
@@ -31,6 +33,7 @@ class CoreController
         // On veut désormais accéder aux données de $viewData, mais sans accéder au tableau
         // La fonction extract permet de créer une variable pour chaque élément du tableau passé en argument
         extract($viewData);
+        // (importe les variables à partir des clés)
         // => la variable $currentPage existe désormais, et sa valeur est $viewName
         // => la variable $assetsBaseUri existe désormais, et sa valeur est $_SERVER['BASE_URI'] . '/assets/'
         // => la variable $baseUri existe désormais, et sa valeur est $_SERVER['BASE_URI']

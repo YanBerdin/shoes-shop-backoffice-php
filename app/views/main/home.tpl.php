@@ -1,28 +1,26 @@
-<h1>Page d'accueil</h1>
+<h1>Accueil - Back-Office : <strong>Dans les shoes</strong>...</h1>
 
-  <?php //dump($categories); ?>
-  <?php //dump($products); ?>
+<?php //dump($categories); 
+?>
+<?php //dump($products); 
+?>
 
-  <div class="container my-4">
-        <p class="display-4">
-            Bienvenue dans le backOffice <strong>Dans les shoe</strong>...
-        </p>
-
-        <div class="row mt-5">
-            <div class="col-12 col-md-6">
-                <div class="card text-white mb-3">
-                    <div class="card-header bg-primary">Liste des catégories</div>
-                    <div class="card-body">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Nom</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                              <?php foreach($categories as $category) : ?>
+<div class="container my-4">
+    <div class="row mt-5">
+        <div class="col-12 col-md-6">
+            <div class="card text-white mb-3">
+                <div class="card-header bg-primary">Liste des catégories</div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($categories as $category) : ?>
                                 <tr>
                                     <th scope="row"><?= $category->getId() ?></th>
                                     <td><?= $category->getName() ?></td>
@@ -32,8 +30,7 @@
                                         </a>
                                         <!-- Example single danger button -->
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-danger dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                                             </button>
                                             <div class="dropdown-menu">
@@ -43,29 +40,29 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                        <div class="d-grid gap-2">
-                            <a href="categories.html" class="btn btn-success">Voir plus</a>
-                        </div>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <div class="d-grid gap-2">
+                        <a href="categories.html" class="btn btn-success">Voir plus</a>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6">
-                <div class="card text-white mb-3">
-                    <div class="card-header bg-primary">Liste des produits</div>
-                    <div class="card-body">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Nom</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                              <?php foreach($products as $product) : ?>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card text-white mb-3">
+                <div class="card-header bg-primary">Liste des produits</div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($products as $product) : ?>
                                 <tr>
                                     <th scope="row"><?= $product->getId() ?></th>
                                     <td><?= $product->getName() ?></td>
@@ -75,8 +72,7 @@
                                         </a>
                                         <!-- Example single danger button -->
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-danger dropdown-toggle"
-                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                                             </button>
                                             <div class="dropdown-menu">
@@ -86,14 +82,14 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                        <div class="d-grid gap-2">
-                            <a href="products.html" class="btn btn-success">Voir plus</a>
-                        </div>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <div class="d-grid gap-2">
+                        <a href="products.html" class="btn btn-success">Voir plus</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>

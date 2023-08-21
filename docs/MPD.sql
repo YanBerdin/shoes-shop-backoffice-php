@@ -93,8 +93,8 @@ INSERT INTO `brand` (`id`, `name`, `created_at`, `updated_at`) VALUES (1, 'oCira
 INSERT INTO `brand` (`id`, `name`, `created_at`, `updated_at`) VALUES (2, 'BOOTstrap', '2018-10-17 9:00:00', NULL);
 INSERT INTO `brand` (`id`, `name`, `created_at`, `updated_at`) VALUES (3, 'Talonette', '2018-10-17 9:00:00', NULL);
 INSERT INTO `brand` (`id`, `name`, `created_at`, `updated_at`) VALUES (4, 'Shossures', '2018-10-17 9:00:00', NULL);
-INSERT INTO `brand` (`id`, `name`, `created_at`, `updated_at`) VALUES (5, 'O\'shoes', '2018-10-17 9:00:00', NULL);
-INSERT INTO `brand` (`id`, `name`, `created_at`, `updated_at`) VALUES (6, 'Pattes d\'eph', '2018-10-17 9:00:00', NULL);
+INSERT INTO `brand` (`id`, `name`, `created_at`, `updated_at`) VALUES (5, 'Oshoes', '2018-10-17 9:00:00', NULL);
+INSERT INTO `brand` (`id`, `name`, `created_at`, `updated_at`) VALUES (6, "Pattes d\'eph", '2018-10-17 9:00:00', NULL);
 INSERT INTO `brand` (`id`, `name`, `created_at`, `updated_at`) VALUES (7, 'PHPieds', '2018-10-17 9:00:00', NULL);
 INSERT INTO `brand` (`id`, `name`, `created_at`, `updated_at`) VALUES (8, 'oPompes', '2018-10-17 9:00:00', NULL);
 
@@ -106,7 +106,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 INSERT INTO `category` (`id`, `name`, `subtitle`, `picture`, `home_order`, `created_at`, `updated_at`) VALUES (1, 'Détente', 'Se faire plaisir', 'assets/images/categ1.jpeg', 4, '2018-10-17 8:00:00', NULL);
-INSERT INTO `category` (`id`, `name`, `subtitle`, `picture`, `home_order`, `created_at`, `updated_at`) VALUES (2, 'Au travail', 'C\'est parti', 'assets/images/categ2.jpeg', 2, '2018-10-17 8:00:00', NULL);
+INSERT INTO `category` (`id`, `name`, `subtitle`, `picture`, `home_order`, `created_at`, `updated_at`) VALUES (2, 'Au travail', "C\'est parti", 'assets/images/categ2.jpeg', 2, '2018-10-17 8:00:00', NULL);
 INSERT INTO `category` (`id`, `name`, `subtitle`, `picture`, `home_order`, `created_at`, `updated_at`) VALUES (3, 'Cérémonie', 'Bien choisir', 'assets/images/categ3.jpeg', 5, '2018-10-17 8:00:00', NULL);
 INSERT INTO `category` (`id`, `name`, `subtitle`, `picture`, `home_order`, `created_at`, `updated_at`) VALUES (4, 'Sortir', 'Faire un tour', 'assets/images/categ4.jpeg', 3, '2018-10-17 8:00:00', NULL);
 INSERT INTO `category` (`id`, `name`, `subtitle`, `picture`, `home_order`, `created_at`, `updated_at`) VALUES (5, 'Vintage', 'Découvrir', 'assets/images/categ5.jpeg', 1, '2018-10-17 8:00:00', NULL);

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers; // Sous dossier dans lequel ce fichier est contenu
 
 // Pour l'étape 2 de l'atelier E01
 // On a besoin du Model Category
 use App\Models\Category;
 
-class CategoryController extends CoreController   //   <=   <=   extends pour heritage
+class CategoryController extends CoreController   // <= extends pour heritage
 {
     public function listCategories()
     {
@@ -15,12 +15,13 @@ class CategoryController extends CoreController   //   <=   <=   extends pour he
         // $this->show('category/category-list');
 
         // Etape 2 : on utilise le Model pour intégrer la BDD
-        // Une manière de faire
+        // Une manière de faire (cf S05)
         // $modelCategory = new Category();
         // $categories = $modelCategory->findAll();
 
         // On veut appeler la méthode findAll() du Model Category
-        // Cette méthode findAll() étant à présent "static", on peut l'appeler directement
+        // Cette méthode findAll() étant à présent "static",
+        // => on peut l'appeler directement sur la classe
         // via le model Category
         $categories = Category::findAll();
 
