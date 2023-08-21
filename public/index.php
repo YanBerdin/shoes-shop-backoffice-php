@@ -6,6 +6,7 @@
 // inclusion des dépendances via Composer
 // autoload.php permet de charger d'un coup toutes les dépendances installées avec composer
 // mais aussi d'activer le chargement automatique des classes (convention PSR-4)
+// => Donc plus besoin de Use (ex Require) des Models ou Controllers
 require_once '../vendor/autoload.php';
 
 /* ------------
@@ -16,8 +17,10 @@ require_once '../vendor/autoload.php';
 // NB : si on avait un .htaccess, alors via la réécriture d'URL,
 // on aurait eu une clé BASE_URI
 // Ici, elle n'existe pas
-// dd($_SERVER);
 
+// dd($_SERVER);
+// var_dump($_SERVER);
+var_dump('BASE_URI');
 // D'où notre page en erreur 404
 // Solutions possibles :
 // - créer un .htaccess
