@@ -102,6 +102,7 @@ $router->map(
     'category-create'
 );
 
+// Route pour afficher la liste des produits
 $router->map(
     'GET',
     '/product/list',
@@ -112,6 +113,7 @@ $router->map(
     'product-list'
 );
 
+// Route pour afficher le formulaire de création d'un produit
 $router->map(
     'GET',
     '/product/add',
@@ -122,15 +124,16 @@ $router->map(
     'product-add'
 );
 
-// $router->map(
-//     'POST',
-//     '/product/add',
-//     [
-//         'method' => 'createProduct',
-//         'controller' => '\App\Controllers\ProductController'
-//     ],
-//     'product-add'
-// );
+// Route pour faire le traitement du formulaire et créer un produit
+$router->map(
+    'POST',
+    '/product/add',
+    [
+        'method' => 'createProduct',
+        'controller' => '\App\Controllers\ProductController'
+    ],
+    'product-create'
+);
 
 
 /* -------------

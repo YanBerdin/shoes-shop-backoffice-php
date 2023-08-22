@@ -1,8 +1,8 @@
 <div class="container my-4">
         <a href="<?= $router->generate('category-add') ?>" class="btn btn-success float-end">Ajouter</a>
         <h2>Liste des catégories</h2>
-        <?php //dump($viewData); ?>
-        <?php dump($categories); ?>
+        <?php // dump($viewData); ?>
+        <?php // dump($categories); ?>
         <table class="table table-hover mt-4">
             <thead>
                 <tr>

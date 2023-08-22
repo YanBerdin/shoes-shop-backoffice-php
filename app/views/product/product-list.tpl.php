@@ -1,5 +1,5 @@
 <div class="container my-4">
-        <a href="category_add.html" class="btn btn-success float-end">Ajouter</a>
+        <a href="<?= $router->generate('product-add') ?>" class="btn btn-success float-end">Ajouter</a>
         <h2>Liste des produits</h2>
         <?php //dump($products); ?>
         <table class="table table-hover mt-4">
