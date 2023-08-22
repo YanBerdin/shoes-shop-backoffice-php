@@ -1,19 +1,23 @@
 <div class="container my-4">
-        <a href="<?= $router->generate('category-add') ?>" class="btn btn-success float-end">Ajouter</a>
-        <h2>Liste des catégories</h2>
-        <?php // dump($viewData); ?>
-        <?php // dump($categories); ?>
-        <table class="table table-hover mt-4">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Sous-titre</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($categories as $category) : ?>
+    <!-- generate('category-add') -->
+    <a href="<?= $router->generate('category-add-update') ?>" class="btn btn-success float-end">Ajouter</a>
+
+    <h2>Liste des catégories</h2>
+    <?php // dump($viewData); 
+    ?>
+    <?php // dump($categories); 
+    ?>
+    <table class="table table-hover mt-4">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Sous-titre</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($categories as $category) : ?>
                 <tr>
                     <th scope="row"><?= $category->getId() ?></th>
                     <td><?= $category->getName() ?></td>
@@ -24,8 +28,7 @@
                         </a>
                         <!-- Example single danger button -->
                         <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-danger dropdown-toggle"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </button>
                             <div class="dropdown-menu">
@@ -35,8 +38,8 @@
                         </div>
                     </td>
                 </tr>
-                <?php endforeach; ?>
-                <!-- <tr>
+            <?php endforeach; ?>
+            <!-- <tr>
                     <th scope="row">2</th>
                     <td>Au travail</td>
                     <td>C'est parti</td>
@@ -116,6 +119,6 @@
                         </div>
                     </td>
                 </tr> -->
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
+</div>

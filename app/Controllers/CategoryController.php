@@ -36,7 +36,15 @@ class CategoryController extends CoreController   // <= extends pour heritage
 
     public function addCategory()
     {
-        $this->show('category/category-add');
+        // $this->show('category/category-add');
+
+        // On passe une instance du Model Category à show
+        // pour avoir accès à $category dans le template
+        // Cela servira à faire appel aux données
+        // (ex : $category->getName())
+        $this->show('category/category-add-update', [
+            'category' => new Category()
+        ]);
     }
 
     public function createCategory()

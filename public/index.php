@@ -82,19 +82,19 @@ $router->map(
 // Route pour afficher le formulaire d'ajout d'une catégorie
 $router->map(
     'GET',
-    '/category/add',
+    '/category/add-update',
     [
         'method' => 'addCategory',
         'controller' => '\App\Controllers\CategoryController'
     ],
-    'category-add'
+    'category-add-update'
 );
 
 
 // Route pour faire le traitement du formulaire et créer une nouvelle catégorie
 $router->map(
     'POST',
-    '/category/add',
+    '/category/add-update',
     [
         'method' => 'createCategory',
         'controller' => '\App\Controllers\CategoryController'
