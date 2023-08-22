@@ -1,5 +1,9 @@
 <?php
 
+// use AltoRouter;
+// use Dispatcher;
+// use App\Controllers\ErrorController;
+
 // POINT D'ENTRÉE UNIQUE :
 // FrontController
 
@@ -64,6 +68,7 @@ $router->map(
     'main-home'
 );
 
+// Route pour afficher la liste des catégories
 $router->map(
     'GET',
     '/category/list',
@@ -74,6 +79,7 @@ $router->map(
     'category-list'
 );
 
+// Route pour afficher le formulaire d'ajout d'une catégorie
 $router->map(
     'GET',
     '/category/add',
@@ -82,6 +88,18 @@ $router->map(
         'controller' => '\App\Controllers\CategoryController'
     ],
     'category-add'
+);
+
+
+// Route pour faire le traitement du formulaire et créer une nouvelle catégorie
+$router->map(
+    'POST',
+    '/category/add',
+    [
+        'method' => 'createCategory',
+        'controller' => '\App\Controllers\CategoryController'
+    ],
+    'category-create'
 );
 
 $router->map(

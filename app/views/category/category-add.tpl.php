@@ -1,5 +1,5 @@
 <div class="container my-4">
-        <a href="categories.html" class="btn btn-success float-end">Retour</a>
+        <a href="<?= $router->generate('category-list') ?>" class="btn btn-success float-end">Retour</a>
         <h2>Ajouter une catégorie</h2>
         
         <!-- 2 attributs sont à indiquer dans la balise <form> -->
@@ -14,6 +14,8 @@
                 <!-- La méthode est 'POST' ==> on retrouvera les données dans l'array associatif $_POST -->
                 <!-- Par ex, pour l'input suivant subtitle, on récupèrera la données via 
                 $_POST['subtitle'] -->
+
+                <!-- for permet de créer Focus pour entrer dans champ input -->
             </div>
             <div class="mb-3">
                 <label for="subtitle" class="form-label">Sous-titre</label>
