@@ -119,7 +119,7 @@ $router->map(
     'POST',
     '/category/add-update/[i:id]',
     [
-        'method' => 'editCategory',
+        'method' => 'createOrUpdateCategory',
         'controller' => '\App\Controllers\CategoryController'
     ],
     'category-update'

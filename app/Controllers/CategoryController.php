@@ -5,7 +5,7 @@ namespace App\Controllers;
 // Pour l'étape 2 de l'atelier E01
 // On a besoin du Model Category
 use App\Models\Category;
-use App\Controllers\CoreController;
+
 
 class CategoryController extends CoreController   // <= extends pour heritage
 {
@@ -61,15 +61,15 @@ class CategoryController extends CoreController   // <= extends pour heritage
      */
     public function createOrUpdateCategory($categoryId = null)
     {
-        // dump($_POST);
+         dump($_POST);
 
         // Cette méthode reçoit potentiellement (par systématiquement) un id
         // Si on est en mode create =>> on aura pas d'id
         // Sinon (mode update) ==> on en aura un
-        // On créé une nouvelle variable (un marqueur) pour savoir dans quel mode on est
+        //? On créé une nouvelle variable (un marqueur) pour savoir dans quel mode on est
         $isUpdate = isset($categoryId);
 
-        // On doit vérifier que $_POST n'est pas vide et contient bien les clés
+        //? On doit vérifier que $_POST n'est pas vide et contient bien les clés
         // les clés sont données par la valeur des attributs name des champs du form
         // nos clés : name, subtitle et picture
         if (!empty($_POST)) {
@@ -85,7 +85,7 @@ class CategoryController extends CoreController   // <= extends pour heritage
             // On créer un array (vide) qui stockera les erreurs
             $errorList = [];
 
-            // On ne fait jamais confiance à l'utilisateur
+            //! On ne fait jamais confiance à l'utilisateur
             // On va vérifier pour =>  chaque champ <= :
             // - Si le champ n'est pas null
             // - et si le champ est valide : si le champ ne passe pas le test du filter_input (via le 3ème argument FILTER_SANITIZE_...) 
@@ -117,7 +117,7 @@ class CategoryController extends CoreController   // <= extends pour heritage
 
 
             // Avant de créer / modifier la nouvelle catégorie, 
-            // on doit vérfier si on a eu une ou plusieurs erreurs
+            //! on doit vérfier si on a eu une ou plusieurs erreurs
             // cad si $errorList n'est pas vide
             if (empty($errorList)) {
 
@@ -126,7 +126,6 @@ class CategoryController extends CoreController   // <= extends pour heritage
                     // On est en mode update
                     // On doit récupérer la catégorie à mettre à jour
                     $modelCategory = Category::find($categoryId);
-
                 } else {
                     // On est en mode create
                     // => on créer une instance de Category
@@ -141,12 +140,12 @@ class CategoryController extends CoreController   // <= extends pour heritage
 
                 // Pour insérer en BDD, je crée une nouvelle instance du Model correspondant (=> Category)
 
-                // 1. On instancie un model Category
+                //! 1. On instancie un model Category
                 // $modelCategory = new Category();
 
-                // Active Record = On utilise le model pour interagir avec la BDD
+                //! Active Record = On utilise le model pour interagir avec la BDD
 
-                // 2. On sette les propriétés de Category
+                //! 2. On sette les propriétés de Category
                 // Renseigner les valeurs pour chaque propriété correspondante dans l'instance.
                 // Setter (appeler les setters) pour mettre les valeurs des inputs 
                 // dans chaque propriété de l'objet Category
@@ -154,19 +153,40 @@ class CategoryController extends CoreController   // <= extends pour heritage
                 $modelCategory->setSubtitle($subtitle);
                 $modelCategory->setPicture($picture);
 
-                // Le model exécutera la nouvelle méthode insert()
-                $isInsert = $modelCategory->insert();
-                // $isInsert contient un booléen (true / false)
+                //? Ajout d'une condition => V3 => $isUpdate
 
-                // Si l'insertion est OK => redirection vers category/list
-                if ($isInsert) {
-                    // Redirection vers category/list 
-                    header('Location: /category/list');
-                } else {
-                    // Sinon => message d'erreur et redirection vers le form 
-                    // (pas besoin ici car notre attribut action du form est vide, et donc on reste sur la page)
-                    // (action="" dans le formulaire )
-                    $errorList[] = 'La création de la catégorie a échoué';
+                //? On teste de nouveau le mode (create / update) pour appeler la méthode
+                //? correspondante du Model
+                if ($isUpdate) {//! Si on est en Mode Update
+                    $isUpdateOk = $modelCategory->update(); // update() est déclaré dans Model Category
+
+                    if ($isUpdateOk) {
+                        // Redirection vers la category modifiée
+                        header("Location: /category/add-update/{$categoryId}");
+                    } else {
+                        // Sinon => message d'erreur et redirection vers le form
+                        // (pas besoin ici car notre attribut action du form est vide, et donc on reste sur la page)
+                        $errorList[] = 'La modification de la catégorie a échoué';
+                    }
+                    
+                } else {//! Sinon on est en Mode Create
+                    // Le model exécutera la nouvelle méthode insert()
+                    //? $isInsert = $modelCategory->insert();
+                    $isInsertOk = $modelCategory->insert();
+                    // $isInsert contient un booléen (true / false)
+
+                    //! Si l'insertion est OK => redirection vers category/list
+                    if ($isInsertOk) {
+                        // Redirection vers category/list
+                        // header(location) permet de sortir du comportement action=""
+                        //? header('Location: /category/list');
+                        header("Location: /category/list");
+                    } else {
+                        //! Sinon => message d'erreur et redirection vers le form
+                        // (pas besoin ici car notre attribut action du form est vide, et donc on reste sur la page)
+                        // (action="" dans le formulaire )
+                        $errorList[] = 'La création de la catégorie a échoué';
+                    }
                 }
             } else {
                 // Ici, on a au moins une erreur
@@ -186,7 +206,7 @@ class CategoryController extends CoreController   // <= extends pour heritage
                 // 3. On appelle la méthode show() en lui passanrt les données (cad valeurs des champs + erreur(s))
                 // Dans le template category-add, on récupère $viewData['category'] et $viewData['errors']
                 // et via extract() : $category et $errors
-                $this->show('category/category-add', [
+                $this->show('category/category-add-update', [
                     'category' => $modelCategory,
                     'errors' => $errorList
                 ]);

@@ -245,10 +245,12 @@ class Category extends CoreModel
         return false;
     }
 
+
     public function update()
     {
         $pdo = Database::getPDO();
-
+        
+        //! Interpolation (Injection SQL)
         $sql = "
             UPDATE `category`
             SET
