@@ -167,7 +167,7 @@ class Category extends CoreModel
         return $categories;
     }
 
-        /**
+    /**
      * Méthode permettant d'ajouter un enregistrement dans la table category
      * L'objet courant doit contenir toutes les données à ajouter : 1 propriété => 1 colonne dans la table
      *
@@ -243,5 +243,39 @@ class Category extends CoreModel
 
         // Si on arrive ici, c'est que quelque chose n'a pas bien fonctionné => FAUX
         return false;
+    }
+
+    public function update()
+    {
+        $pdo = Database::getPDO();
+
+        $sql = "
+            UPDATE `category`
+            SET
+            name = :name,
+            subtitle = :subtitle,
+            picture = :picture,
+            updated_at = NOW()
+            WHERE id = :id
+        ";
+
+        $pdoStatement = $pdo->prepare($sql);
+
+        $pdoStatement->bindValue(':name', $this->name);
+        $pdoStatement->bindValue(':subtitle', $this->subtitle);
+        $pdoStatement->bindValue(':picture', $this->picture);
+        $pdoStatement->bindValue(':id', $this->id, PDO::PARAM_INT);
+
+        $pdoStatement->execute();
+
+        if ($pdoStatement->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+        // Version plus courte
+        // retourne true si la condition est vraie, sinon false
+        // return ($pdoStatement->rowCount() > 0);
     }
 }

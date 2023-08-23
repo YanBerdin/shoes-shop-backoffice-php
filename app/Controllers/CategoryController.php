@@ -53,9 +53,21 @@ class CategoryController extends CoreController   // <= extends pour heritage
         ]);
     }
 
-    public function createOrUpdateCategory()
+    /**
+     * Créer ou modifier en BDD une catégorie
+     *
+     * @param int | null $categoryId
+     * @return void
+     */
+    public function createOrUpdateCategory($categoryId = null)
     {
         // dump($_POST);
+
+        // Cette méthode reçoit potentiellement (par systématiquement) un id
+        // Si on est en mode create =>> on aura pas d'id
+        // Sinon (mode update) ==> on en aura un
+        // On créé une nouvelle variable (un marqueur) pour savoir dans quel mode on est
+        $isUpdate = isset($categoryId);
 
         // On doit vérifier que $_POST n'est pas vide et contient bien les clés
         // les clés sont données par la valeur des attributs name des champs du form
@@ -104,10 +116,22 @@ class CategoryController extends CoreController   // <= extends pour heritage
             }
 
 
-            // Avant de créer la nouvelle catégorie, 
+            // Avant de créer / modifier la nouvelle catégorie, 
             // on doit vérfier si on a eu une ou plusieurs erreurs
             // cad si $errorList n'est pas vide
             if (empty($errorList)) {
+
+                // On va faire le traitement des données en fonction du mode
+                if ($isUpdate) {
+                    // On est en mode update
+                    // On doit récupérer la catégorie à mettre à jour
+                    $modelCategory = Category::find($categoryId);
+
+                } else {
+                    // On est en mode create
+                    // => on créer une instance de Category
+                    $modelCategory = new Category();
+                }
 
                 // On utilise le model pour interagir avec la BDD
 
@@ -118,7 +142,7 @@ class CategoryController extends CoreController   // <= extends pour heritage
                 // Pour insérer en BDD, je crée une nouvelle instance du Model correspondant (=> Category)
 
                 // 1. On instancie un model Category
-                $modelCategory = new Category();
+                // $modelCategory = new Category();
 
                 // Active Record = On utilise le model pour interagir avec la BDD
 
