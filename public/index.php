@@ -79,7 +79,7 @@ $router->map(
     'category-list'
 );
 
-// Route pour afficher le formulaire d'ajout d'une catégorie
+// Route pour afficher le formulaire d'ajout/Modif d'une catégorie
 $router->map(
     'GET',
     '/category/add-update',
@@ -91,16 +91,40 @@ $router->map(
 );
 
 
-// Route pour faire le traitement du formulaire et créer une nouvelle catégorie
+// Route pour faire le traitement du formulaire de création d'une catégorie
 $router->map(
     'POST',
     '/category/add-update',
     [
-        'method' => 'createCategory',
+        'method' => 'createOrUpdateCategory',
         'controller' => '\App\Controllers\CategoryController'
     ],
-    'category-create'
+    'category-create' // TODO ajouter -update et MAJ liens dans TPL
 );
+
+// Route pour afficher le formulaire de modification d'une catégorie
+$router->map(
+    'GET',
+    '/category/add-update/[i:id]',
+    [
+        'method' => 'editCategory',
+        'controller' => '\App\Controllers\CategoryController'
+    ],
+    'category-edit'
+);
+
+// Route pour faire le traitement du formulaire 
+// de modification d'une catégorie
+$router->map(
+    'POST',
+    '/category/add-update/[i:id]',
+    [
+        'method' => 'editCategory',
+        'controller' => '\App\Controllers\CategoryController'
+    ],
+    'category-update'
+);
+
 
 // Route pour afficher la liste des produits
 $router->map(

@@ -34,6 +34,12 @@ class CategoryController extends CoreController   // <= extends pour heritage
         ]);
     }
 
+
+    /**
+     * Méthode pour afficher le formulaire d'ajout d'une catégorie
+     *
+     * @return void
+     */
     public function addCategory()
     {
         // $this->show('category/category-add');
@@ -47,7 +53,7 @@ class CategoryController extends CoreController   // <= extends pour heritage
         ]);
     }
 
-    public function createCategory()
+    public function createOrUpdateCategory()
     {
         // dump($_POST);
 
@@ -164,5 +170,25 @@ class CategoryController extends CoreController   // <= extends pour heritage
                 // TODO : utiliser les données dans le template pour gérer l'affichage
             }
         }
+    }
+
+    /**
+     * Méthode pour mettre à jour une catégorie (existante)
+     *
+     * @return void
+     */
+    public function editCategory($categoryId)
+    {
+        // $categoryId (qu'on aurait pu appeler comme on veux)
+        // contient la donnée de $params['id'] 
+        // cad l'id de la catégorie à modifier
+        //dump($categoryId);
+
+        // On récupère la catégorie à modifier
+        $category = Category::find($categoryId);
+        $this->show('category/category-add-update', [
+            'category' => $category,
+            'categoryId' => $categoryId // intérêt : récupérer $categoryId pour gestion dynamique de l'affichage du <h2> dans le template
+        ]);
     }
 }
