@@ -61,7 +61,6 @@ class CategoryController extends CoreController   // <= extends pour heritage
      */
     public function createOrUpdateCategory($categoryId = null)
     {
-         dump($_POST);
 
         // Cette méthode reçoit potentiellement (par systématiquement) un id
         // Si on est en mode create =>> on aura pas d'id
