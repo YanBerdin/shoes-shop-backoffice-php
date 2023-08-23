@@ -36,6 +36,7 @@
             <div class="mb-3">
                 <label for="rate" class="form-label">Note</label>
                 <select name="rate" id="rate" required>
+                //! Boucle sur les "rate"
                     <?php for ($i = 1; $i <= 5; $i++) : ?>
                     <option value="<?= $i ?>"><?= $i ?></option>
                     <?php endfor; ?>
@@ -44,6 +45,7 @@
             <div class="mb-3">
                 <label for="status" class="form-label">Statut</label>
                 <select name="status" id="status" required>
+                //! Boucle sur les "status"
                 <?php for ($i = 1; $i <= 2; $i++) : ?>
                     <option value="<?= $i ?>"><?= $i ?></option>
                     <?php endfor; ?>
@@ -52,6 +54,7 @@
              <div class="mb-3">
                 <label for="category_id" class="form-label">Catégorie</label>
                 <select name="category_id" id="category_id" required>
+                //! Boucle sur les "category"
                 <?php foreach ($categories as $category) : ?>
                     <option value="<?= $category->getId() ?>"><?= $category->getName() ?></option>
                     <?php endforeach; ?>
@@ -60,6 +63,7 @@
             <div class="mb-3">
                 <label for="brand_id" class="form-label">Marque</label>
                 <select name="brand_id" id="brand_id" required>
+                //! Boucle sur les "brand"
                 <?php foreach ($brands as $brand) : ?>
                     <option value="<?= $brand->getId() ?>"><?= $brand->getName() ?></option>
                     <?php endforeach; ?>
@@ -68,6 +72,7 @@
             <div class="mb-3">
                 <label for="type_id" class="form-label">Type</label>
                 <select name="type_id" id="type_id" required>
+                //! Boucle sur les "type"
                 <?php foreach ($types as $type) : ?>
                     <option value="<?= $type->getId() ?>"><?= $type->getName() ?></option>
                     <?php endforeach; ?>
