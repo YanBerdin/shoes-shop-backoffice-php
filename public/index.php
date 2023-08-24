@@ -160,6 +160,28 @@ $router->map(
 );
 
 
+// Affichage du form user
+$router->map(
+    'GET',
+    '/user/login',
+    [
+        'method' => 'login',
+        'controller' => '\App\Controllers\AppUserController'
+    ],
+    'user-login'
+);
+
+// Traitement du form user
+$router->map(
+    'POST',
+    '/user/login',
+    [
+        'method' => 'loginUser',
+        'controller' => '\App\Controllers\AppUserController'
+    ],
+    'user-check'
+);
+
 /* -------------
 --- DISPATCH ---
 --------------*/
