@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Utils\Database;
+
 class AppUser extends CoreModel
 {
     private $email;
@@ -16,10 +18,65 @@ class AppUser extends CoreModel
 
     private $status;
 
+    public static function find($id)
+    {
+        // On implémente la méthode
+
+        // Exemple d'utilisation : appel de la méthode statique
+        // find à l'intérieur de la classe
+        // $this ne fonctionnera pas, il faut utiliser à la place self::
+        // Pour appeler ici find(), on va donc faire self::find()
+        //$this->getEmail(); ==> génère une erreur car ici nous sommes dans une méthode statique, l'objet courant $this n'est pas accessible
+        self::getEmail();
+    }
+
+
+    public static function findByEmail($email)
+    {
+        // Si on trouve un résultat pour l'email, retourner une instance de APPUser
+        // Sinon, retourner false
+
+        // Connexion BDD
+        $pdo = Database::getPDO();
+
+        // Interpolation = injection SQL
+        $sql = "
+            SELECT * FROM `app_user`
+            WHERE email = :email
+        ";
+
+        //! Requete préparée
+        $pdoStatement = $pdo->prepare($sql);
+
+        // Executer la requete (on pourrait aussi utiliser bindvalue cf hier)
+        $pdoStatement->execute([':email' => $email]);
+
+        // Vu qu'il n'y a qu'1 email prévu en BDD 
+        // Utiliser fetchObject => on attend qu'1 résultat
+        // fetchObject attend argument type d'objet
+        // permet de savoir à quelles propriétés on a acces
+        $user = $pdoStatement->fetchObject('App\Models\AppUser'); // <= FQCM
+
+        //! NB : $user peut contenir ou pas un objet User
+
+        // si on trouve un résultat pour l'email, retourner une instance de AppUser
+        // sinon, retourner false
+        if ($user) {
+            return $user;
+        } else {
+            return false;
+        }
+
+        // TODO Version plus courte sur une ligne en ternaire
+        //TODO (condition) ? execution si condition vérifiée : exécution sinon
+        // return ($user) ? $user : false;
+
+    }
+
 
     /**
      * Get the value of email
-     */ 
+     */
     public function getEmail()
     {
         return $this->email;
@@ -29,7 +86,7 @@ class AppUser extends CoreModel
      * Set the value of email
      *
      * @return  self
-     */ 
+     */
     public function setEmail($email)
     {
         $this->email = $email;
@@ -39,7 +96,7 @@ class AppUser extends CoreModel
 
     /**
      * Get the value of password
-     */ 
+     */
     public function getPassword()
     {
         return $this->password;
@@ -49,7 +106,7 @@ class AppUser extends CoreModel
      * Set the value of password
      *
      * @return  self
-     */ 
+     */
     public function setPassword($password)
     {
         $this->password = $password;
@@ -59,7 +116,7 @@ class AppUser extends CoreModel
 
     /**
      * Get the value of firstname
-     */ 
+     */
     public function getFirstname()
     {
         return $this->firstname;
@@ -69,7 +126,7 @@ class AppUser extends CoreModel
      * Set the value of firstname
      *
      * @return  self
-     */ 
+     */
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
@@ -79,7 +136,7 @@ class AppUser extends CoreModel
 
     /**
      * Get the value of lastname
-     */ 
+     */
     public function getLastname()
     {
         return $this->lastname;
@@ -89,7 +146,7 @@ class AppUser extends CoreModel
      * Set the value of lastname
      *
      * @return  self
-     */ 
+     */
     public function setLastname($lastname)
     {
         $this->lastname = $lastname;
@@ -99,7 +156,7 @@ class AppUser extends CoreModel
 
     /**
      * Get the value of role
-     */ 
+     */
     public function getRole()
     {
         return $this->role;
@@ -109,7 +166,7 @@ class AppUser extends CoreModel
      * Set the value of role
      *
      * @return  self
-     */ 
+     */
     public function setRole($role)
     {
         $this->role = $role;
@@ -119,7 +176,7 @@ class AppUser extends CoreModel
 
     /**
      * Get the value of status
-     */ 
+     */
     public function getStatus()
     {
         return $this->status;
@@ -129,7 +186,7 @@ class AppUser extends CoreModel
      * Set the value of status
      *
      * @return  self
-     */ 
+     */
     public function setStatus($status)
     {
         $this->status = $status;
