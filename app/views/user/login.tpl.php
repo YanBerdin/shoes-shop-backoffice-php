@@ -1,3 +1,5 @@
+<?php dump($_SESSION); ?>
+
 <h1>Page de connexion à l'interface admin</h1>
 
 <form action="" method="POST" class="mt-5">

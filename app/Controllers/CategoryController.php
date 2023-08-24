@@ -6,11 +6,32 @@ namespace App\Controllers;
 // On a besoin du Model Category
 use App\Models\Category;
 
-
-class CategoryController extends CoreController   // <= extends pour heritage
+//  extends pour heritage
+class CategoryController extends CoreController   
 {
+     /**
+     * Méthode qui sera exécutée pour l'affichage de toutes les cartégories du site
+     *
+     * @return void
+     */
     public function listCategories()
     {
+        //! Autorisation
+        //? On utilise la méthode checkAuthorization() pour vérifier si le user 
+        //? a les droits (permissions) pour accéder à la page
+        // On doit lui passer en argument un array des roles authorisés pour cette page
+        // Ici, les rôles admin et catalog-manager auront les permissions
+        //? Cas ou nicole à le droit d'accès à tpl category-list
+         $this->checkAuthorization(['admin', 'catalog-manager']);
+        //? nicole n'a pas de droit d'accès à tpl category-list
+        // recois une 403
+        // $this->checkAuthorization(['admin']);
+
+        //! Si le script continue c'est que :
+        //? checkAuthorization(['admin']) = true
+        
+        //! Si pas de sortie exit() dans checkAuthorization($authorizedRoles = [])
+        //! le script continue jusqu'à show() = affiche quand même
         // Etape 1 : on appelle show() en lui passant le template
         // à utiliser pour l'affichage
         // $this->show('category/category-list');
@@ -20,7 +41,7 @@ class CategoryController extends CoreController   // <= extends pour heritage
         // $modelCategory = new Category();
         // $categories = $modelCategory->findAll();
 
-        // On veut appeler la méthode findAll() du Model Category
+        //? V2 :On veut appeler la méthode findAll() du Model Category
         // Cette méthode findAll() étant à présent "static",
         // => on peut l'appeler directement sur la classe
         // via le model Category

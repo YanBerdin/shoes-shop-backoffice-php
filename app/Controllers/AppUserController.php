@@ -7,7 +7,7 @@ use App\Controllers\CoreController;
 
 class AppUserController extends CoreController
 {
-    // Affichage du formulaire
+    //! Affichage du formulaire
     public function login()
     {
         $this->show('user/login');
@@ -19,7 +19,7 @@ class AppUserController extends CoreController
     // dump($_POST);
     // }
 
-    // Traitement du formulaire
+    //! Traitement du formulaire
     public function loginUser()
     {
         // dump($_POST);
@@ -45,19 +45,21 @@ class AppUserController extends CoreController
             if ($user != false) {
                 //! On rentre ici, cad l'email existe bien en BDD
                 // Alors on vérifie aussi le password
-                //! $user->getPassword() permet de récupérer le password du User
-                // $password correspond au password saisi dans le form                
+
+                //? $user->getPassword() permet de récupérer le password du User
+                //? $password correspond au password saisi dans le form                
                 // V1 : avec un BDD non sécurisée cad avec mots de passe en clair,
                 // on peut directement comparer mot de passe saisi et mot de passe de la BDD
                 // if ($user->getPassword() == $password) {
-                // V2 : on doit modifier le if précédent car à présent tous les password sont hashés
+                //! V3 : on doit modifier le if précédent car à présent tous les password sont hashés
                 // https://www.php.net/manual/fr/function.password-verify.php
                 if (password_verify($password, $user->getPassword())) {
-                    // Email et password associé sont bons
+                    //! Email et password associé sont bons
                     // OK, on pourra connecter le user
                     // V1 : on affiche "Vous êtes bien connecté"
                     echo "Vous êtes bien connecté";
-                    // Bonus : on ajoute les données (userId et userObject) à la session
+
+                    //! V2 Bonus : on ajoute les données (userId et userObject) à la session
                     // On récupère ces 2 données pour les stocker dans la session
                     $_SESSION['userId'] = $user->getId();
                     $_SESSION['userObject'] = $user;

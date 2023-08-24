@@ -1,17 +1,16 @@
 <?php
 
-// use AltoRouter;
-// use Dispatcher;
-// use App\Controllers\ErrorController;
-
-// POINT D'ENTRÉE UNIQUE :
+//? POINT D'ENTRÉE UNIQUE :
 // FrontController
 
-// inclusion des dépendances via Composer
+//? inclusion des dépendances via Composer
 // autoload.php permet de charger d'un coup toutes les dépendances installées avec composer
 // mais aussi d'activer le chargement automatique des classes (convention PSR-4)
 // => Donc plus besoin de Use (ex Require) des Models ou Controllers
 require_once '../vendor/autoload.php';
+
+//! On démarre la session
+session_start();
 
 /* ------------
 --- ROUTAGE ---
@@ -47,7 +46,7 @@ if (array_key_exists('BASE_URI', $_SERVER)) {
     $_SERVER['BASE_URI'] = '/';
 }
 
-// On doit déclarer toutes les "routes" à AltoRouter,
+//? On doit déclarer toutes les "routes" à AltoRouter,
 // afin qu'il puisse nous donner LA "route" correspondante à l'URL courante
 // On appelle cela "mapper" les routes
 // 1. méthode HTTP : GET ou POST (pour résumer)
@@ -186,7 +185,7 @@ $router->map(
 --- DISPATCH ---
 --------------*/
 
-// On demande à AltoRouter de trouver une route qui correspond à l'URL courante
+//? On demande à AltoRouter de trouver une route qui correspond à l'URL courante
 $match = $router->match();
 
 // Ensuite, pour dispatcher le code dans la bonne méthode, du bon Controller
