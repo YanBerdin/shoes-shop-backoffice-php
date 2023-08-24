@@ -22,10 +22,10 @@ class CategoryController extends CoreController
         // On doit lui passer en argument un array des roles authorisés pour cette page
         // Ici, les rôles admin et catalog-manager auront les permissions
         //? Cas ou nicole à le droit d'accès à tpl category-list
-         $this->checkAuthorization(['admin', 'catalog-manager']);
+        // $this->checkAuthorization(['admin', 'catalog-manager']);
         //? nicole n'a pas de droit d'accès à tpl category-list
-        // recois une 403
-        // $this->checkAuthorization(['admin']);
+        // elle est catalog-manager => recois une 403
+        $this->checkAuthorization(['admin']);
 
         //! Si le script continue c'est que :
         //? checkAuthorization(['admin']) = true

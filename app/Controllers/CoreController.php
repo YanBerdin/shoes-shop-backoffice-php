@@ -27,19 +27,23 @@ class CoreController
         // définir l'url absolue pour nos assets
         $viewData['assetsBaseUri'] = $_SERVER['BASE_URI'] . 'assets/';
         // définir l'url absolue pour la racine du site
-        //! /!\ != racine projet, ici on parle du répertoire public/
+        //! /!\ != racine projet => ici on parle du répertoire public/
         $viewData['baseUri'] = $_SERVER['BASE_URI'];
 
         // On veut désormais accéder aux données de $viewData, mais sans accéder au tableau
         // La fonction extract permet de créer une variable pour chaque élément du tableau passé en argument
         extract($viewData);
         // (importe les variables à partir des clés)
-        // => la variable $currentPage existe désormais, et sa valeur est $viewName
-        // => la variable $assetsBaseUri existe désormais, et sa valeur est $_SERVER['BASE_URI'] . '/assets/'
-        // => la variable $baseUri existe désormais, et sa valeur est $_SERVER['BASE_URI']
-        // => il en va de même pour chaque élément du tableau
+        //TODODone => la variable $currentPage existe désormais, et sa valeur est $viewName
+        //TODODone => la variable $assetsBaseUri existe désormais, et sa valeur est $_SERVER['BASE_URI'] . '/assets/'
+        //TODODone => la variable $baseUri existe désormais, et sa valeur est $_SERVER['BASE_URI']
+        //TODODone => il en va de même pour chaque élément du tableau
 
-        //! $viewData est disponible dans chaque fichier de vue
+        //? Pour voir le nom de la Route pour la class active du menu
+        //? "-" sera un "/" dans la barre d'adresse
+        dump($currentPage);
+
+        // $viewData est disponible dans chaque fichier de vue
         require_once __DIR__ . '/../views/layout/header.tpl.php';
         require_once __DIR__ . '/../views/' . $viewName . '.tpl.php';
         require_once __DIR__ . '/../views/layout/footer.tpl.php';
