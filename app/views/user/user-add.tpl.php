@@ -1,4 +1,5 @@
 <?php //dump($errors);?>
+<?php dump($_POST);?>
 
 <div class="container my-4">
         <a href="<?= $router->generate('user-list') ?>" class="btn btn-success float-end">Retour</a>

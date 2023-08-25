@@ -120,10 +120,149 @@ class AppUserController extends CoreController
         //$this->checkAuthorization(['admin']);
 
         $this->show('user/user-add', [
-            // Si on prébvoit une évolution du form vers add | update
+            //! Si on prébvoit une évolution du form vers add | update
             // alors on peut déjà passer une instance de AppUser
+            // même avec un objet user vide => Pas d'erreur
             'user' => new AppUser,
             'errors' => [],
         ]);
+    }
+
+    public function createUser()
+    {
+        // Etape 4 - On limite l'accès pour ne laisser les droits qu'aux admin
+        //$this->checkAuthorization(['admin']);
+
+        //! 1- On récupère les données POST du form
+        if (!empty($_POST)) {
+            // $firstname = $_POST['firstname'];     = Récupérer sans vérifier 
+            // ...
+
+            //! 2- On les vérifie (filter_input)
+            $firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_SPECIAL_CHARS);
+            $lastname = filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_SPECIAL_CHARS);
+            $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+            $password = filter_input(INPUT_POST, 'password');
+            $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_SPECIAL_CHARS);
+            $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_NUMBER_INT);
+
+            //! 3- On check les éventuelles erreurs
+            // (s'il y en a, alors on les stocke dans un array $errorList)
+            $errorList = [];
+
+            if (empty($firstname)) {
+                $errorList[] = 'Merci de renseigner le prénom';
+            }
+
+            if ($firstname === false) {
+                $errorList[] = 'Merci de renseigner un prénom valide';
+            }
+
+            if (empty($lastname)) {
+                $errorList[] = 'Merci de renseigner le nom';
+            }
+
+            if ($lastname === false) {
+                $errorList[] = 'Merci de renseigner un nom valide';
+            }
+
+            if (empty($email)) {
+                $errorList[] = "Merci de renseigner l'email";
+            }
+
+            if ($email === false) {
+                $errorList[] = 'Merci de renseigner un email valide';
+            }
+
+            if (empty($password)) {
+                $errorList[] = 'Merci de renseigner le mot de passe';
+            }
+
+            if ($password === false) {
+                $errorList[] = 'Merci de renseigner un mot de passe valide';
+            }
+
+            if (empty($role)) {
+                $errorList[] = 'Merci de renseigner le rôle';
+            }
+
+            if ($role === false) {
+                $errorList[] = 'Merci de renseigner un rôle valide';
+            }
+
+            if (empty($status)) {
+                $errorList[] = 'Merci de renseigner le statut';
+            }
+
+            if ($status === false) {
+                $errorList[] = 'Merci de renseigner un statut valide';
+            }
+
+
+            //! Avant d'aller plus loin, on vérifiera si on a aucune erreur
+            // (et si c'est le cas, on arrête le processus)
+            if (empty($errorList)) {
+                // On n'a rencontré aucune erreur
+
+                //! 4- s'il n'y en a pas ==> on continue
+                // on appelle le Model pour faire l'insertion
+                $modelUser = new AppUser();
+
+                // On set les valeurs 
+                //(cad on met les valeurs récupérées du form dans les propriétés de la nouvelle instance)
+                // On met à jour les propriétés (Copyright Fanny)
+                $modelUser->setEmail($email);
+                $modelUser->setFirstname($firstname);
+                $modelUser->setLastname($lastname);
+                $modelUser->setRole($role);
+                $modelUser->setStatus($status);
+
+                //TODO Attention : le password est saisi en clair dans le formulaire
+                //TODO On doit hasher le password avant de l'insérer en BDD
+                // Rappel : en BDD, tous nos password doivent être hashés
+                // A la saisie du form, on récuère le password clair qu'on va hasher
+                // ET on va comparer le hash au password de la BDD
+                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+                $modelUser->setPassword($hashedPassword);
+
+                // On appelle la méthode du Model AppUser pour faire l'insertion en BDD
+                if ($modelUser->insert()) {
+                    // insertion OK ==> on redirige vers la liste des user
+                    header('Location: /user/list');
+                    exit;
+                } else {
+                    //! insertion KO => message d'erreur 
+                    //! (et ajouter une ereur dans errorList)
+                    // et on redirige vers le form d'ajout
+                    $this->show('user/user-add', [
+                        'errors' => $errorList,
+                        'insertionError' => "Erreur lors de l'insertion en BDD"
+                        // extract génère $errors & insertionError
+                    ]);
+                }
+            } else {
+                //! Ici, on a au moins 1 erreur au niveau des champs du formulaire
+                $modelUser = new AppUser();
+
+                // On met à jour les propriétés (Copyright Fanny)
+                $modelUser->setEmail($email);
+                $modelUser->setFirstname($firstname);
+                $modelUser->setLastname($lastname);
+                $modelUser->setRole($role);
+                $modelUser->setStatus($status);
+
+                //TODO On doit hasher le password avant de l'insérer en BDD
+                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+                $modelUser->setPassword($hashedPassword);
+
+                // Autre manière plus directe d'écrire les 2 lignes ci-dessus
+                // $modelUser->setPassword(password_hash($password, PASSWORD_BCRYPT));
+
+                $this->show('user/user-add', [
+                    'errors' => $errorList,
+                    'user' => $modelUser
+                ]);
+            }
+        }
     }
 }

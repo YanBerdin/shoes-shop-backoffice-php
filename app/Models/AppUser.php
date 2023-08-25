@@ -98,7 +98,43 @@ class AppUser extends CoreModel
         // AppUser::class revient à mettre le FQCN
     }
 
+    //! S06 E06 AM2
+    /**
+     * Méthode pour ajouter user dans la Table app_user en BDD
+     * (Version sans bindvalue)
+     * @return booléan true if insertion ok, else false
+     */
+    public function insert()
+    {
+        // Copyright Romain
+        
+        $pdo = Database::getPDO();
+        
+        $sql = "
+        INSERT INTO `app_user`
+        (`email`, `password`, `firstname`, `lastname`, `role`, `status`)
+        VALUES (:email, :password, :firstname, :lastname, :role, :status)
+        ";
 
+        $pdoStatement = $pdo->prepare($sql);
+
+        $pdoStatement->execute([
+           ':email' =>  $this->email,
+           ':password' => $this->password,
+           ':firstname' => $this->firstname,
+           ':lastname' => $this->lastname,
+           ':role' => $this->role,
+           ':status' => $this->status,
+        ]);
+
+        // Si au moins 1 ligne a été MAJ
+        if ($pdoStatement->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+   
 
     /**
      * Get the value of email
