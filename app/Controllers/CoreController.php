@@ -5,6 +5,51 @@ namespace App\Controllers;
 class CoreController
 {
     /**
+     * Constructeur : systématiquement et automatiqueent appelé
+     * (à l'appel de la classe ou lors d'une nouvelle isntanciation)
+     */
+    public function __construct()
+    {
+        //! On définit une liste des permissions
+        // ACL : Access Control List
+        // https://fr.wikipedia.org/wiki/Access_Control_List
+        // Ici, on fait une correspondance entre nom de la route et rôles ayant les permissions
+        // Les routes ne nécessitant pas de gestion de permission n'ont rien à faire là
+        // (elles ne seront pas listées dans $acl)
+        $acl = [
+            'user-list' => ['admin', 'catalog-manager'],
+            'user-add' => ['admin'],
+            'user-create' => ['admin'],
+            //TODO => Finir de définir $acl avec autres Routes à protéger  
+        ];
+
+        // On va regarder si l'URL demandée (cad la route concernée)
+        // nécessite un contrôle
+        // Si la route demandée est dans la liste des routes à vérifier (cad dans $acl)
+        // alors on devra appeler checkAuthorization()
+        // On a donc besoin de la route actuelle : $match['name']
+        // ==> On doit donc récupérer $match
+        global $match;
+        // On récupère à présent le nom de la route
+        $routeName = $match['name'];
+
+        //! Si la route demandée est dans la liste des routes à vérifier
+        //! (cad dans $acl)
+        if (array_key_exists($routeName, $acl)) {
+            // On  récupère la liste des rôles autorisés
+            $authorizedRoles = $acl[$routeName];
+
+            //! On appelle le check
+            $this->checkAuthorization($authorizedRoles);
+        }
+        // else ? ==> pas besoin de else car si on ne rentre pas dans le if, ça signifie 
+        // que la route n'est pas dans la liste $acl des routes à vérifier
+        // cad toute le monde peut accéder librement et directement à cete route
+
+    }
+
+
+    /**
      * Méthode permettant d'afficher du code HTML en se basant sur les views
      *
      * @param string $viewName Nom du fichier de vue

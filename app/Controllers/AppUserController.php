@@ -118,7 +118,9 @@ class AppUserController extends CoreController
     {
         //? ⛔ Etape 4 ⛔ 
         // On limite l'accès pour ne laisser les droits qu'aux admin
-        $this->checkAuthorization(['admin']);
+        //? Etape 6 checkAuthorization commenté 
+        //? CoreController s'en occupe
+        //$this->checkAuthorization(['admin']);
 
         $this->show('user/user-add', [
             //! Si on prébvoit une évolution du form vers add | update
@@ -133,7 +135,9 @@ class AppUserController extends CoreController
     {
         //? ⛔ Etape 4 ⛔ 
         // On limite l'accès pour ne laisser les droits qu'aux admin
-        $this->checkAuthorization(['admin']);
+        //? Etape 6 checkAuthorization commenté 
+        //? CoreController s'en occupe
+        // $this->checkAuthorization(['admin']);
 
         //! 1- On récupère les données POST du form
         if (!empty($_POST)) {

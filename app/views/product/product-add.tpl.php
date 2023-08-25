@@ -3,7 +3,6 @@
 <?php // dump($brands); ?>
 <?php // dump($categories); ?>
 <?php // dump($types); ?>
-<?php dump($errors); ?>
 
         <a href="<?= $router->generate('product-list') ?>" class="btn btn-success float-end">Retour</a>
         <h1>Ajouter un produit</h1>

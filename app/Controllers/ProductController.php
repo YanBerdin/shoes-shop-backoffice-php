@@ -54,7 +54,10 @@ class ProductController extends CoreController
         // On doit lui passer en argument un array des roles authorisés pour cette page
         // Ici, les rôles admin et catalog-manager auront les permissions
         //? Cas ou  à le droit d'accès à tpl category-list
-        $this->checkAuthorization(['admin', 'catalog-manager']);
+
+        //? Etape 6 checkAuthorization commenté 
+        //? CoreController s'en occupe
+        //$this->checkAuthorization(['admin', 'catalog-manager']);
 
         // dump($_POST);
 
