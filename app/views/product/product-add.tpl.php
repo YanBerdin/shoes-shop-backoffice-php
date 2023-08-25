@@ -1,8 +1,9 @@
 <div class="container my-4">
-<?php dump($viewData); ?>
+<?php // dump($viewData); ?>
 <?php // dump($brands); ?>
 <?php // dump($categories); ?>
 <?php // dump($types); ?>
+<?php dump($errors); ?>
 
         <a href="<?= $router->generate('product-list') ?>" class="btn btn-success float-end">Retour</a>
         <h1>Ajouter un produit</h1>

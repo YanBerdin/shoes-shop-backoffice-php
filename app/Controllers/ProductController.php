@@ -48,6 +48,14 @@ class ProductController extends CoreController
 
     public function createProduct() // idem createCategory() adaptée
     {
+        //! Autorisation
+        //? On utilise la méthode checkAuthorization() pour vérifier si le user 
+        //? a les droits (permissions) pour accéder à la page
+        // On doit lui passer en argument un array des roles authorisés pour cette page
+        // Ici, les rôles admin et catalog-manager auront les permissions
+        //? Cas ou  à le droit d'accès à tpl category-list
+        $this->checkAuthorization(['admin', 'catalog-manager']);
+
         // dump($_POST);
 
         // On doit vérifier que $_POST n'est pas vide et contient bien les clés
@@ -183,7 +191,7 @@ class ProductController extends CoreController
                     $errorList[] = 'La création du produit a échoué';
                 }
             } else {
-                // Ici, on a au moins une erreur
+                //! Ici, on a au moins une erreur
                 // On reste sur le formulaire et on souhaite transmettre à show() les champs saisis et les erreurs obtenues
                 // Pour que plus tard, le template récupère ces données pour :
                 // - pré-remplir les input du form avec les données qui ont été saisies
@@ -205,7 +213,7 @@ class ProductController extends CoreController
 
                 // 3. On appelle la méthode show() en lui passanrt les données (cad valeurs des champs + erreur(s))
                 // Dans le template category-add, on récupère $viewData['category'] et $viewData['errors']
-                // et via extract() : $category et $errors
+                //! et via extract() : $product et $errors
                 $this->show('product/product-add', [
                     'product' => $modelProduct,
                     'errors' => $errorList

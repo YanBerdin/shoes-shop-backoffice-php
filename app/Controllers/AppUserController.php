@@ -92,8 +92,8 @@ class AppUserController extends CoreController
     public function userList()
     {
         // Atelier E05 : Etape 2
-        // On appelle checkAuthorization() pour que les user admin puissent seulement
-        // accéder à cette liste
+        // On appelle checkAuthorization() pour que seul un user admin
+        // ait la permission d'accéder à cette liste
         //$this->checkAuthorization(['admin']);
 
         // V2 : plus nécessaire ici car on utilise maintenant les ACL
@@ -117,7 +117,7 @@ class AppUserController extends CoreController
     public function addUser()
     {
         //? ⛔ Etape 4 ⛔ 
-        // On restreind l'accès pour ne laisser les droits qu'aux admin
+        // On limite l'accès pour ne laisser les droits qu'aux admin
         $this->checkAuthorization(['admin']);
 
         $this->show('user/user-add', [
