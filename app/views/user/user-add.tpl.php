@@ -1,6 +1,12 @@
-<?php //dump($errors);?>
-<?php dump($_POST);?>
+<?php // dump($errors);?>
+<?php // dump($viewData) ?>
+<?php
+// TODO Pas de $user->getPssword() le password ne doit pas etre en placeholder
+//
+// TODO Remettre Require sur champ firstname & lastname retirés pour Tests $errorList[]
+// dump($_POST);?>
 
+<!-- Afficher : Ajouter ou Modifier -->
 <div class="container my-4">
         <a href="<?= $router->generate('user-list') ?>" class="btn btn-success float-end">Retour</a>
        <!-- //si je rentre par le bouton 'ajouter' de la page user/list -->
@@ -9,12 +15,16 @@
         <?php else : ?>
             <h2>Modification un Utilisateur</h2>
         <?php endif; ?>
-
+        <?php // dump($errors);?>
+        <!-- Afficher les erreurs -->
         <h3>
             <ul>
                 <!-- On boucle sur $errors, array d'erreurs transmis par show() -->
                 <!-- On doit vérifier que $errors existe et contient bien quelque chose -->
-                <?php if (isset($viewData['$errors'])) : ?>
+                <?php if (isset($errors)) : 
+                    // idem  if (isset($viewData['errors'])) :
+                    ?>
+                   
                     <?php foreach($errors as $error) : ?>
                     <li><?= $error ?></li>
                     <?php endforeach; ?>

@@ -116,8 +116,9 @@ class AppUserController extends CoreController
      */
     public function addUser()
     {
+        //? ⛔ Etape 4 ⛔ 
         // On restreind l'accès pour ne laisser les droits qu'aux admin
-        //$this->checkAuthorization(['admin']);
+        $this->checkAuthorization(['admin']);
 
         $this->show('user/user-add', [
             //! Si on prébvoit une évolution du form vers add | update
@@ -130,8 +131,9 @@ class AppUserController extends CoreController
 
     public function createUser()
     {
-        // Etape 4 - On limite l'accès pour ne laisser les droits qu'aux admin
-        //$this->checkAuthorization(['admin']);
+        //? ⛔ Etape 4 ⛔ 
+        // On limite l'accès pour ne laisser les droits qu'aux admin
+        $this->checkAuthorization(['admin']);
 
         //! 1- On récupère les données POST du form
         if (!empty($_POST)) {
@@ -151,51 +153,51 @@ class AppUserController extends CoreController
             $errorList = [];
 
             if (empty($firstname)) {
-                $errorList[] = 'Merci de renseigner le prénom';
+                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner le prénom';
             }
 
             if ($firstname === false) {
-                $errorList[] = 'Merci de renseigner un prénom valide';
+                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner un prénom valide';
             }
 
             if (empty($lastname)) {
-                $errorList[] = 'Merci de renseigner le nom';
+                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner le nom';
             }
 
             if ($lastname === false) {
-                $errorList[] = 'Merci de renseigner un nom valide';
+                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner un nom valide';
             }
 
             if (empty($email)) {
-                $errorList[] = "Merci de renseigner l'email";
+                $errorList[] = "⛔ Crétion refusée ⛔ Merci de renseigner l'email";
             }
 
             if ($email === false) {
-                $errorList[] = 'Merci de renseigner un email valide';
+                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner un email valide';
             }
 
             if (empty($password)) {
-                $errorList[] = 'Merci de renseigner le mot de passe';
+                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner le mot de passe';
             }
 
             if ($password === false) {
-                $errorList[] = 'Merci de renseigner un mot de passe valide';
+                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner un mot de passe valide';
             }
 
             if (empty($role)) {
-                $errorList[] = 'Merci de renseigner le rôle';
+                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner le rôle';
             }
 
             if ($role === false) {
-                $errorList[] = 'Merci de renseigner un rôle valide';
+                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner un rôle valide';
             }
 
             if (empty($status)) {
-                $errorList[] = 'Merci de renseigner le statut';
+                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner le statut';
             }
 
             if ($status === false) {
-                $errorList[] = 'Merci de renseigner un statut valide';
+                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner un statut valide';
             }
 
 
