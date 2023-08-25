@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Utils\Database;
+use PDO;
 
 class AppUser extends CoreModel
 {
@@ -72,6 +73,31 @@ class AppUser extends CoreModel
         // return ($user) ? $user : false;
 
     }
+
+    //?S06 E06
+    /**
+     * Méthode pour récupérer tous les users
+     * Copyright Audrey
+     *
+     * @return void
+     */
+    public static function findAll()
+    {
+        $pdo = Database::getPDO();
+
+        $sql = 'SELECT * FROM `app_user`';
+
+        $pdoStatement = $pdo->query($sql);
+
+        return $pdoStatement->fetchAll(PDO::FETCH_CLASS, AppUser::class);
+
+        // Version plus longue
+        // $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, AppUser::class);
+        // return $results;
+
+        // AppUser::class revient à mettre le FQCN
+    }
+
 
 
     /**

@@ -28,6 +28,7 @@ class CoreController
         $viewData['assetsBaseUri'] = $_SERVER['BASE_URI'] . 'assets/';
         // définir l'url absolue pour la racine du site
         //! /!\ != racine projet => ici on parle du répertoire public/
+        // Rappel 0.0.0.0:8080 = public/
         $viewData['baseUri'] = $_SERVER['BASE_URI'];
 
         // On veut désormais accéder aux données de $viewData, mais sans accéder au tableau

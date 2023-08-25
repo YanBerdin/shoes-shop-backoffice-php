@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\AppUser;
 use App\Controllers\CoreController;
 
+
 class AppUserController extends CoreController
 {
     //! Affichage du formulaire
@@ -80,5 +81,49 @@ class AppUserController extends CoreController
             // (ne risque pas vraiment d'arriver car Require dans le formulaire)
             echo "Merci de renseigner les champs du formulaire";
         }
+    }
+
+    //? S06 E06
+    /**
+     * Méthode qui récupère la liste de tous les users
+     * 
+     * @return void
+     */
+    public function userList()
+    {
+        // Atelier E05 : Etape 2
+        // On appelle checkAuthorization() pour que les user admin puissent seulement
+        // accéder à cette liste
+        //$this->checkAuthorization(['admin']);
+
+        // V2 : plus nécessaire ici car on utilise maintenant les ACL
+
+        // Atelier E05 : Etape 1
+        // On récupère tous les users
+        $users = AppUser::findAll();
+
+        // On appelle show en lui transmettant la liste ds users
+        $this->show('user/user-list', [
+            'users' => $users
+        ]);
+    }
+
+    //? S06 E06
+    /**
+     * Méthode pour afficher le formulaire d'ajout d'un user
+     *
+     * @return void
+     */
+    public function addUser()
+    {
+        // On restreind l'accès pour ne laisser les droits qu'aux admin
+        //$this->checkAuthorization(['admin']);
+
+        $this->show('user/user-add', [
+            // Si on prébvoit une évolution du form vers add | update
+            // alors on peut déjà passer une instance de AppUser
+            'user' => new AppUser,
+            'errors' => [],
+        ]);
     }
 }

@@ -181,6 +181,42 @@ $router->map(
     'user-check'
 );
 
+//? S06 E06
+
+// Affichage de tous les users
+$router->map(
+    'GET',
+    '/user/list',
+    [
+        'method' => 'userList',
+        'controller' => '\App\Controllers\AppUserController'
+    ],
+    'user-list'
+);
+
+// Affichage du formulaire de création (ajout) d'un user
+$router->map(
+    'GET',
+    '/user/add',
+    [
+        'method' => 'addUser',
+        'controller' => '\App\Controllers\AppUserController'
+    ],
+    'user-add'
+);
+
+// Traitement du formulaire de création (ajout) d'un user
+$router->map(
+    'POST',
+    '/user/add',
+    [
+        'method' => 'createUser',
+        'controller' => '\App\Controllers\AppUserController'
+    ],
+    'user-create'
+);
+
+
 /* -------------
 --- DISPATCH ---
 --------------*/
