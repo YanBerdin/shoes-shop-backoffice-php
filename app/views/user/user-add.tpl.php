@@ -20,7 +20,9 @@
         <h3>
             <ul>
                 <!-- On boucle sur $errors, array d'erreurs transmis par show() -->
-                <!-- On doit vérifier que $errors existe et contient bien quelque chose -->
+                <!-- On doit vérifier que $errors existe
+                 if (isset($errors)) 
+                 et si contient bien quelque chose -->
                 <?php if (isset($errors)) : 
                     // idem  if (isset($viewData['errors'])) :
                     ?>

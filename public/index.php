@@ -216,6 +216,30 @@ $router->map(
     'user-create'
 );
 
+//? S06 E07
+// Route pour afficher le formulaire de gestion des catégories
+$router->map(
+    'GET',
+    '/category/manage',
+    [
+        'method' => 'homeDisplay',
+        'controller' => '\App\Controllers\CategoryController'        
+    ],
+    'category-manage'
+);
+
+//? S06 E07
+// Route pour faire le traitement le formulaire de gestion des catégories
+$router->map(
+    'POST',
+    '/category/manage',
+    [
+        'method' => 'homeSelect',
+        'controller' => '\App\Controllers\CategoryController'        
+    ],
+    'category-select'
+);
+
 
 /* -------------
 --- DISPATCH ---

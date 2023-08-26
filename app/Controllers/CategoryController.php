@@ -7,9 +7,9 @@ namespace App\Controllers;
 use App\Models\Category;
 
 //  extends pour heritage
-class CategoryController extends CoreController   
+class CategoryController extends CoreController
 {
-     /**
+    /**
      * Méthode qui sera exécutée pour l'affichage de toutes les cartégories du site
      *
      * @return void
@@ -25,14 +25,14 @@ class CategoryController extends CoreController
         // $this->checkAuthorization(['admin', 'catalog-manager']);
         //? nicole n'a pas de droit d'accès à tpl category-list
         // elle est catalog-manager => recois une 403
-       
+
         //? Etape 6 checkAuthorization commenté 
         //? CoreController s'en occupe
         // $this->checkAuthorization(['admin']);
 
         //! Si le script continue c'est que :
         //? checkAuthorization(['admin']) = true
-        
+
         //! Si pas de sortie exit() dans checkAuthorization($authorizedRoles = [])
         //! le script continue jusqu'à show() = affiche quand même
         // Etape 1 : on appelle show() en lui passant le template
@@ -180,7 +180,7 @@ class CategoryController extends CoreController
 
                 //? On teste de nouveau le mode (create / update) pour appeler la méthode
                 //? correspondante du Model
-                if ($isUpdate) {//! Si on est en Mode Update
+                if ($isUpdate) { //! Si on est en Mode Update
                     $isUpdateOk = $modelCategory->update(); // update() est déclaré dans Model Category
 
                     if ($isUpdateOk) {
@@ -191,8 +191,7 @@ class CategoryController extends CoreController
                         // (pas besoin ici car notre attribut action du form est vide, et donc on reste sur la page)
                         $errorList[] = 'La modification de la catégorie a échoué';
                     }
-                    
-                } else {//! Sinon on est en Mode Create
+                } else { //! Sinon on est en Mode Create
                     // Le model exécutera la nouvelle méthode insert()
                     //? $isInsert = $modelCategory->insert();
                     $isInsertOk = $modelCategory->insert();
@@ -256,6 +255,24 @@ class CategoryController extends CoreController
         $this->show('category/category-add-update', [
             'category' => $category,
             'categoryId' => $categoryId // intérêt : récupérer $categoryId pour gestion dynamique de l'affichage du <h2> dans le template
+        ]);
+    }
+
+    /**
+     * Méthode appelée pour l'affichage du formulaire
+     *
+     * @return void
+     */
+    public function homeDisplay()
+    {
+        // On récupère toutes les catégories de la BDD
+        // pour boucler dessus et les "insérer" dynamiquement dans les menus déroulants
+        // (<select>) du formulaire => Toutes les catégories visibles dans select
+        // findAll() est une méthode statique ==> on peut l'appeler directement sur la classe via l'opérateur "::"
+        $categories = Category::findAll();
+
+        $this->show('category/manage', [
+            'categories' => $categories // Toutes les catégories transmises à View
         ]);
     }
 }
