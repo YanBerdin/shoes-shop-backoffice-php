@@ -280,4 +280,50 @@ class Category extends CoreModel
         // retourne true si la condition est vraie, sinon false
         // return ($pdoStatement->rowCount() > 0);
     }
+
+//? S06 E07
+    /**
+     * Méthode qui met à jour les valeurs de home_order des catégories
+     * Par défaut, toutes les catégories auront un home_order à 0
+     * Ensuite, on mettra les valeurs récupérées du form dans les 5 catégories
+     * à mettre en avant
+     *
+     * @param Array $ids Liste des id des catégories à mettre en avant
+     * @return void        La fonction execute mais ne renvoie rien
+     */
+    public static function updateHomeOrder($ids)
+    {
+        // On se connecte à la BDD
+        $pdo = Database::getPDO();
+
+        //! On fait les mises à jour nécessaires
+        // - passer tous les home_order à 0
+        // - mettre les bonnes valeurs dans les 5 catégories correspondantes
+        // Contrairement à d'habitude, on passe ici par des marqueurs anonymes (?)
+        // car toutes les données sont semblables (ce sont toutes des id)
+        $sql = '
+            UPDATE `category` SET `home_order` = 0;
+            UPDATE `category` SET `home_order` = 1 WHERE id = ?;
+            UPDATE `category` SET `home_order` = 2 WHERE id = ?;
+            UPDATE `category` SET `home_order` = 3 WHERE id = ?;
+            UPDATE `category` SET `home_order` = 4 WHERE id = ?;
+            UPDATE `category` SET `home_order` = 5 WHERE id = ?;
+        '; 
+
+        //! On prépare les requêtes $query pourrait être $pdoStatement
+        // $query ou $pdoStatement
+        $query = $pdo->prepare($sql);
+
+        //! On exécute les requêtes
+        // $ids est un array d'id, par exemple : [1, 3, 2, 5, 4]
+        // La méthode execute attend un array ==> on peut donc directement passer $ids
+        $query->execute($ids);
+
+        // TODO Versions plus abouties possible :
+        // - mettre un try / catch sur l'exécution des requêtes
+        // - ajouter un return true / false ==> le controller testera la valeur retournée
+        // (ajout d'une gestion d'erreurs)
+        // il faudra que toutes les lignes (5) soient MAJ
+    }
+
 }

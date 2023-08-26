@@ -1,4 +1,4 @@
-<?php //dump($categories) ?>
+<?php dump($categories) ?>
 
 <div class="container my-4">
     <form action="" method="POST" class="mt-5">

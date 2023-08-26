@@ -258,6 +258,7 @@ class CategoryController extends CoreController
         ]);
     }
 
+    //?S06 E07
     /**
      * Méthode appelée pour l'affichage du formulaire
      *
@@ -268,11 +269,30 @@ class CategoryController extends CoreController
         // On récupère toutes les catégories de la BDD
         // pour boucler dessus et les "insérer" dynamiquement dans les menus déroulants
         // (<select>) du formulaire => Toutes les catégories visibles dans select
-        // findAll() est une méthode statique ==> on peut l'appeler directement sur la classe via l'opérateur "::"
+        // findAll() (déjà implémentée) est une méthode statique ==> on peut l'appeler directement sur la classe via l'opérateur "::"
         $categories = Category::findAll();
 
         $this->show('category/manage', [
             'categories' => $categories // Toutes les catégories transmises à View
         ]);
     }
+
+
+    public function homeSelect()
+    {
+        //dump($_POST['emplacement']);
+
+        // On récupère les données postées
+ $emplacements = filter_input(INPUT_POST, 'emplacement', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+
+        // On appelle une méthode du Model Category
+        // pour exécuter la requête de mise à jour
+        // On doit mettre à jour la valeur du home_order de CHAQUE categorie
+        // $emplacements est un array contenant des int (id)
+        Category::updateHomeOrder($emplacements);
+
+        // On redirige vers la liste des catégories
+        header('Location: /category/list');
+    }
+
 }

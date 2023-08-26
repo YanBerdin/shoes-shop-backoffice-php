@@ -1,6 +1,6 @@
 <h1>Accueil - Back-Office : <strong>Dans les shoes</strong>...</h1>
 
-<?php //dump($categories); 
+<?php // dump($categories); 
 ?>
 <?php //dump($products); 
 ?>
