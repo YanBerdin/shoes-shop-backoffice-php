@@ -319,11 +319,11 @@ class Category extends CoreModel
         // La méthode execute attend un array ==> on peut donc directement passer $ids
         $query->execute($ids);
 
-        // TODO Versions plus abouties possible :
-        // - mettre un try / catch sur l'exécution des requêtes
-        // - ajouter un return true / false ==> le controller testera la valeur retournée
-        // (ajout d'une gestion d'erreurs)
-        // il faudra que toutes les lignes (5) soient MAJ
+        //TODO Versions plus abouties possible :
+        //TODO - mettre un try / catch sur l'exécution des requêtes
+        //TODO - ajouter un return true / false ==> le controller testera la valeur retournée
+        //TODO (ajout d'une gestion d'erreurs)
+        //TODO il faudra que toutes les lignes (5) soient MAJ
     }
 
 }

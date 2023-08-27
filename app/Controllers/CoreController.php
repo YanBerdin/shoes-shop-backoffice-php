@@ -20,7 +20,8 @@ class CoreController
             'user-list' => ['admin', 'catalog-manager'],
             'user-add' => ['admin'],
             'user-create' => ['admin'],
-            //TODO => Finir de définir $acl avec autres Routes à protéger  
+            //TODO => Finir de définir $acl avec autres Routes à protéger 
+            //TODO => category/manage category/
         ];
 
         // On va regarder si l'URL demandée (cad la route concernée)

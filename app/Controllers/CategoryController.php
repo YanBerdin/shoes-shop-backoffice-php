@@ -103,8 +103,7 @@ class CategoryController extends CoreController
             $subtitle = filter_input(INPUT_POST, 'subtitle', FILTER_SANITIZE_SPECIAL_CHARS);
             $picture = filter_input(INPUT_POST, 'picture', FILTER_SANITIZE_SPECIAL_CHARS);
 
-            // TODO
-            // On doit gérer les éventuelles erreurs
+            //! On doit gérer les éventuelles erreurs
             // On créer un array (vide) qui stockera les erreurs
             $errorList = [];
 
@@ -290,6 +289,9 @@ class CategoryController extends CoreController
         // On doit mettre à jour la valeur du home_order de CHAQUE categorie
         // $emplacements est un array contenant des int (id)
         Category::updateHomeOrder($emplacements);
+
+        //TODO Versions plus abouties possible (voir updateHomeOrder($ids) :
+        //TODO - mettre un try / catch sur l'exécution des requêtes
 
         // On redirige vers la liste des catégories
         header('Location: /category/list');
