@@ -105,10 +105,26 @@ class Category extends CoreModel
         $pdo = Database::getPDO();
 
         // écrire notre requête
-        $sql = 'SELECT * FROM `category` WHERE `id` =' . $categoryId;
-
+        //? Requete non préparée
+        //? $sql = 'SELECT * FROM `category` WHERE `id` =' . $categoryId;
         // exécuter notre requête
-        $pdoStatement = $pdo->query($sql);
+        //? $pdoStatement = $pdo->query($sql);
+
+        //! Requete Préparée (Alec)
+        // Version avec marqueurs nommés (un marqueur nommé sera de la forme : ':string')
+        // Les marqueurs seront remplacés par des données que l'on récupérera via la 2nde requête (execute)
+        $sql = 'SELECT * FROM `category` WHERE `id` = :id';
+
+        // V2 : on utilise la méthode prepare() pour faire des requêtes préparées
+        $pdoStatement = $pdo->prepare($sql);
+
+        // On exécute la requête préparée en passant les données attendues
+        // Les données attendues sont passées via un array associatif
+        $pdoStatement->execute([
+            ':id' => $categoryId,
+        ]);
+
+
 
         // un seul résultat => fetchObject
         $category = $pdoStatement->fetchObject('App\Models\Category');
@@ -145,7 +161,7 @@ class Category extends CoreModel
     public static function findAllHomepage()
     {
         // RAPPEL
-        // On peut appeler direcrement getPDO() sur la classe Database 
+        // On peut appeler directement getPDO() sur la classe Database 
         // car getPDO() est une méthode statique (définie par : public static function ...)
         $pdo = Database::getPDO();
         // Sinon, on aurait dû faire :
@@ -249,7 +265,7 @@ class Category extends CoreModel
     public function update()
     {
         $pdo = Database::getPDO();
-        
+
         //! Interpolation (Injection SQL)
         $sql = "
             UPDATE `category`
@@ -281,7 +297,7 @@ class Category extends CoreModel
         // return ($pdoStatement->rowCount() > 0);
     }
 
-//? S06 E07
+    //? S06 E07
     /**
      * Méthode qui met à jour les valeurs de home_order des catégories
      * Par défaut, toutes les catégories auront un home_order à 0
@@ -308,7 +324,7 @@ class Category extends CoreModel
             UPDATE `category` SET `home_order` = 3 WHERE id = ?;
             UPDATE `category` SET `home_order` = 4 WHERE id = ?;
             UPDATE `category` SET `home_order` = 5 WHERE id = ?;
-        '; 
+        ';
 
         //! On prépare les requêtes $query pourrait être $pdoStatement
         // $query ou $pdoStatement
@@ -325,5 +341,4 @@ class Category extends CoreModel
         //TODO (ajout d'une gestion d'erreurs)
         //TODO il faudra que toutes les lignes (5) soient MAJ
     }
-
 }

@@ -3,7 +3,7 @@
     <a href="<?= $router->generate('category-add-update') ?>" class="btn btn-success float-end">Ajouter</a>
 
     <h2>Liste des catégories</h2>
-    <?php // dump($viewData); 
+    <?php  dump($viewData); 
     ?>
     <?php // dump($categories); 
     ?>
