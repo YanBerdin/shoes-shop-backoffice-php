@@ -1,4 +1,4 @@
-<?php dump($_SESSION); ?>
+<?php  dump($_SESSION); ?>
 
 <h1>Page de connexion à l'interface admin</h1>
 
@@ -15,6 +15,6 @@
     </div>
 
     <div class="d-grid gap-2">
-        <button type="submit" class="btn btn-primary mt-5">Se connecter</button>
+        <button type="submit" class="btn btn-primary mt-5">Me connecter</button>
     </div>
 </form>

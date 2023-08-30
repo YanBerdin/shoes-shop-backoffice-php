@@ -95,7 +95,8 @@ class CoreController
 
         //? Pour voir le nom de la Route pour la class active du menu
         //? "-" sera un "/" dans la barre d'adresse
-        dump($currentPage);
+        
+        //dump($currentPage);
 
         // $viewData est disponible dans chaque fichier de vue
         require_once __DIR__ . '/../views/layout/header.tpl.php';

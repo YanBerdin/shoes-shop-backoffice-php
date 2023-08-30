@@ -1,11 +1,11 @@
 <h1>Accueil - Back-Office : <strong>Dans les shoes</strong>...</h1>
-
 <?php // dump($categories); 
 ?>
 <?php //dump($products); 
 ?>
-
 <div class="container my-4">
+
+
     <div class="row mt-5">
         <div class="col-12 col-md-6">
             <div class="card text-white mb-3">
