@@ -16,12 +16,19 @@ class CoreController
         // Ici, on fait une correspondance entre nom de la route et rôles ayant les permissions
         // Les routes ne nécessitant pas de gestion de permission n'ont rien à faire là
         // (elles ne seront pas listées dans $acl)
+        //TODO Nom de la Route PAS CHEMIN !!!
         $acl = [
-            'user-list' => ['admin', 'catalog-manager'],
+            'category-add-update' => ['admin', 'catalog-manager'],
+            'category-create' => ['admin', 'catalog-manager'],
+            'category-edit' => ['admin', 'catalog-manager'],
+            'category-update' => ['admin', 'catalog-manager'],
+            'product-add' =>  ['admin', 'catalog-manager'],
+            'product-create' => ['admin', 'catalog-manager'],
+            'user-list' => ['admin'],
             'user-add' => ['admin'],
             'user-create' => ['admin'],
-            //TODO => Finir de définir $acl avec autres Routes à protéger 
-            //TODO => category/manage category/
+            'category-manage' => ['admin', 'catalog-manager'],
+            'category-select' => ['admin', 'catalog-manager'],
         ];
 
         // On va regarder si l'URL demandée (cad la route concernée)
@@ -133,7 +140,7 @@ class CoreController
         } else {
             // Si le user n'est pas connecté
             // alors on le redirige vers la page de connexion
-            header('Location : /user/login');
+            header('Location: /user/login');
             //! On stop l'exécution du script
             // (au cas où par sécurité pour sortir)
             exit();

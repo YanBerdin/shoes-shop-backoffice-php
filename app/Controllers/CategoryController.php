@@ -26,7 +26,7 @@ class CategoryController extends CoreController
         //? nicole n'a pas de droit d'accès à tpl category-list
         // elle est catalog-manager => recois une 403
 
-        //? Etape 6 checkAuthorization commenté 
+        //TODODone Etape 6 checkAuthorization commenté 
         //? CoreController s'en occupe
         // $this->checkAuthorization(['admin']);
 

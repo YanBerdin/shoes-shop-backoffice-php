@@ -86,7 +86,7 @@ $router->map(
         'method' => 'addCategory',
         'controller' => '\App\Controllers\CategoryController'
     ],
-    'category-add-update'
+    'category-add-update' // Dans ACL
 );
 
 
@@ -99,7 +99,7 @@ $router->map(
         'controller' => '\App\Controllers\CategoryController'
     ],
     'category-create' // TODO ajouter -update et MAJ liens dans TPL
-);
+);  // Dans ACL
 
 // Route pour afficher le formulaire de modification d'une catégorie
 $router->map(
@@ -109,7 +109,7 @@ $router->map(
         'method' => 'editCategory',
         'controller' => '\App\Controllers\CategoryController'
     ],
-    'category-edit'
+    'category-edit' // Dans ACL
 );
 
 // Route pour faire le traitement du formulaire 
@@ -121,7 +121,7 @@ $router->map(
         'method' => 'createOrUpdateCategory',
         'controller' => '\App\Controllers\CategoryController'
     ],
-    'category-update'
+    'category-update'  // Dans ACL
 );
 
 
@@ -155,7 +155,7 @@ $router->map(
         'method' => 'createProduct',
         'controller' => '\App\Controllers\ProductController'
     ],
-    'product-create'
+    'product-create'  // Dans ACL
 );
 
 
@@ -178,7 +178,7 @@ $router->map(
         'method' => 'loginUser',
         'controller' => '\App\Controllers\AppUserController'
     ],
-    'user-check'
+    'user-check' //? A mettre aussi ? Voir ALEC
 );
 
 //? S06 E06
@@ -191,7 +191,7 @@ $router->map(
         'method' => 'userList',
         'controller' => '\App\Controllers\AppUserController'
     ],
-    'user-list'
+    'user-list' // Dans ACL
 );
 
 // Affichage du formulaire de création (ajout) d'un user
@@ -202,7 +202,7 @@ $router->map(
         'method' => 'addUser',
         'controller' => '\App\Controllers\AppUserController'
     ],
-    'user-add'
+    'user-add'  // Dans ACL
 );
 
 // Traitement du formulaire de création (ajout) d'un user
@@ -213,7 +213,7 @@ $router->map(
         'method' => 'createUser',
         'controller' => '\App\Controllers\AppUserController'
     ],
-    'user-create'
+    'user-create'  // Dans ACL
 );
 
 //? S06 E07
@@ -225,11 +225,11 @@ $router->map(
         'method' => 'homeDisplay',
         'controller' => '\App\Controllers\CategoryController'        
     ],
-    'category-manage'
+    'category-manage' // Dans ACL
 );
 
 //? S06 E07
-// Route pour faire le traitement le formulaire de gestion des catégories
+// Route pour faire le traitement du formulaire de gestion des catégories
 $router->map(
     'POST',
     '/category/manage',
@@ -237,7 +237,7 @@ $router->map(
         'method' => 'homeSelect',
         'controller' => '\App\Controllers\CategoryController'        
     ],
-    'category-select'
+    'category-select' // Dans ACL
 );
 
 

@@ -58,7 +58,9 @@ class AppUserController extends CoreController
                     //! Email et password associé sont bons
                     // OK, on pourra connecter le user
                     // V1 : on affiche "Vous êtes bien connecté"
-                    echo "Vous êtes bien connecté";
+                    
+                    // echo "Vous êtes bien connecté";
+                    header('Location: /');
 
                     //! V2 Bonus : on ajoute les données (userId et userObject) à la session
                     // On récupère ces 2 données pour les stocker dans la session
