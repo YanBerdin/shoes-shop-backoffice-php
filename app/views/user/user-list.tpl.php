@@ -1,5 +1,5 @@
 <?php //dump($users); ?>
-<?php dump($viewData); ?>
+<?php // dump($viewData); ?>
 
 <!-- Copyright Anthony -->
 

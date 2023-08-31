@@ -107,9 +107,9 @@ class AppUser extends CoreModel
     public function insert()
     {
         // Copyright Romain
-        
+
         $pdo = Database::getPDO();
-        
+
         $sql = "
         INSERT INTO `app_user`
         (`email`, `password`, `firstname`, `lastname`, `role`, `status`)
@@ -119,12 +119,12 @@ class AppUser extends CoreModel
         $pdoStatement = $pdo->prepare($sql);
 
         $pdoStatement->execute([
-           ':email' =>  $this->email,
-           ':password' => $this->password,
-           ':firstname' => $this->firstname,
-           ':lastname' => $this->lastname,
-           ':role' => $this->role,
-           ':status' => $this->status,
+            ':email' =>  $this->email,
+            ':password' => $this->password,
+            ':firstname' => $this->firstname,
+            ':lastname' => $this->lastname,
+            ':role' => $this->role,
+            ':status' => $this->status,
         ]);
 
         // Si au moins 1 ligne a été MAJ
@@ -134,7 +134,22 @@ class AppUser extends CoreModel
             return false;
         }
     }
-   
+
+    //? Récupéré mais pas utilisé
+    // Pierre O'clock => Condition affichage Onglet Liste Utilisateurs dans Menu
+    // Méthode pratique qui permet de savoir facile si l'utilisateur a le role admin
+    // public function isAdmin()
+    // {
+        // if ($this->role === "admin")
+        //     return true;
+        // else
+        //     return false;
+
+        //? Version raccourcie
+        //?   return $this->role === "admin";
+    // }
+
+
 
     /**
      * Get the value of email

@@ -1,3 +1,10 @@
+<?php
+//TODO Recherches Perso Afichage Conditionnel
+// dump($viewData); 
+// dump($_SESSION); 
+//dump($_SESSION['userObject']->getRole()) ; 
+?>
+
 <!-- Bonus : gestion de la classe active -->
 <!-- Plusieurs manières de faire -->
 <!-- Copyright Christelle -->
@@ -46,9 +53,19 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Sélection Accueil</a>
                 </li>
+
+                <?php if (isset($_SESSION['userId']) && $_SESSION['userObject']->getRole() === "admin") :
+                ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?= (strpos($currentPage, 'user-list') !== false) ? "active" : ""; ?>" href="<?= $router->generate('user-list') ?>">
+                            Utilisateurs
+                        </a>
+                    </li>
+                <?php endif;
+                ?>
             </ul>
         </div>
-
+        <!-- Si aucun User en Session => Afficher le bouton -->
         <?php if (!isset($_SESSION['userId'])) :  ?>
             <a href="<?= $router->generate('user-login') ?>" class="btn btn-success float-end">Se Connecter</a>
         <?php endif; ?>

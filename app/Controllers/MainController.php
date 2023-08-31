@@ -24,6 +24,10 @@ class MainController extends CoreController
         // Idem au niveau des products
         $products = Product::findAllHomepage();
 
+    //? Bonus PierreOclock : n'afficher que les 3 premiers éléments de chaque tableau
+    // $allCategories = array_slice( $allCategories, 0, 3 );
+    // $allProducts   = array_slice( $allProducts,   0, 3 );
+
         // On appelle la méthode show() de l'objet courant
         // En argument, on fournit le fichier de Vue
         // Par convention, chaque fichier de vue sera dans un sous-dossier du nom du Controller

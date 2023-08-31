@@ -282,7 +282,7 @@ class CategoryController extends CoreController
         //dump($_POST['emplacement']);
 
         // On récupère les données postées
- $emplacements = filter_input(INPUT_POST, 'emplacement', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+        $emplacements = filter_input(INPUT_POST, 'emplacement', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
         // On appelle une méthode du Model Category
         // pour exécuter la requête de mise à jour
@@ -296,8 +296,4 @@ class CategoryController extends CoreController
         // On redirige vers la liste des catégories
         header('Location: /category/list');
     }
-
-
-
-    
 }
