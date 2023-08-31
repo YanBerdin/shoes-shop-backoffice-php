@@ -232,7 +232,7 @@ class CategoryController extends CoreController
                     'errors' => $errorList
                 ]);
 
-                // TODO : utiliser les données dans le template pour gérer l'affichage
+                // utiliser les données dans le template pour gérer l'affichage
             }
         }
     }
@@ -276,7 +276,6 @@ class CategoryController extends CoreController
         ]);
     }
 
-
     public function homeSelect()
     {
         //dump($_POST['emplacement']);
@@ -290,8 +289,8 @@ class CategoryController extends CoreController
         // $emplacements est un array contenant des int (id)
         Category::updateHomeOrder($emplacements);
 
-        //TODO Versions plus abouties possible (voir updateHomeOrder($ids) :
-        //TODO - mettre un try / catch sur l'exécution des requêtes
+        //FIXME: Versions plus abouties possible (voir updateHomeOrder($ids) :
+        //FIXME: - mettre un try / catch sur l'exécution des requêtes
 
         // On redirige vers la liste des catégories
         header('Location: /category/list');

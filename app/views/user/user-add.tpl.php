@@ -37,7 +37,7 @@
         <form action="" method="POST" class="mt-5">
             <div class="mb-3">
                 <label for="firstname" class="form-label">Prénom</label>
-                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="prenom de l'utilisateur" value="<?= $user->getFirstName() ?>" >
+                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Prénom de l'utilisateur" value="<?= $user->getFirstName() ?>" >
             </div>
             <div class="mb-3">
                 <label for="lastname" class="form-label">Nom</label>

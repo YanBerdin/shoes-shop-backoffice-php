@@ -54,11 +54,13 @@ class AppUserController extends CoreController
                 // if ($user->getPassword() == $password) {
                 //! V3 : on doit modifier le if précédent car à présent tous les password sont hashés
                 // https://www.php.net/manual/fr/function.password-verify.php
+                //? Peut importe qu'on ai hashé avec PASSWORD_BCRYPT ou PASSWORD_DEFAULT
+                // password_verifiy le reconnaitra automatiquement
                 if (password_verify($password, $user->getPassword())) {
                     //! Email et password associé sont bons
                     // OK, on pourra connecter le user
                     // V1 : on affiche "Vous êtes bien connecté"
-                    
+
                     // echo "Vous êtes bien connecté";
                     header('Location: /');
 
@@ -149,8 +151,8 @@ class AppUserController extends CoreController
             //! 2- On les vérifie (filter_input)
             $firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_SPECIAL_CHARS);
             $lastname = filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_SPECIAL_CHARS);
-            $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-            $password = filter_input(INPUT_POST, 'password');
+            $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL); //FIXME: FILTER_VALIDATE_EMAIL utilisé par PierreOclock => Mieux ? Alec ?
+            $password = filter_input(INPUT_POST, 'password');                  //FIXME: Pas de FILTER => Alec ?
             $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_SPECIAL_CHARS);
             $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_NUMBER_INT);
 
@@ -159,52 +161,67 @@ class AppUserController extends CoreController
             $errorList = [];
 
             if (empty($firstname)) {
-                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner le prénom';
+                $errorList[] = '⛔ Création refusée ⛔ Merci de renseigner le prénom';
             }
 
             if ($firstname === false) {
-                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner un prénom valide';
+                $errorList[] = '⛔ Création refusée ⛔ Merci de renseigner un prénom valide';
             }
 
             if (empty($lastname)) {
-                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner le nom';
+                $errorList[] = '⛔ Création refusée ⛔ Merci de renseigner le nom';
             }
 
             if ($lastname === false) {
-                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner un nom valide';
+                $errorList[] = '⛔ Création refusée ⛔ Merci de renseigner un nom valide';
             }
 
             if (empty($email)) {
-                $errorList[] = "⛔ Crétion refusée ⛔ Merci de renseigner l'email";
+                $errorList[] = "⛔ Création refusée ⛔ Merci de renseigner l'email";
             }
 
             if ($email === false) {
-                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner un email valide';
+                $errorList[] = '⛔ Création refusée ⛔ Merci de renseigner un email valide';
             }
 
             if (empty($password)) {
-                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner le mot de passe';
+                $errorList[] = '⛔ Création refusée ⛔ Merci de renseigner le mot de passe';
             }
 
             if ($password === false) {
-                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner un mot de passe valide';
+                $errorList[] = '⛔ Création refusée ⛔ Merci de renseigner un mot de passe valide';
             }
 
             if (empty($role)) {
-                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner le rôle';
+                $errorList[] = '⛔ Création refusée ⛔ Merci de renseigner le rôle';
             }
 
             if ($role === false) {
-                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner un rôle valide';
+                $errorList[] = '⛔ Création refusée ⛔ Merci de renseigner un rôle valide';
             }
 
             if (empty($status)) {
-                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner le statut';
+                $errorList[] = '⛔ Création refusée ⛔ Merci de renseigner le statut';
             }
 
             if ($status === false) {
-                $errorList[] = '⛔ Crétion refusée ⛔ Merci de renseigner un statut valide';
+                $errorList[] = '⛔ Création refusée ⛔ Merci de renseigner un statut valide';
             }
+
+            //? Version Pierre Oclock -------------------------------------------------------------
+            // Si au moins un des champs n'est pas rempli ou si un des filtres a échoué
+            //   if( !$email || !$password || !$firstname || !$lastname || !$role || !$status )
+            //   {
+            //     $errorList[] = "Tous les champs sont obligatoires";
+            //   }
+
+            //! Vérification de la validité du mot de passe
+            if (strlen($password) < 5) {
+                $errorList[] = "Le mot de passe doit faire au moins 5 caractères.";
+            }
+            // FIXME:
+            // TODO Bonus : Vérifier la complexite ++ (voir Mega Bonus de l'atelier E06)
+            //? FIN de Version Pierre Oclock-------------------------------------------------------
 
 
             //! Avant d'aller plus loin, on vérifiera si on a aucune erreur
@@ -214,6 +231,7 @@ class AppUserController extends CoreController
 
                 //! 4- s'il n'y en a pas ==> on continue
                 // on appelle le Model pour faire l'insertion
+                // Ajout du user en BDD, on commence par créer un nouveau AppUser (ActiveRecord !)
                 $modelUser = new AppUser();
 
                 // On set les valeurs 
@@ -225,13 +243,15 @@ class AppUserController extends CoreController
                 $modelUser->setRole($role);
                 $modelUser->setStatus($status);
 
-                //TODO Attention : le password est saisi en clair dans le formulaire
-                //TODO On doit hasher le password avant de l'insérer en BDD
+                //! Attention : le password est saisi en clair dans le formulaire
+                //! On doit hasher le password avant de l'insérer en BDD
                 // Rappel : en BDD, tous nos password doivent être hashés
                 // A la saisie du form, on récuère le password clair qu'on va hasher
                 // ET on va comparer le hash au password de la BDD
-                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);  //? PASSWORD_DEFAULT (utilisé par Pierre Oclock) Mieux ? Alec ?
                 $modelUser->setPassword($hashedPassword);
+
+                //FIXME: Faut il vérifier que le nombre de caractères saisi === nbr enregistré BDD ? FIXME: Alec ?
 
                 // On appelle la méthode du Model AppUser pour faire l'insertion en BDD
                 if ($modelUser->insert()) {
