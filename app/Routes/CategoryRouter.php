@@ -57,3 +57,27 @@ $router->map(
     'category-update'  // Dans ACL
 );
 
+
+//? S06 E07
+// Route pour afficher le formulaire de gestion des catégories
+$router->map(
+    'GET',
+    '/category/manage',
+    [
+        'method' => 'homeDisplay',
+        'controller' => '\App\Controllers\CategoryController'        
+    ],
+    'category-manage' // Dans ACL
+);
+
+//? S06 E07
+// Route pour faire le traitement du formulaire de gestion des catégories
+$router->map(
+    'POST',
+    '/category/manage',
+    [
+        'method' => 'homeSelect',
+        'controller' => '\App\Controllers\CategoryController'        
+    ],
+    'category-select' // Dans ACL
+);

@@ -1,5 +1,5 @@
 <?php
-//TODO Recherches Perso Afichage Conditionnel
+//TODO Recherches Perso Affichage Conditionnel
 // dump($viewData); 
 // dump($_SESSION); 
 //dump($_SESSION['userObject']->getRole()) ; 
@@ -34,12 +34,12 @@
                 <li class="nav-item">
                     <!-- <a class="nav-link" href="<?php // echo $router->generate('category-list') 
                                                     ?>">Catégories <span class="sr-only">(current)</span></a> -->
-                    <a class="nav-link <?= (strpos($currentPage, 'category') !== false) ? "active" : ""; ?>" href="<?= $router->generate('category-list') ?>">Catégories</a>
+                    <a class="nav-link <?= (strpos($currentPage, 'category-list') !== false) ? "active" : ""; ?>" href="<?= $router->generate('category-list') ?>">Catégories</a>
                 </li>
                 <li class="nav-item">
                     <!-- <a class="nav-link" href="<?php // echo $router->generate('product-list') 
                                                     ?>">Produits</a> -->
-                    <a class="nav-link <?= (strpos($currentPage, 'product') !== false) ? "active" : ""; ?>" href="<?= $router->generate('product-list') ?>">Produits</a>
+                    <a class="nav-link <?= (strpos($currentPage, 'product-list') !== false) ? "active" : ""; ?>" href="<?= $router->generate('product-list') ?>">Produits</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Types</a>
@@ -51,13 +51,14 @@
                     <a class="nav-link" href="#">Tags</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Sélection Accueil</a>
+                    <!-- <a class="nav-link" href="#">Sélection Accueil</a> -->
+                    <a class="nav-link <?= (strpos($currentPage, 'manage') !== false) ? "active" : ""; ?>" href="<?= $router->generate('category-manage') ?>">Sélection Accueil</a>
                 </li>
 
                 <?php if (isset($_SESSION['userId']) && $_SESSION['userObject']->getRole() === "admin") :
                 ?>
                     <li class="nav-item">
-                        <a class="nav-link <?= (strpos($currentPage, 'user-list') !== false) ? "active" : ""; ?>" href="<?= $router->generate('user-list') ?>">
+                        <a class="nav-link <?= (strpos($currentPage, 'user/list') !== false) ? "active" : ""; ?>" href="<?= $router->generate('user-list') ?>">
                             Utilisateurs
                         </a>
                     </li>
