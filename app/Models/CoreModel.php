@@ -31,10 +31,16 @@ class CoreModel
 
     //! On déclare ici la (ou les) méthode(s) abstraites
     //! Les classes enfants devront implémenter ces méthdes là
-    //? abstract static public function find($id);
-    //?
+    // J'indique que toute classe qui hérite de CoreModel DOIT IMPERATIVEMENT
+    // implémenter une méthode find qui doit etre statique
+    // Attention, elle n'oblige rien au niveau du CONTENU de la méthode
+    //TODO abstract static public function find($id);
     //TODO => Maintenant il faut implémenter find($id) dans CHAQUE Model
-
+    // abstract static function find( $id );
+    // abstract static function findAll();
+    // abstract function insert();
+    // abstract function update();
+    // abstract function delete();
 
     /**
      * Get the value of id

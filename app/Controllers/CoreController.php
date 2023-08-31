@@ -54,6 +54,8 @@ class CoreController
         // que la route n'est pas dans la liste $acl des routes à vérifier
         // cad toute le monde peut accéder librement et directement à cete route
 
+        // Sinon, ce n'est pas une route contrôle, 
+        // on ne fait rien et on laisse la page s'affiche normalement
     }
 
 
@@ -69,6 +71,7 @@ class CoreController
     {
         // On globalise $router car on ne sait pas faire mieux pour l'instant
         global $router;
+        //TODO Voir $router et $match dans CoreModel cf Pierre-Oclock => Alec
 
         // Comme $viewData est déclarée comme paramètre de la méthode show()
         // les vues y ont accès
@@ -88,14 +91,14 @@ class CoreController
         // La fonction extract permet de créer une variable pour chaque élément du tableau passé en argument
         extract($viewData);
         // (importe les variables à partir des clés)
-        //TODODone => la variable $currentPage existe désormais, et sa valeur est $viewName
-        //TODODone => la variable $assetsBaseUri existe désormais, et sa valeur est $_SERVER['BASE_URI'] . '/assets/'
-        //TODODone => la variable $baseUri existe désormais, et sa valeur est $_SERVER['BASE_URI']
-        //TODODone => il en va de même pour chaque élément du tableau
+        //? => la variable $currentPage existe désormais, et sa valeur est $viewName
+        //? => la variable $assetsBaseUri existe désormais, et sa valeur est $_SERVER['BASE_URI'] . '/assets/'
+        //? => la variable $baseUri existe désormais, et sa valeur est $_SERVER['BASE_URI']
+        //? => il en va de même pour chaque élément du tableau
 
         //? Pour voir le nom de la Route pour la class active du menu
         //? "-" sera un "/" dans la barre d'adresse
-        
+
         //dump($currentPage);
 
         // $viewData est disponible dans chaque fichier de vue
@@ -131,7 +134,12 @@ class CoreController
                 // sinon => ko : on renvoie une 403 "Forbidden"
                 //! On envoie le code 403 dans le header
                 http_response_code(403);
-                echo 'Oups, une erreur 403';
+                echo 'Oups, une erreur 403, Accès => Refusé';
+
+                //TODO A Tester et verifier Alec
+                //TODO header('Location: /error/err403');
+                //TODO $this->show( "error/err403" ); 
+
                 //! On stop l'exécution du script (vu que y a pas de return)
                 // Sinon affiche quand même la page demandée (category-list) 
                 exit();
@@ -142,6 +150,7 @@ class CoreController
             // Si le user n'est pas connecté
             // alors on le redirige vers la page de connexion
             header('Location: /user/login');
+
             //! On stop l'exécution du script
             // (au cas où par sécurité pour sortir)
             exit();

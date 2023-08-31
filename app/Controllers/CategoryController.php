@@ -297,4 +297,7 @@ class CategoryController extends CoreController
         header('Location: /category/list');
     }
 
+
+
+    
 }
