@@ -135,7 +135,7 @@ class AppUser extends CoreModel
         }
     }
 
-    //? Récupéré mais pas utilisé
+    //? Récupéré mais pas utilisé => Peut etre utile si User à plusieurs rôles
     // Pierre O'clock => Condition affichage Onglet Liste Utilisateurs dans Menu
     // Méthode pratique qui permet de savoir facile si l'utilisateur a le role admin
     // public function isAdmin()

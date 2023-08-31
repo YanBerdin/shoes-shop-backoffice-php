@@ -67,178 +67,189 @@ $router->map(
     'main-home'
 );
 
+//! Inclusion des routes liées aux catégories depuis un autre fichier 
+// pour ranger
+require_once '../app/Routes/CategoryRouter.php';
+
 // Route pour afficher la liste des catégories
-$router->map(
-    'GET',
-    '/category/list',
-    [
-        'method' => 'listCategories',
-        'controller' => '\App\Controllers\CategoryController'
-    ],
-    'category-list'
-);
+// $router->map(
+//     'GET',
+//     '/category/list',
+//     [
+//         'method' => 'listCategories',
+//         'controller' => '\App\Controllers\CategoryController'
+//     ],
+//     'category-list'
+// );
 
 // Route pour afficher le formulaire d'ajout/Modif d'une catégorie
-$router->map(
-    'GET',
-    '/category/add-update',
-    [
-        'method' => 'addCategory',
-        'controller' => '\App\Controllers\CategoryController'
-    ],
-    'category-add-update' // Dans ACL
-);
+// $router->map(
+//     'GET',
+//     '/category/add-update',
+//     [
+//         'method' => 'addCategory',
+//         'controller' => '\App\Controllers\CategoryController'
+//     ],
+//     'category-add-update' // Dans ACL
+// );
 
 
 // Route pour faire le traitement du formulaire de création d'une catégorie
-$router->map(
-    'POST',
-    '/category/add-update',
-    [
-        'method' => 'createOrUpdateCategory',
-        'controller' => '\App\Controllers\CategoryController'
-    ],
-    'category-create' // TODO ajouter -update et MAJ liens dans TPL
-);  // Dans ACL
+// $router->map(
+//     'POST',
+//     '/category/add-update',
+//     [
+//         'method' => 'createOrUpdateCategory',
+//         'controller' => '\App\Controllers\CategoryController'
+//     ],
+//     'category-create' // TODO ajouter -update et MAJ liens dans TPL
+// );  // Dans ACL
 
 // Route pour afficher le formulaire de modification d'une catégorie
-$router->map(
-    'GET',
-    '/category/add-update/[i:id]',
-    [
-        'method' => 'editCategory',
-        'controller' => '\App\Controllers\CategoryController'
-    ],
-    'category-edit' // Dans ACL
-);
+// $router->map(
+//     'GET',
+//     '/category/add-update/[i:id]',
+//     [
+//         'method' => 'editCategory',
+//         'controller' => '\App\Controllers\CategoryController'
+//     ],
+//     'category-edit' // Dans ACL
+// );
 
 // Route pour faire le traitement du formulaire 
 // de modification d'une catégorie
-$router->map(
-    'POST',
-    '/category/add-update/[i:id]',
-    [
-        'method' => 'createOrUpdateCategory',
-        'controller' => '\App\Controllers\CategoryController'
-    ],
-    'category-update'  // Dans ACL
-);
+// $router->map(
+//     'POST',
+//     '/category/add-update/[i:id]',
+//     [
+//         'method' => 'createOrUpdateCategory',
+//         'controller' => '\App\Controllers\CategoryController'
+//     ],
+//     'category-update'  // Dans ACL
+// );
 
 
+//! Inclusion des routes liées aux catégories depuis un autre fichier
+// pour ranger
+require_once '../app/Routes/ProductRouter.php';
 // Route pour afficher la liste des produits
-$router->map(
-    'GET',
-    '/product/list',
-    [
-        'method' => 'listProducts',
-        'controller' => '\App\Controllers\ProductController'
-    ],
-    'product-list'
-);
+// $router->map(
+//     'GET',
+//     '/product/list',
+//     [
+//         'method' => 'listProducts',
+//         'controller' => '\App\Controllers\ProductController'
+//     ],
+//     'product-list'
+// );
 
 // Route pour afficher le formulaire de création d'un produit
-$router->map(
-    'GET',
-    '/product/add',
-    [
-        'method' => 'addProduct',
-        'controller' => '\App\Controllers\ProductController'
-    ],
-    'product-add'
-);
+// $router->map(
+//     'GET',
+//     '/product/add',
+//     [
+//         'method' => 'addProduct',
+//         'controller' => '\App\Controllers\ProductController'
+//     ],
+//     'product-add'
+// );
 
 // Route pour faire le traitement du formulaire et créer un produit
-$router->map(
-    'POST',
-    '/product/add',
-    [
-        'method' => 'createProduct',
-        'controller' => '\App\Controllers\ProductController'
-    ],
-    'product-create'  // Dans ACL
-);
+// $router->map(
+//     'POST',
+//     '/product/add',
+//     [
+//         'method' => 'createProduct',
+//         'controller' => '\App\Controllers\ProductController'
+//     ],
+//     'product-create'  // Dans ACL
+// );
 
+
+//! Inclusion des routes liées aux catégories depuis un autre fichier
+// pour ranger
+require_once '../app/Routes/AppUserRouter.php';
 
 // Affichage du form user
-$router->map(
-    'GET',
-    '/user/login',
-    [
-        'method' => 'login',
-        'controller' => '\App\Controllers\AppUserController'
-    ],
-    'user-login'
-);
+// $router->map(
+//     'GET',
+//     '/user/login',
+//     [
+//         'method' => 'login',
+//         'controller' => '\App\Controllers\AppUserController'
+//     ],
+//     'user-login'
+// );
 
 // Traitement du form user
-$router->map(
-    'POST',
-    '/user/login',
-    [
-        'method' => 'loginUser',
-        'controller' => '\App\Controllers\AppUserController'
-    ],
-    'user-check' //? A mettre aussi ? Voir ALEC
-);
+// $router->map(
+//     'POST',
+//     '/user/login',
+//     [
+//         'method' => 'loginUser',
+//         'controller' => '\App\Controllers\AppUserController'
+//     ],
+//     'user-check' //? A mettre aussi ? Voir ALEC
+// );
 
 //? S06 E06
 
 // Affichage de tous les users
-$router->map(
-    'GET',
-    '/user/list',
-    [
-        'method' => 'userList',
-        'controller' => '\App\Controllers\AppUserController'
-    ],
-    'user-list' // Dans ACL
-);
+// $router->map(
+//     'GET',
+//     '/user/list',
+//     [
+//         'method' => 'userList',
+//         'controller' => '\App\Controllers\AppUserController'
+//     ],
+//     'user-list' // Dans ACL
+// );
 
 // Affichage du formulaire de création (ajout) d'un user
-$router->map(
-    'GET',
-    '/user/add',
-    [
-        'method' => 'addUser',
-        'controller' => '\App\Controllers\AppUserController'
-    ],
-    'user-add'  // Dans ACL
-);
+// $router->map(
+//     'GET',
+//     '/user/add',
+//     [
+//         'method' => 'addUser',
+//         'controller' => '\App\Controllers\AppUserController'
+//     ],
+//     'user-add'  // Dans ACL
+// );
 
 // Traitement du formulaire de création (ajout) d'un user
-$router->map(
-    'POST',
-    '/user/add',
-    [
-        'method' => 'createUser',
-        'controller' => '\App\Controllers\AppUserController'
-    ],
-    'user-create'  // Dans ACL
-);
+// $router->map(
+//     'POST',
+//     '/user/add',
+//     [
+//         'method' => 'createUser',
+//         'controller' => '\App\Controllers\AppUserController'
+//     ],
+//     'user-create'  // Dans ACL
+// );
 
 //? S06 E07
 // Route pour afficher le formulaire de gestion des catégories
-$router->map(
-    'GET',
-    '/category/manage',
-    [
-        'method' => 'homeDisplay',
-        'controller' => '\App\Controllers\CategoryController'        
-    ],
-    'category-manage' // Dans ACL
-);
+// $router->map(
+//     'GET',
+//     '/category/manage',
+//     [
+//         'method' => 'homeDisplay',
+//         'controller' => '\App\Controllers\CategoryController'        
+//     ],
+//     'category-manage' // Dans ACL
+// );
 
 //? S06 E07
 // Route pour faire le traitement du formulaire de gestion des catégories
-$router->map(
-    'POST',
-    '/category/manage',
-    [
-        'method' => 'homeSelect',
-        'controller' => '\App\Controllers\CategoryController'        
-    ],
-    'category-select' // Dans ACL
-);
+// $router->map(
+//     'POST',
+//     '/category/manage',
+//     [
+//         'method' => 'homeSelect',
+//         'controller' => '\App\Controllers\CategoryController'        
+//     ],
+//     'category-select' // Dans ACL
+// );
 
 
 /* -------------
