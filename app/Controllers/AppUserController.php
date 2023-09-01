@@ -87,6 +87,32 @@ class AppUserController extends CoreController
         }
     }
 
+    //! Méthode de déconnexion du user connecté
+    //? Pierre Oclock
+    public function logout()
+    {
+        // Déconnecter un utilisateur revient a "oublier" quel coffre ouvre sa clé
+        //  ou
+        // Vider le contenu du coffre
+
+        // Ici, on va garder la même clé mais vider le coffre
+        // Ici unset détruit la clé 'user' du tableau de session
+        // FIXME: //? ALEC ?
+        // TODO Avec unset => BUG => Undefined $_SESSION['userObject']
+        // TODO Pourtant Ok sur PierreOclock
+        // FIXME: unset( $_SESSION['userObject'] );
+
+        // On pourrait aussi détruire tout le coffre
+        session_destroy();
+
+        // Une fois déconnecté, rediriger vers le login
+        // header( "Location: ".$this->router->generate( "user-login" ) );
+        header('Location: /user/login');
+        exit;
+    }
+
+
+
     //? S06 E06
     /**
      * Méthode qui récupère la liste de tous les users

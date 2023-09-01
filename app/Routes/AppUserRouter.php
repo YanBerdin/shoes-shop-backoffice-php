@@ -1,4 +1,5 @@
 <?php 
+namespace App\Routes;
 
 // Affichage du form user
 $router->map(
@@ -56,3 +57,15 @@ $router->map(
     ],
     'user-create'  // Dans ACL
 );
+
+//? PierreOclock
+$router->map(
+    'GET',
+    '/logout',
+    [
+      'method' => 'logout',
+      'controller' => '\App\Controllers\AppUserController' // TODO UserController::class
+    ],
+    'user-logout'
+  );
+  
