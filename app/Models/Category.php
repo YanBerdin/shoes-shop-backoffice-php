@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Utils\Database;
 use PDO;
+use App\Utils\Database;
 
 class Category extends CoreModel
 {
@@ -123,8 +123,6 @@ class Category extends CoreModel
         $pdoStatement->execute([
             ':id' => $categoryId,
         ]);
-
-
 
         // un seul résultat => fetchObject
         $category = $pdoStatement->fetchObject('App\Models\Category');

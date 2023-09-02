@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use App\Utils\Database; // use => Chemin jusqu'à fichier (sans extension)
+use App\Models\CoreModel;
 use PDO; // Natif donc pas de chemin nécéssaire
+use App\Utils\Database; // use => Chemin jusqu'à fichier (sans extension)
 
 /**
  * Un modèle représente une table (un entité) dans notre base
@@ -32,16 +33,26 @@ class Brand extends CoreModel
         $pdo = Database::getPDO();
 
         // écrire notre requête
-        $sql = '
-            SELECT *
-            FROM brand
-            WHERE id = ' . $brandId;
+        $sql = 'SELECT * 
+                FROM brand
+                WHERE `id` = :id';
+        // WHERE id = ' . $brandId;
+
 
         // exécuter notre requête
-        $pdoStatement = $pdo->query($sql);
+        // Non préparée
+        // $pdoStatement = $pdo->query($sql);
+        $pdoStatement = $pdo->prepare($sql);
+
+        // On exécute la requête préparée en passant les données attendues
+        // Les données attendues sont passées via un array associatif
+        $pdoStatement->execute([
+            ':id' => $brandId,
+        ]);
 
         // un seul résultat => fetchObject
         $brand = $pdoStatement->fetchObject('App\Models\Brand');
+        //?                     fetchObject( self::class ); (Pierre Oclock) Alec : Mieux ?
 
         // retourner le résultat
         return $brand;
@@ -56,7 +67,13 @@ class Brand extends CoreModel
     {
         $pdo = Database::getPDO();
         $sql = 'SELECT * FROM `brand`';
-        $pdoStatement = $pdo->query($sql);
+
+        // $pdoStatement = $pdo->query($sql);
+        $pdoStatement = $pdo->prepare($sql);
+
+        // On exécute la requête préparée
+        $pdoStatement->execute();
+
         $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'App\Models\Brand');
 
         return $results;
@@ -73,17 +90,31 @@ class Brand extends CoreModel
         // Récupération de l'objet PDO représentant la connexion à la DB
         $pdo = Database::getPDO();
 
-        // Ecriture de la requête INSERT INTO
+        //! Ecriture de la requête INSERT INTO
+        // $sql = "
+        //     INSERT INTO `brand` (name)
+        //     VALUES ('{$this->name}')
+        // ";
+
         $sql = "
             INSERT INTO `brand` (name)
-            VALUES ('{$this->name}')
+            VALUES (:name)
         ";
 
+
+
+        //!utiliser la méthode prepare() pour faire des requêtes préparées
+        $pdoStatement = $pdo->prepare($sql);
+
         // Execution de la requête d'insertion (exec, pas query)
-        $insertedRows = $pdo->exec($sql);
+        // $insertedRows = $pdo->exec($sql);
+
+        //! On exécute la requête préparée
+        $pdoStatement->execute();
 
         // Si au moins une ligne ajoutée
-        if ($insertedRows > 0) {
+        // if ($insertedRows > 0) {
+        if ($pdoStatement > 0) {
             // Alors on récupère l'id auto-incrémenté généré par MySQL
             $this->id = $pdo->lastInsertId();
 
@@ -107,20 +138,43 @@ class Brand extends CoreModel
         // Récupération de l'objet PDO représentant la connexion à la DB
         $pdo = Database::getPDO();
 
-        // Ecriture de la requête UPDATE
+        //! Ecriture de la requête UPDATE
+
+        // $sql = "
+        //     UPDATE `brand`
+        //     SET
+        //         name = '{$this->name}',
+        //         updated_at = NOW()
+        //     WHERE id = {$this->id}
+        // ";
+
         $sql = "
             UPDATE `brand`
             SET
-                name = '{$this->name}',
+                name = :name,
                 updated_at = NOW()
-            WHERE id = {$this->id}
+            WHERE id = :id
         ";
 
+        //!prepare() pour faire des requêtes préparées
+        $pdoStatement = $pdo->prepare($sql);
+
+        // On exécute la requête préparée
+        $pdoStatement->execute([
+            ':name' => $this->name,
+            ':id' => $this->id,
+        ]);
+
+
         // Execution de la requête de mise à jour (exec, pas query)
-        $updatedRows = $pdo->exec($sql);
+        // $updatedRows = $pdo->exec($sql);
+        //? Plus besoin d'utiliser exec/query ?
+
 
         // On retourne VRAI, si au moins une ligne ajoutée
-        return ($updatedRows > 0);
+        return ($pdoStatement > 0);
+
+        //TODO Gérer erreurs ?
     }
 
     /**
