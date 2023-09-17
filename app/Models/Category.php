@@ -168,8 +168,7 @@ class Category extends CoreModel
 
         // ci-dessous => ASC n'est pas tres utile => c'est comme ça par defaut
 
-        $sql = '
-            SELECT *
+        $sql = 'SELECT *
             FROM `category`
             WHERE `home_order` > 0
             ORDER BY `home_order` ASC
@@ -303,7 +302,7 @@ class Category extends CoreModel
      * à mettre en avant
      *
      * @param Array $ids Liste des id des catégories à mettre en avant
-     * @return void        La fonction execute mais ne renvoie rien
+     * @return void La fonction execute mais ne renvoie rien
      */
     public static function updateHomeOrder($ids)
     {
@@ -315,14 +314,24 @@ class Category extends CoreModel
         // - mettre les bonnes valeurs dans les 5 catégories correspondantes
         // Contrairement à d'habitude, on passe ici par des marqueurs anonymes (?)
         // car toutes les données sont semblables (ce sont toutes des id)
-        $sql = '
-            UPDATE `category` SET `home_order` = 0;
-            UPDATE `category` SET `home_order` = 1 WHERE id = ?;
-            UPDATE `category` SET `home_order` = 2 WHERE id = ?;
-            UPDATE `category` SET `home_order` = 3 WHERE id = ?;
-            UPDATE `category` SET `home_order` = 4 WHERE id = ?;
-            UPDATE `category` SET `home_order` = 5 WHERE id = ?;
-        ';
+        // $sql = '
+        //     UPDATE `category` SET `home_order` = 0;
+        //     UPDATE `category` SET `home_order` = 1 WHERE id = ?;
+        //     UPDATE `category` SET `home_order` = 2 WHERE id = ?;
+        //     UPDATE `category` SET `home_order` = 3 WHERE id = ?;
+        //     UPDATE `category` SET `home_order` = 4 WHERE id = ?;
+        //     UPDATE `category` SET `home_order` = 5 WHERE id = ?;
+        // ';
+        $sql = 'UPDATE `category`
+ 	   SET `home_order` = CASE 
+    		  when id = ? then 1
+  		  when id = ? then 2
+ 		  when id = ? then 3
+		  when id = ? then 4
+		  when id = ? then 5
+		  ELSE `home_order`	
+            END ';
+
 
         //! On prépare les requêtes $query pourrait être $pdoStatement
         // $query ou $pdoStatement

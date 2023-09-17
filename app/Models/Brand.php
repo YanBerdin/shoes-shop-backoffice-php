@@ -33,6 +33,7 @@ class Brand extends CoreModel
         $pdo = Database::getPDO();
 
         // écrire notre requête
+        // Interpolation = injection SQL
         $sql = 'SELECT * 
                 FROM brand
                 WHERE `id` = :id';
@@ -66,6 +67,8 @@ class Brand extends CoreModel
     public function findAll()
     {
         $pdo = Database::getPDO();
+
+        // Interpolation = injection SQL
         $sql = 'SELECT * FROM `brand`';
 
         // $pdoStatement = $pdo->query($sql);
@@ -96,14 +99,10 @@ class Brand extends CoreModel
         //     VALUES ('{$this->name}')
         // ";
 
-        $sql = "
-            INSERT INTO `brand` (name)
-            VALUES (:name)
-        ";
+        $sql = "INSERT INTO `brand` (name)
+            VALUES (:name)";
 
-
-
-        //!utiliser la méthode prepare() pour faire des requêtes préparées
+        //!utiliser la méthode prepare() => requêtes préparées
         $pdoStatement = $pdo->prepare($sql);
 
         // Execution de la requête d'insertion (exec, pas query)
@@ -138,8 +137,8 @@ class Brand extends CoreModel
         // Récupération de l'objet PDO représentant la connexion à la DB
         $pdo = Database::getPDO();
 
-        //! Ecriture de la requête UPDATE
-
+        //? Ecriture de la requête UPDATE
+        //? Interpolation = injection SQL
         // $sql = "
         //     UPDATE `brand`
         //     SET
@@ -148,22 +147,27 @@ class Brand extends CoreModel
         //     WHERE id = {$this->id}
         // ";
 
-        $sql = "
-            UPDATE `brand`
+        $sql = "UPDATE `brand`
             SET
                 name = :name,
                 updated_at = NOW()
-            WHERE id = :id
-        ";
+            WHERE id = :id";
 
         //!prepare() pour faire des requêtes préparées
         $pdoStatement = $pdo->prepare($sql);
 
-        // On exécute la requête préparée
+        //! On exécute la requête préparée
         $pdoStatement->execute([
             ':name' => $this->name,
             ':id' => $this->id,
         ]);
+
+        // Avec bindvalue :
+        // Remplacement des paramètres de la requête
+        // $pdoStatement->bindValue(':name', $this->name, PDO::PARAM_STR);
+        // $pdoStatement->bindValue(':id', $this->id, PDO::PARAM_INT);
+        // Exécution de la requête préparée
+        // $pdoStatement->execute();
 
 
         // Execution de la requête de mise à jour (exec, pas query)

@@ -62,15 +62,28 @@ class Product extends CoreModel
         $pdo = Database::getPDO();
 
         // on écrit la requête SQL pour récupérer le produit
-        $sql = '
-            SELECT *
-            FROM product
-            WHERE id = ' . $productId;
+        //? Interpolation = injection SQL
+        // $sql = '
+        //     SELECT *
+        //     FROM product
+        //     WHERE id = ' . $productId;
+
+
+        $sql = "SELECT *
+        FROM product
+        WHERE id =:id";
 
         // query ? exec ?
         // On fait de la LECTURE = une récupration => query()
         // si on avait fait une modification, suppression, ou un ajout => exec
-        $pdoStatement = $pdo->query($sql);
+        // $pdoStatement = $pdo->query($sql);
+
+
+        //! Requete préparée
+        $pdoStatement = $pdo->prepare($sql);
+
+        // Executer la requete
+        $pdoStatement->execute([':id' => $productId]);
 
         // fetchObject() pour récupérer un seul résultat
         // si j'en avais eu plusieurs => fetchAll
@@ -87,8 +100,12 @@ class Product extends CoreModel
     public static function findAll()
     {
         $pdo = Database::getPDO();
+
+        // Interpolation = injection SQL
         $sql = 'SELECT * FROM `product`';
+
         $pdoStatement = $pdo->query($sql);
+
         $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'App\Models\Product');
 
         return $results;
@@ -109,13 +126,26 @@ class Product extends CoreModel
         // $database = new Database();
         // $database->getPDO();
 
-        $sql = '
-            SELECT *
+        //? Interpolation = injection SQL
+        $sql = 'SELECT *
             FROM `product`
             ORDER BY `id`
-            LIMIT 5
-        ';
+            LIMIT 5';
+
         $pdoStatement = $pdo->query($sql);
+
+        // $sql = 'SELECT *
+        //     FROM `product`
+        //     ORDER BY `id`
+        //     LIMIT :limit';
+
+        //! Requete préparée
+        // $pdoStatement = $pdo->prepare($sql);
+
+        // Executer la requete (on pourrait aussi utiliser bindvalue cf hier)
+        //TODO Marche Pas => Voir Alec
+        //TODO $pdoStatement->execute([`:limit` => $limit]);
+
         $products = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'App\Models\Product');
 
         return $products;
@@ -144,11 +174,16 @@ class Product extends CoreModel
 
         // Version avec marqueurs nommés (un marqueur nommé sera de la forme : ':string')
         // Les marqueurs seront remplacés par des données que l'on récupérera via la 2nde requête (execute)
-        $sql = '
-            INSERT INTO `product`
-            (`name`, `description`, `picture`, `price`, `rate`, `status`, `category_id`, `brand_id`, `type_id`)
+        // $sql = 'INSERT INTO `product`
+        //     (`name`, `description`, `picture`, `price`, `rate`, `status`, `category_id`, `brand_id`, `type_id`)
+        //     VALUES (:name, :description, :picture, :price, :rate, :status, :category_id, :brand_id, :type_id)
+        // ';
+
+        $sql = 'INSERT INTO `product`
+            (name, description, picture, price, rate, status, category_id, brand_id, type_id)
             VALUES (:name, :description, :picture, :price, :rate, :status, :category_id, :brand_id, :type_id)
         ';
+
 
         // Execution de la requête d'insertion (exec, pas query)
         // $insertedRows = $pdo->exec($sql);
