@@ -25,18 +25,18 @@ class AppUserController extends CoreController
     {
         // dump($_POST);
         $errorList = [];
-  
+
         // if (!empty($_POST)) {
 
-            // Manière de récupérer les données simplement via $_POST
-            // $email = $_POST['email'];
-            // $password = $_POST['password'];
+        // Manière de récupérer les données simplement via $_POST
+        // $email = $_POST['email'];
+        // $password = $_POST['password'];
 
-    //! Vérifier si les champs sont vides (mix avec Pierre Oclock)
-    if (!empty($_POST['email']) && !empty($_POST['password'])) {
-    
-        //? Le formulaire a été soumis avec des données non vides
-        //? effectuer la validation
+        //! Vérifier si les champs sont vides (mix avec Pierre Oclock)
+        if (!empty($_POST['email']) && !empty($_POST['password'])) {
+
+            //? Le formulaire a été soumis avec des données non vides
+            //? effectuer la validation
 
             // On récupère les données et on passe par filter_input
             $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
@@ -44,7 +44,7 @@ class AppUserController extends CoreController
             // Pour le mot de passe on évite le sanitize qui risque de retirer des caractères
             // $password = filter_input( INPUT_POST, "password", FILTER_VALIDATE_EMAIL );
             $password = filter_input(INPUT_POST, 'password');
-    
+
             // Pierre Oclock
             // On va vérifier que le mot de passe fait plus de 3 caractères (semblant de complexité)
             // if (strlen($password) < 4) {
@@ -59,7 +59,7 @@ class AppUserController extends CoreController
 
             // On utilise le Model AppUser pour récupérer les données Utilisteur
             $user = AppUser::findByEmail($email);
-        
+
             //? Est-ce que cet email existe et correspond bien à un user ?
             // $user contient soit un user (instance de AppUser) soit false
             if ($user != false) {
@@ -74,6 +74,9 @@ class AppUserController extends CoreController
                 // if ($user->getPassword() == $password) {
 
                 //! V3 : on doit modifier le if précédent car à présent tous les password sont hashés
+                // Vérifier que le mot de passe correspond si l'utilisateur existe
+                // Maintenant que les mots de passe sont hashés en BDD, on ne peut pas "juste"
+                // vérifier qu'ils sont égaux, on doit utiliser la fonction PHP password_verify
                 // https://www.php.net/manual/fr/function.password-verify.php
                 //? Peut importe qu'on ai hashé avec PASSWORD_BCRYPT ou PASSWORD_DEFAULT
                 // password_verifiy le reconnaitra automatiquement
@@ -88,6 +91,9 @@ class AppUserController extends CoreController
 
                     //! V2 Bonus : on ajoute les données (userId et userObject) à la session
                     // On récupère ces 2 données pour les stocker dans la session
+                    // On stocke dans la session du client qui a réussi a se connecter
+                    // l'objet $user qui correspond à lui dans la BDD
+
                     $_SESSION['userId'] = $user->getId();
                     $_SESSION['userObject'] = $user;
                     echo ' => User id = ' . $_SESSION['userId'];
@@ -112,19 +118,17 @@ class AppUserController extends CoreController
             $errorList[] = "Merci de renseigner les champs du formulaire !";
         }
 
-      //! On arrivera ici UNIQUEMENT si on n'a pas réussi à se connecter  
-      // On affiche chaque erreur rencontrée sur le formulaire de connexion
-      // foreach( $errorList as $error )
-      // {
-      //   echo $error . "<br>";
-      // } 
+        //! On arrivera ici UNIQUEMENT si on n'a pas réussi à se connecter  
+        // On affiche chaque erreur rencontrée sur le formulaire de connexion
+        // foreach( $errorList as $error )
+        // {
+        //   echo $error . "<br>";
+        // } 
 
-      //! Pour faire ça proprement, on charge la vue login en envoyant le tableau d'erreurs
-      $this->show( "user/login", [      
-        "errors" => $errorList
-      ] );
-
-
+        //! Pour faire ça proprement, on charge la vue login en envoyant le tableau d'erreurs
+        $this->show("user/login", [
+            "errors" => $errorList
+        ]);
     }
 
     //! Méthode de déconnexion du user connecté

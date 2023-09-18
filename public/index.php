@@ -263,6 +263,11 @@ $match = $router->match();
 // On délègue à une librairie externe : https://packagist.org/packages/benoclock/alto-dispatcher
 // 1er argument : la variable $match retournée par AltoRouter
 // 2e argument : le "target" (controller & méthode) pour afficher la page 404
+
+//! Version PierreOclock pour éviter de globaliser $match
+//! Cette fonction permet d'envoyer des arguments au constructeur du Controller utilisé
+// $dispatcher->setControllersArguments( $router, $match );       
+
 $dispatcher = new Dispatcher($match, '\App\Controllers\ErrorController::err404');
 // Une fois le "dispatcher" configuré, on lance le dispatch qui va exécuter la méthode du controller
 $dispatcher->dispatch();

@@ -9,6 +9,7 @@ class CoreController
      * (à l'appel de la classe ou lors d'une nouvelle isntanciation)
      */
     public function __construct()
+    //! public function __construct( $router, $match )
     {
         //! On définit une liste des permissions
         // ACL : Access Control List
@@ -16,6 +17,7 @@ class CoreController
         // Ici, on fait une correspondance entre nom de la route et rôles ayant les permissions
         // Les routes ne nécessitant pas de gestion de permission n'ont rien à faire là
         // (elles ne seront pas listées dans $acl)
+        //? Pas de route "publique" comme Login
         //TODO Nom de la Route PAS CHEMIN !!!
         $acl = [
             'category-add-update' => ['admin', 'catalog-manager'],
@@ -71,7 +73,7 @@ class CoreController
     {
         // On globalise $router car on ne sait pas faire mieux pour l'instant
         global $router;
-        //TODO Voir $router et $match dans CoreModel cf Pierre-Oclock => Alec
+        //TODO Voir $router et $match dans CoreController cf Pierre-Oclock => Alec
 
         // Comme $viewData est déclarée comme paramètre de la méthode show()
         // les vues y ont accès
@@ -100,6 +102,10 @@ class CoreController
         //? "-" sera un "/" dans la barre d'adresse
 
         //dump($currentPage);
+
+        //TODO Astuce PierreOclock pour voir les variables disponibles dans nos vues
+        // A ne pas laisser en PROD !
+        dump(get_defined_vars());
 
         // $viewData est disponible dans chaque fichier de vue
         require_once __DIR__ . '/../views/layout/header.tpl.php';
