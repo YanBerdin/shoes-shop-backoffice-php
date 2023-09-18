@@ -20,44 +20,66 @@ class AppUserController extends CoreController
     // dump($_POST);
     // }
 
-    //! Traitement du formulaire
+    //! Traitement du formulaire de connexion
     public function loginUser()
     {
         // dump($_POST);
+        $errorList = [];
+  
+        // if (!empty($_POST)) {
 
-        if (!empty($_POST)) {
             // Manière de récupérer les données simplement via $_POST
             // $email = $_POST['email'];
             // $password = $_POST['password'];
 
+    //! Vérifier si les champs sont vides (mix avec Pierre Oclock)
+    if (!empty($_POST['email']) && !empty($_POST['password'])) {
+    
+        //? Le formulaire a été soumis avec des données non vides
+        //? effectuer la validation
+
             // On récupère les données et on passe par filter_input
             $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-            $password = filter_input(INPUT_POST, 'password');
 
-            // Objectif : à la connexion, vérifier si :
+            // Pour le mot de passe on évite le sanitize qui risque de retirer des caractères
+            // $password = filter_input( INPUT_POST, "password", FILTER_VALIDATE_EMAIL );
+            $password = filter_input(INPUT_POST, 'password');
+    
+            // Pierre Oclock
+            // On va vérifier que le mot de passe fait plus de 3 caractères (semblant de complexité)
+            // if (strlen($password) < 4) {
+            //     // On donne encore une fois pas trop d'infos
+            //     // $errorList[] = "Le mot de passe doit faire au moins 4 caractères.";
+            //     $errorList[] = "Identifiants incorrects";
+            // }
+
+            //? Objectif : à la connexion, vérifier si :
             // - l'email existe bien en BDD
             // - si oui, alors on vérifie aussi le password
 
             // On utilise le Model AppUser pour récupérer les données Utilisteur
             $user = AppUser::findByEmail($email);
-
-            // Est-ce que cet email existe et correspond bien à un user ?
+        
+            //? Est-ce que cet email existe et correspond bien à un user ?
             // $user contient soit un user (instance de AppUser) soit false
             if ($user != false) {
                 //! On rentre ici, cad l'email existe bien en BDD
                 // Alors on vérifie aussi le password
+
 
                 //? $user->getPassword() permet de récupérer le password du User
                 //? $password correspond au password saisi dans le form                
                 // V1 : avec un BDD non sécurisée cad avec mots de passe en clair,
                 // on peut directement comparer mot de passe saisi et mot de passe de la BDD
                 // if ($user->getPassword() == $password) {
+
                 //! V3 : on doit modifier le if précédent car à présent tous les password sont hashés
                 // https://www.php.net/manual/fr/function.password-verify.php
                 //? Peut importe qu'on ai hashé avec PASSWORD_BCRYPT ou PASSWORD_DEFAULT
                 // password_verifiy le reconnaitra automatiquement
                 if (password_verify($password, $user->getPassword())) {
-                    //! Email et password associé sont bons
+
+                    //? Email et password associé sont bons
                     // OK, on pourra connecter le user
                     // V1 : on affiche "Vous êtes bien connecté"
 
@@ -70,21 +92,39 @@ class AppUserController extends CoreController
                     $_SESSION['userObject'] = $user;
                     echo ' => User id = ' . $_SESSION['userId'];
                 } else {
-                    //! Le mot de passe n'est pas bon, mais on reste flou côté site
+                    //? Le mot de passe n'est pas bon, mais on reste flou côté site
                     // #modeparanocontreleshackers
-                    echo "Email et/ou mot de passe incorrects";
+                    // echo "Email et/ou mot de passe incorrects";
+                    $errorList[] = "Email et/ou mot de passe incorrects";
                 }
             } else {
-                //! Dans ce cas, l'email n'a pas été trouvé (dans la BDD, aucun user n'existe avec cet email)
+                //? Dans ce cas, l'email n'a pas été trouvé (dans la BDD, aucun user n'existe avec cet email)
                 // L'email n'est pas bon, mais on reste flou côté site
                 // #modeparanocontreleshackers
-                echo "Email et/ou mot de passe incorrects";
+                // echo "Email et/ou mot de passe incorrects";
+                $errorList[] = "Email et/ou mot de passe incorrects";
             }
         } else {
-            //! Ici, le form est vide car $_POST ne contient aucune donnée
+            // Ici, le form est vide car $_POST ne contient aucune donnée
+            // ? => $_POST['email'] ou $_POST['password'] est vide
             // (ne risque pas vraiment d'arriver car Require dans le formulaire)
-            echo "Merci de renseigner les champs du formulaire";
+            // echo "Merci de renseigner les champs du formulaire";
+            $errorList[] = "Merci de renseigner les champs du formulaire !";
         }
+
+      //! On arrivera ici UNIQUEMENT si on n'a pas réussi à se connecter  
+      // On affiche chaque erreur rencontrée sur le formulaire de connexion
+      // foreach( $errorList as $error )
+      // {
+      //   echo $error . "<br>";
+      // } 
+
+      //! Pour faire ça proprement, on charge la vue login en envoyant le tableau d'erreurs
+      $this->show( "user/login", [      
+        "errors" => $errorList
+      ] );
+
+
     }
 
     //! Méthode de déconnexion du user connecté
@@ -153,7 +193,7 @@ class AppUserController extends CoreController
         //$this->checkAuthorization(['admin']);
 
         $this->show('user/user-add', [
-            //! Si on prébvoit une évolution du form vers add | update
+            //! Si on prévoit une évolution du form vers add | update
             // alors on peut déjà passer une instance de AppUser
             // même avec un objet user vide => Pas d'erreur
             'user' => new AppUser,
