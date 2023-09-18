@@ -50,13 +50,15 @@ dump($_SESSION);
                 <li class="nav-item">
                     <a class="nav-link" href="#">Tags</a>
                 </li>
-                <li class="nav-item">
-                    <!-- <a class="nav-link" href="#">Sélection Accueil</a> -->
-                    <a class="nav-link <?= (strpos($currentPage, 'manage') !== false) ? "active" : ""; ?>" href="<?= $router->generate('category-manage') ?>">Sélection Accueil</a>
-                </li>
+
                 <?php if (isset($_SESSION['userId'])) : ?>
 
                     <?php if ($_SESSION['userObject']->getRole() === "admin") : ?>
+
+                        <li class="nav-item">
+                            <!-- <a class="nav-link" href="#">Sélection Accueil</a> -->
+                            <a class="nav-link <?= (strpos($currentPage, 'manage') !== false) ? "active" : ""; ?>" href="<?= $router->generate('category-manage') ?>">Sélection Accueil</a>
+                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link <?= (strpos($currentPage, 'user-list') !== false) ? "active" : ""; ?>" href="<?= $router->generate('user-list') ?>">

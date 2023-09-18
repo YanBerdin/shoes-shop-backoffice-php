@@ -118,7 +118,7 @@ class Product extends CoreModel
      */
     public static function findAllHomepage()
     {
-        // On peut appeler direcrement getPDO() sur la classe Database 
+        // On peut appeler directement getPDO() sur la classe Database 
         // car getPDO() est une méthode statique (définie par : public static function ...)
         $pdo = Database::getPDO();
 
@@ -144,7 +144,11 @@ class Product extends CoreModel
 
         // Executer la requete (on pourrait aussi utiliser bindvalue cf hier)
         //TODO Marche Pas => Voir Alec
-        //TODO $pdoStatement->execute([`:limit` => $limit]);
+        // FIXME: $pdoStatement->execute([`:limit` => $limit]);
+        // Et si j'utilise :
+        // $pdoStatement->bindParam(':limit', $limit, PDO::PARAM_INT);
+        // $pdoStatement->execute();
+        // Je ne peux plus forcer les objets reçus à être de classe Product
 
         $products = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'App\Models\Product');
 
@@ -174,15 +178,16 @@ class Product extends CoreModel
 
         // Version avec marqueurs nommés (un marqueur nommé sera de la forme : ':string')
         // Les marqueurs seront remplacés par des données que l'on récupérera via la 2nde requête (execute)
-        // $sql = 'INSERT INTO `product`
-        //     (`name`, `description`, `picture`, `price`, `rate`, `status`, `category_id`, `brand_id`, `type_id`)
-        //     VALUES (:name, :description, :picture, :price, :rate, :status, :category_id, :brand_id, :type_id)
-        // ';
-
         $sql = 'INSERT INTO `product`
-            (name, description, picture, price, rate, status, category_id, brand_id, type_id)
+            (`name`, `description`, `picture`, `price`, `rate`, `status`, `category_id`, `brand_id`, `type_id`)
             VALUES (:name, :description, :picture, :price, :rate, :status, :category_id, :brand_id, :type_id)
         ';
+        
+        //? Version sans backtick
+        // $sql = 'INSERT INTO `product`
+        //     (name, description, picture, price, rate, status, category_id, brand_id, type_id)
+        //     VALUES (:name, :description, :picture, :price, :rate, :status, :category_id, :brand_id, :type_id)
+        // ';
 
 
         // Execution de la requête d'insertion (exec, pas query)

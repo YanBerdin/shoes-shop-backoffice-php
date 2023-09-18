@@ -220,8 +220,7 @@ class Category extends CoreModel
 
         // Version avec marqueurs nommés (un marqueur nommé sera de la forme : ':string')
         // Les marqueurs seront remplacés par des données que l'on récupérera via la 2nde requête (execute)
-        $sql = '
-            INSERT INTO `category`
+        $sql = 'INSERT INTO `category`
             (`name`, `subtitle`, `picture`)
             VALUES (:name, :subtitle, :picture)
         ';
@@ -314,23 +313,24 @@ class Category extends CoreModel
         // - mettre les bonnes valeurs dans les 5 catégories correspondantes
         // Contrairement à d'habitude, on passe ici par des marqueurs anonymes (?)
         // car toutes les données sont semblables (ce sont toutes des id)
-        // $sql = '
-        //     UPDATE `category` SET `home_order` = 0;
-        //     UPDATE `category` SET `home_order` = 1 WHERE id = ?;
-        //     UPDATE `category` SET `home_order` = 2 WHERE id = ?;
-        //     UPDATE `category` SET `home_order` = 3 WHERE id = ?;
-        //     UPDATE `category` SET `home_order` = 4 WHERE id = ?;
-        //     UPDATE `category` SET `home_order` = 5 WHERE id = ?;
-        // ';
-        $sql = 'UPDATE `category`
- 	   SET `home_order` = CASE 
-    		  when id = ? then 1
-  		  when id = ? then 2
- 		  when id = ? then 3
-		  when id = ? then 4
-		  when id = ? then 5
-		  ELSE `home_order`	
-            END ';
+        $sql = 'UPDATE `category` SET `home_order` = 0;
+            UPDATE `category` SET `home_order` = 1 WHERE id = ?;
+            UPDATE `category` SET `home_order` = 2 WHERE id = ?;
+            UPDATE `category` SET `home_order` = 3 WHERE id = ?;
+            UPDATE `category` SET `home_order` = 4 WHERE id = ?;
+            UPDATE `category` SET `home_order` = 5 WHERE id = ?;
+        ';
+
+        //FIXME:
+    //     $sql = 'UPDATE `category`
+ 	//    SET `home_order` = CASE 
+    // 	  when id = ? then 1
+  	// 	  when id = ? then 2
+ 	// 	  when id = ? then 3
+	// 	  when id = ? then 4
+	// 	  when id = ? then 5
+	// 	  ELSE `home_order`	
+    //         END ';
 
 
         //! On prépare les requêtes $query pourrait être $pdoStatement
