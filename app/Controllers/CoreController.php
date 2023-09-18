@@ -4,13 +4,23 @@ namespace App\Controllers;
 
 class CoreController
 {
+    protected $router;
+    protected $match;
+
     /**
      * Constructeur : systématiquement et automatiqueent appelé
      * (à l'appel de la classe ou lors d'une nouvelle isntanciation)
      */
-    public function __construct()
-    //! public function __construct( $router, $match )
+    // public function __construct()
+    public function __construct($router, $match)
     {
+        // Je stocke les paramètres reçus dans des propriétés protected
+        // ainsi tout les autres Controller qui héritent de CoreController
+        // hériteront également de ces deux propriétés, adieu global !
+        $this->router = $router;
+        $this->match  = $match;
+
+
         //! On définit une liste des permissions
         // ACL : Access Control List
         // https://fr.wikipedia.org/wiki/Access_Control_List
@@ -39,7 +49,7 @@ class CoreController
         // alors on devra appeler checkAuthorization()
         // On a donc besoin de la route actuelle : $match['name']
         // ==> On doit donc récupérer $match
-        global $match;
+        // global $match;
         // On récupère à présent le nom de la route
         $routeName = $match['name'];
 
@@ -71,9 +81,12 @@ class CoreController
      */
     protected function show(string $viewName, $viewData = [])
     {
+        //! On sait fairemieux avec setArguments (PierreOclock S06E06 PM)
         // On globalise $router car on ne sait pas faire mieux pour l'instant
-        global $router;
-        //TODO Voir $router et $match dans CoreController cf Pierre-Oclock => Alec
+        //? global $router;
+        //? Vu qu'on a accès à la propriété $this->router grace au constructeur
+        //? on peut transmettre facilement cette donnée à toutes nos vues
+        $viewData['router'] = $this->router;
 
         // Comme $viewData est déclarée comme paramètre de la méthode show()
         // les vues y ont accès
@@ -155,7 +168,10 @@ class CoreController
         } else {
             // Si le user n'est pas connecté
             // alors on le redirige vers la page de connexion
-            header('Location: /user/login');
+            //? Après avoir déglobalisé $router => Dynamiser Redirection
+            //? header('Location: /user/login');
+            header("Location: " . $this->router->generate("user-login"));
+            
 
             //! On stop l'exécution du script
             // (au cas où par sécurité pour sortir)

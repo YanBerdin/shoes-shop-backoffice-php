@@ -184,7 +184,11 @@ class CategoryController extends CoreController
 
                     if ($isUpdateOk) {
                         // Redirection vers la category modifiée
+                        // FIXME: Alec Essai de dynamiser redirection comme ailleurs mais KO
                         header("Location: /category/add-update/{$categoryId}");
+
+                        //? Recommandation exit() apres Redirection
+                        exit();
                     } else {
                         // Sinon => message d'erreur et redirection vers le form
                         // (pas besoin ici car notre attribut action du form est vide, et donc on reste sur la page)
@@ -200,8 +204,12 @@ class CategoryController extends CoreController
                     if ($isInsertOk) {
                         // Redirection vers category/list
                         // header(location) permet de sortir du comportement action=""
-                        //? header('Location: /category/list');
-                        header("Location: /category/list");
+                        //? Après avoir déglobalisé $router => Dynamiser Redirection
+                        //? header("Location: /category/list");
+                        header("Location: " . $this->router->generate("category-list"));
+
+                        //? Recommandation exit() apres Redirection
+                        exit();
                     } else {
                         //! Sinon => message d'erreur et redirection vers le form
                         // (pas besoin ici car notre attribut action du form est vide, et donc on reste sur la page)
@@ -293,6 +301,11 @@ class CategoryController extends CoreController
         //FIXME: - mettre un try / catch sur l'exécution des requêtes
 
         // On redirige vers la liste des catégories
-        header('Location: /category/list');
+        //? Après avoir déglobalisé $router => Dynamiser Redirection
+        //? header("Location: /category/list");
+        header("Location: " . $this->router->generate("category-list"));
+
+        //? Recommandation exit() apres Redirection
+        exit();
     }
 }

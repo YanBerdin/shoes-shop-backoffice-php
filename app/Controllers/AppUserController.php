@@ -150,9 +150,10 @@ class AppUserController extends CoreController
         session_destroy();
 
         // Une fois déconnecté, rediriger vers le login
-        // header( "Location: ".$this->router->generate( "user-login" ) );
-        header('Location: /user/login');
-        exit;
+        //? Après avoir déglobalisé $router => Dynamiser Redirection
+        //? header('Location: /user/login');
+        header("Location: " . $this->router->generate("user-login"));
+        exit();
     }
 
 
@@ -326,8 +327,10 @@ class AppUserController extends CoreController
                 // On appelle la méthode du Model AppUser pour faire l'insertion en BDD
                 if ($modelUser->insert()) {
                     // insertion OK ==> on redirige vers la liste des user
-                    header('Location: /user/list');
-                    exit;
+                    //? Après avoir déglobalisé $router => Dynamiser Redirection
+                    //? header('Location: /user/list');
+                    header("Location: " . $this->router->generate("user-list"));
+                    exit();
                 } else {
                     //! insertion KO => message d'erreur 
                     //! (et ajouter une ereur dans errorList)

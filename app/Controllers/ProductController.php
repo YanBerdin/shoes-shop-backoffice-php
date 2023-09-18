@@ -188,7 +188,11 @@ class ProductController extends CoreController
                 // Si l'insertion est OK => redirection vers category/list
                 if ($isInsert) {    // $isInsert vaut true
                     // Redirection vers category/list
-                    header('Location: /product/list');
+                    //? Après avoir déglobalisé $router => Dynamiser Redirection
+                    //? header('Location: /product/list');
+                    header("Location: " . $this->router->generate("product-list"));
+                    //? Recommandation exit() après une redirection
+                    exit();
                 } else {
                     // Sinon => message d'erreur et redirection vers le form (pas besoin ici car notre attribut action du form est vide, et donc on reste sur la page)
                     $errorList[] = 'La création du produit a échoué';
