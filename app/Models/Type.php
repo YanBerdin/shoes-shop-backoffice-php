@@ -38,7 +38,9 @@ class Type extends CoreModel
         $pdoStatement = $pdo->query($sql);
 
         // un seul résultat => fetchObject
-        $type = $pdoStatement->fetchObject('App\Models\Type');
+        //? $type = $pdoStatement->fetchObject('App\Models\Type');
+        //? Autre manière ( self::class ); (Pierre Oclock)
+        $type = $pdoStatement->fetchObject(self::class);
 
         // retourner le résultat
         return $type;

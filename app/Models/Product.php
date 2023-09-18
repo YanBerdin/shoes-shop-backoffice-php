@@ -106,7 +106,9 @@ class Product extends CoreModel
 
         $pdoStatement = $pdo->query($sql);
 
-        $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'App\Models\Product');
+        //? $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'App\Models\Product');
+        //? Autre manière ( self::class ); (Pierre Oclock)
+        $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, self::class);
 
         return $results;
     }

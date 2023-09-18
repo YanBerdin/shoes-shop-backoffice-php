@@ -56,7 +56,9 @@ class AppUser extends CoreModel
         // Utiliser fetchObject => on attend qu'1 résultat
         // fetchObject attend argument type d'objet
         // permet de savoir à quelles propriétés on a acces
-        $user = $pdoStatement->fetchObject('App\Models\AppUser'); // <= FQCM
+        //? $user = $pdoStatement->fetchObject('App\Models\AppUser'); // <= FQCM
+        //? ( self::class ); (Pierre Oclock)
+        $user = $pdoStatement->fetchObject(self::class); // <= FQCM
 
         //! NB : $user peut contenir ou pas un objet User
 
@@ -89,7 +91,9 @@ class AppUser extends CoreModel
 
         $pdoStatement = $pdo->query($sql);
 
-        return $pdoStatement->fetchAll(PDO::FETCH_CLASS, AppUser::class);
+        //? return $pdoStatement->fetchAll(PDO::FETCH_CLASS, AppUser::class);
+        //? ( self::class ); (Pierre Oclock)
+        return $pdoStatement->fetchAll(PDO::FETCH_CLASS, self::class);
 
         // Version plus longue
         // $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, AppUser::class);
@@ -140,13 +144,13 @@ class AppUser extends CoreModel
     // Méthode pratique qui permet de savoir facile si l'utilisateur a le role admin
     // public function isAdmin()
     // {
-        // if ($this->role === "admin")
-        //     return true;
-        // else
-        //     return false;
+    // if ($this->role === "admin")
+    //     return true;
+    // else
+    //     return false;
 
-        //? Version raccourcie
-        //?   return $this->role === "admin";
+    //? Version raccourcie
+    //?   return $this->role === "admin";
     // }
 
 

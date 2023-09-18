@@ -52,8 +52,10 @@ class Brand extends CoreModel
         ]);
 
         // un seul résultat => fetchObject
-        $brand = $pdoStatement->fetchObject('App\Models\Brand');
-        //?                     fetchObject( self::class ); (Pierre Oclock) Alec : Mieux ?
+        //? $brand = $pdoStatement->fetchObject('App\Models\Brand');
+        //? fetchObject( self::class ); (Pierre Oclock)
+        $brand = $pdoStatement->fetchObject(self::class);
+
 
         // retourner le résultat
         return $brand;
@@ -77,7 +79,9 @@ class Brand extends CoreModel
         // On exécute la requête préparée
         $pdoStatement->execute();
 
-        $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'App\Models\Brand');
+        //? $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'App\Models\Brand');
+        //? fetchObject( self::class ); (Pierre Oclock)
+        $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, self::class);
 
         return $results;
     }
