@@ -141,10 +141,10 @@ class AppUserController extends CoreController
 
         // Ici, on va garder la même clé mais vider le coffre
         // Ici unset détruit la clé 'user' du tableau de session
-        // FIXME: //? ALEC ?
+
         // TODO Avec unset => BUG => Undefined $_SESSION['userObject']
         // TODO Pourtant Ok sur PierreOclock
-        // FIXME: unset( $_SESSION['userObject'] );
+        // unset( $_SESSION['userObject'] );
 
         // On pourrait aussi détruire tout le coffre
         session_destroy();
@@ -222,8 +222,8 @@ class AppUserController extends CoreController
             //! 2- On les vérifie (filter_input)
             $firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_SPECIAL_CHARS);
             $lastname = filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_SPECIAL_CHARS);
-            $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL); //FIXME: FILTER_VALIDATE_EMAIL utilisé par PierreOclock => Mieux ? Alec ?
-            $password = filter_input(INPUT_POST, 'password');                  //FIXME: Pas de FILTER => Alec ?
+            $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL); // FILTER_VALIDATE_EMAIL utilisé par PierreOclock
+            $password = filter_input(INPUT_POST, 'password');                  //! Pas de FILTER
             $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_SPECIAL_CHARS);
             $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_NUMBER_INT);
 
@@ -290,10 +290,16 @@ class AppUserController extends CoreController
             if (strlen($password) < 5) {
                 $errorList[] = "Le mot de passe doit faire au moins 5 caractères.";
             }
-            // FIXME:
+
             // TODO Bonus : Vérifier la complexite ++ (voir Mega Bonus de l'atelier E06)
             //? FIN de Version Pierre Oclock-------------------------------------------------------
-
+            // TODO Vérification
+            // Pas trop de répétitions d’un même caractères
+            // Nombre minimum de classes de caractère différentes (minuscuels, majuscules, chiffre, caractères spéciaux, …)
+            // Pas la date de naissance
+            // Pas de suite de caractères comme abcdef… ou 1234…
+            // Pas un mot du dictionnaire
+            // Pas un des X derniers mots de passe
 
             //! Avant d'aller plus loin, on vérifiera si on a aucune erreur
             // (et si c'est le cas, on arrête le processus)
@@ -319,10 +325,8 @@ class AppUserController extends CoreController
                 // Rappel : en BDD, tous nos password doivent être hashés
                 // A la saisie du form, on récuère le password clair qu'on va hasher
                 // ET on va comparer le hash au password de la BDD
-                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);  //? PASSWORD_DEFAULT (utilisé par Pierre Oclock) Mieux ? Alec ?
+                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);  // (PASSWORD_DEFAULT utilisé par Pierre Oclock)
                 $modelUser->setPassword($hashedPassword);
-
-                //FIXME: Faut il vérifier que le nombre de caractères saisi === nbr enregistré BDD ? FIXME: Alec ?
 
                 // On appelle la méthode du Model AppUser pour faire l'insertion en BDD
                 if ($modelUser->insert()) {

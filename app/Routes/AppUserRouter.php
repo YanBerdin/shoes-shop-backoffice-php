@@ -1,15 +1,16 @@
 <?php 
-namespace App\Routes;
+// namespace App\Routes;
 
+use App\Controllers\UserController;
 // Affichage du form user
 $router->map(
     'GET',
     '/user/login',
     [
         'method' => 'login',
-        'controller' => '\App\Controllers\AppUserController'
+        'controller' => UserController::class // '\App\Controllers\AppUserController'
     ],
-    'user-login'
+    'user-login'// acces public
 );
 
 // Traitement du form user
@@ -18,9 +19,9 @@ $router->map(
     '/user/login',
     [
         'method' => 'loginUser',
-        'controller' => '\App\Controllers\AppUserController'
+        'controller' => UserController::class // '\App\Controllers\AppUserController'
     ],
-    'user-check' //? A mettre aussi ? Voir ALEC
+    'user-check' // acces public
 );
 
 //? S06 E06
@@ -31,7 +32,7 @@ $router->map(
     '/user/list',
     [
         'method' => 'userList',
-        'controller' => '\App\Controllers\AppUserController'
+        'controller' => UserController::class // '\App\Controllers\AppUserController'
     ],
     'user-list' // Dans ACL
 );
@@ -42,7 +43,7 @@ $router->map(
     '/user/add',
     [
         'method' => 'addUser',
-        'controller' => '\App\Controllers\AppUserController'
+        'controller' => UserController::class // '\App\Controllers\AppUserController'
     ],
     'user-add'  // Dans ACL
 );
@@ -53,7 +54,7 @@ $router->map(
     '/user/add',
     [
         'method' => 'createUser',
-        'controller' => '\App\Controllers\AppUserController'
+        'controller' => UserController::class // '\App\Controllers\AppUserController'
     ],
     'user-create'  // Dans ACL
 );
@@ -64,7 +65,7 @@ $router->map(
     '/logout',
     [
       'method' => 'logout',
-      'controller' => '\App\Controllers\AppUserController' // TODO UserController::class
+      'controller' => UserController::class // '\App\Controllers\AppUserController'
     ],
     'user-logout'
   );

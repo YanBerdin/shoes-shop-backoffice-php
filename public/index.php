@@ -178,7 +178,7 @@ require_once '../app/Routes/AppUserRouter.php';
 //         'method' => 'login',
 //         'controller' => '\App\Controllers\AppUserController'
 //     ],
-//     'user-login'
+//     'user-login' // Doit rester publique
 // );
 
 // Traitement du form user
@@ -189,7 +189,7 @@ require_once '../app/Routes/AppUserRouter.php';
 //         'method' => 'loginUser',
 //         'controller' => '\App\Controllers\AppUserController'
 //     ],
-//     'user-check' //? A mettre aussi ? Voir ALEC
+//     'user-check'  // Doit rester publique
 // );
 
 //? S06 E06

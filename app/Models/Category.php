@@ -110,7 +110,7 @@ class Category extends CoreModel
         // exécuter notre requête
         //? $pdoStatement = $pdo->query($sql);
 
-        //! Requete Préparée (Alec)
+        //! Requete Préparée
         // Version avec marqueurs nommés (un marqueur nommé sera de la forme : ':string')
         // Les marqueurs seront remplacés par des données que l'on récupérera via la 2nde requête (execute)
         $sql = 'SELECT * FROM `category` WHERE `id` = :id';

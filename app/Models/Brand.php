@@ -176,7 +176,7 @@ class Brand extends CoreModel
 
         // Execution de la requête de mise à jour (exec, pas query)
         // $updatedRows = $pdo->exec($sql);
-        //? Plus besoin d'utiliser exec/query ?
+        
 
 
         // On retourne VRAI, si au moins une ligne ajoutée

@@ -40,7 +40,7 @@ class CoreController
             'user-add' => ['admin'],
             'user-create' => ['admin'],
             'category-manage' => ['admin', 'catalog-manager'],
-            'category-select' => ['admin', 'catalog-manager'],
+            'category-select' => ['admin', 'catalog-manager']
         ];
 
         // On va regarder si l'URL demandée (cad la route concernée)
@@ -155,9 +155,11 @@ class CoreController
                 http_response_code(403);
                 echo 'Oups, une erreur 403, Accès => Refusé';
 
-                //TODO A Tester et verifier Alec
-                //TODO header('Location: /error/err403');
-                //TODO $this->show( "error/err403" ); 
+                //? Envoyer un header d’erreur cf Ajax Kourou
+                header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden', true, 403);
+
+                //TODO Remplacer echo par une jolie page 403
+                // $this->show( "error/err403" ); 
 
                 //! On stop l'exécution du script (vu que y a pas de return)
                 // Sinon affiche quand même la page demandée (category-list) 
@@ -171,10 +173,10 @@ class CoreController
             //? Après avoir déglobalisé $router => Dynamiser Redirection
             //? header('Location: /user/login');
             header("Location: " . $this->router->generate("user-login"));
-            
 
             //! On stop l'exécution du script
-            // (au cas où par sécurité pour sortir)
+            // (au cas où par sécurité pour sortir 
+            // vu qu'il n'y a pas de return pour stopper l'execution du script)
             exit();
         }
     }
