@@ -1,14 +1,15 @@
 <?php 
 // namespace App\Routes;
 
-use App\Controllers\UserController;
+use App\Controllers\AppUserController;
+
 // Affichage du form user
 $router->map(
     'GET',
     '/user/login',
     [
         'method' => 'login',
-        'controller' => UserController::class // '\App\Controllers\AppUserController'
+        'controller' => AppUserController::class // '\App\Controllers\AppUserController'
     ],
     'user-login'// acces public
 );
@@ -19,7 +20,7 @@ $router->map(
     '/user/login',
     [
         'method' => 'loginUser',
-        'controller' => UserController::class // '\App\Controllers\AppUserController'
+        'controller' => AppUserController::class // '\App\Controllers\AppUserController'
     ],
     'user-check' // acces public
 );
@@ -32,7 +33,7 @@ $router->map(
     '/user/list',
     [
         'method' => 'userList',
-        'controller' => UserController::class // '\App\Controllers\AppUserController'
+        'controller' => AppUserController::class // '\App\Controllers\AppUserController'
     ],
     'user-list' // Dans ACL
 );
@@ -43,7 +44,7 @@ $router->map(
     '/user/add',
     [
         'method' => 'addUser',
-        'controller' => UserController::class // '\App\Controllers\AppUserController'
+        'controller' => AppUserController::class // '\App\Controllers\AppUserController'
     ],
     'user-add'  // Dans ACL
 );
@@ -54,7 +55,7 @@ $router->map(
     '/user/add',
     [
         'method' => 'createUser',
-        'controller' => UserController::class // '\App\Controllers\AppUserController'
+        'controller' => AppUserController::class // '\App\Controllers\AppUserController'
     ],
     'user-create'  // Dans ACL
 );
@@ -65,7 +66,7 @@ $router->map(
     '/logout',
     [
       'method' => 'logout',
-      'controller' => UserController::class // '\App\Controllers\AppUserController'
+      'controller' => AppUserController::class // '\App\Controllers\AppUserController'
     ],
     'user-logout'
   );
