@@ -11,6 +11,17 @@
 
 Le BackOffice de Shoes Shop est une application web conçue pour gérer cette boutique en ligne : [https://github.com/YanBerdin/shoes-shop-frontoffice-php]
 
+Le code HTML/CSS du BackOffice fourni est basé sur le framework Bootstrap version 5.1, dont voici [la documentation](https://getbootstrap.com/docs/5.1/getting-started/introduction/).
+
+Il comprend 3 pages :
+
+- accueil
+- liste des catégories
+- formulaire d'ajout d'une catégorie
+
+A partir de ces 3 exemples produire le reste, aidé des Wireframes fournis.
+
+
 ## `Pour installer cette app, suivez les étapes suivantes :`
 
 1. Assurez-vous d'avoir PHP, MySQL, Composer et un serveur web (comme Apache) installés sur votre machine.
@@ -58,8 +69,9 @@ Zone réservée aux administrateurs _métier_ et techniques du site.
     - `catalog manager` pouvant gérer les données sur les produits du site (y compris catégories, types et marque)
     - `admin` pouvant, en plus de ce que peut faire un `catalog manager`, modifier le statut des commandes et créer des utilisateurs
 
-## `Documents techniques`
+## `Documents techniques produits`
 
 - [User stories](docs/user_stories.md)
 - [Intégration HTML/CSS](docs/html-css/)
+- [Routes](docs/routes.md)
 

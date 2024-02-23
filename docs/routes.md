@@ -1,6 +1,4 @@
-# Routes (Pushé par Gérard)
-
-## Sprint 2
+# Routes
 
 | URL | HTTP Method | Controller | Method | Title | Content | Comment |
 |--|--|--|--|--|--|--|

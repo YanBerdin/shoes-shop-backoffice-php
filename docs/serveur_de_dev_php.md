@@ -2,7 +2,6 @@
 
 ## Fonctionnement
 
-Cette saison, nous allons utiliser le serveur de développement intégré à PHP.
 Pour le lancer, on tape dans son terminal à la racine du dépôt la commande :
 `php -S 0.0.0.0:8080 -t public`
 
@@ -17,10 +16,10 @@ Bien qu'il n'utilise pas de fichier `.htaccess` (format de fichier spécifique �
 
 Du fait que le serveur soit lancé dans le répertoire `public`, le mot `public` n'apparaît plus dans l'url. On accède directement à `localhost:8080`.
 
-Il n'y a plus de sous-dossier dans l'url, cela ressemble un peu plus à un site en ligne.
+Il n'y a plus de sous-dossier dans l'url.
 
 Un autre avantage est que les fichiers et dossiers non publics (les répertoires `app` et les autres) sont mieux sécurisés car on ne peut pas remonter au delà de la racine (répertoire `public`).
 
 ## Et pour mettre le site en production ?
 
-Si le serveur de production utilise le logiciel Apache (comme sur nos VM), alors il faudrait s'adapter et remettre en place les fichiers `.htaccess` comme on l'avait fait en S05, pour gérer le renvoi vers le Front Controller (index.php) et interdire l'accès à certains répertoires.
+Si le serveur de production utilise le logiciel Apache (comme sur nos VM), alors il faudrait s'adapter et remettre en place les fichiers `.htaccess` pour gérer le renvoi vers le Front Controller (index.php) et interdire l'accès à certains répertoires.
