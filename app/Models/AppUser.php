@@ -8,80 +8,53 @@ use PDO;
 class AppUser extends CoreModel
 {
     private $email;
-
     private $password;
-
     private $firstname;
-
     private $lastname;
-
     private $role;
-
     private $status;
 
     public static function find($id)
     {
-        // On implémente la méthode
-
-        // Exemple d'utilisation : appel de la méthode statique
-        // find à l'intérieur de la classe
-        // $this ne fonctionnera pas, il faut utiliser à la place self::
-        // Pour appeler ici find(), on va donc faire self::find()
-        //$this->getEmail(); ==> génère une erreur car ici nous sommes dans une méthode statique, l'objet courant $this n'est pas accessible
+        // Mémo : méthode statique, l'objet courant $this n'est pas accessible
         self::getEmail();
     }
 
 
     public static function findByEmail($email)
     {
-        // Si on trouve un résultat pour l'email, retourner une instance de APPUser
-        // Sinon, retourner false
+        // Si ok email, retourne une instance de $user
+        // Sinon, retourne false
 
-        // Connexion BDD
         $pdo = Database::getPDO();
 
-        // Interpolation = injection SQL
         $sql = "
             SELECT * FROM `app_user`
             WHERE email = :email
         ";
 
-        //! Requete préparée
         $pdoStatement = $pdo->prepare($sql);
-
-        // Executer la requete (on pourrait aussi utiliser bindvalue cf hier)
         $pdoStatement->execute([':email' => $email]);
 
-        // Vu qu'il n'y a qu'1 email prévu en BDD 
-        // Utiliser fetchObject => on attend qu'1 résultat
         // fetchObject attend argument type d'objet
         // permet de savoir à quelles propriétés on a acces
-        //? $user = $pdoStatement->fetchObject('App\Models\AppUser'); // <= FQCM
-        //? ( self::class ); (Pierre Oclock)
-        $user = $pdoStatement->fetchObject(self::class); // <= FQCM
+        $user = $pdoStatement->fetchObject(self::class);
 
-        //! NB : $user peut contenir ou pas un objet User
-
-        // si on trouve un résultat pour l'email, retourner une instance de AppUser
-        // sinon, retourner false
+        // NB : $user peut contenir ou pas un objet User
         if ($user) {
             return $user;
         } else {
             return false;
         }
 
-        // TODO Version plus courte sur une ligne en ternaire
-        //TODO (condition) ? execution si condition vérifiée : exécution sinon
+        // Ternaire
+        // (condition) ? execution si condition vérifiée : sinon exécution
         // return ($user) ? $user : false;
-
     }
 
-    //?S06 E06
     /**
-     * Méthode pour récupérer tous les users
-     * Copyright Audrey
+     * Récupérer tous les users
      *
-     * @return void
      */
     public static function findAll()
     {
@@ -91,26 +64,22 @@ class AppUser extends CoreModel
 
         $pdoStatement = $pdo->query($sql);
 
-        //? return $pdoStatement->fetchAll(PDO::FETCH_CLASS, AppUser::class);
-        //? ( self::class ); (Pierre Oclock)
         return $pdoStatement->fetchAll(PDO::FETCH_CLASS, self::class);
 
-        // Version plus longue
+        // Version + longue
         // $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, AppUser::class);
         // return $results;
 
-        // AppUser::class revient à mettre le FQCN
     }
 
     //! S06 E06 AM2
     /**
      * Méthode pour ajouter user dans la Table app_user en BDD
-     * (Version sans bindvalue)
+     * 
      * @return booléan true if insertion ok, else false
      */
     public function insert()
     {
-        // Copyright Romain
 
         $pdo = Database::getPDO();
 
@@ -138,22 +107,6 @@ class AppUser extends CoreModel
             return false;
         }
     }
-
-    //? Récupéré mais pas utilisé => Peut etre utile si User à plusieurs rôles
-    // Pierre O'clock => Condition affichage Onglet Liste Utilisateurs dans Menu
-    // Méthode pratique qui permet de savoir facile si l'utilisateur a le role admin
-    // public function isAdmin()
-    // {
-    // if ($this->role === "admin")
-    //     return true;
-    // else
-    //     return false;
-
-    //? Version raccourcie
-    //?   return $this->role === "admin";
-    // }
-
-
 
     /**
      * Get the value of email

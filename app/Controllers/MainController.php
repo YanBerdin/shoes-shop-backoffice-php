@@ -2,35 +2,24 @@
 
 namespace App\Controllers;
 
-// Si j'ai besoin du Model Category
 use App\Models\Category;
 use App\Models\Product;
 
 class MainController extends CoreController
 {
     /**
-     * Méthode s'occupant de la page d'accueil et Pages statiques
+     * Méthode de la page d'accueil et pages statiques
      *
      * @return void
      */
     public function home()
     {
-        // objets transmis dans home car besoin uniquement sur Home 
-        // Sinon on l'aurait mis dans show() de CoreController
-
-        // On utilise le Model Category pour afficher les 5 catégories à mettre en avant
+        // objets transmis dans home (besoin uniquement sur Homepage)
         $categories = Category::findAllHomepage();
 
-        // Idem au niveau des products
+        // Idem pour products
         $products = Product::findAllHomepage();
 
-    //? Bonus PierreOclock : n'afficher que les 3 premiers éléments de chaque tableau
-    // $allCategories = array_slice( $allCategories, 0, 3 );
-    // $allProducts   = array_slice( $allProducts,   0, 3 );
-
-        // On appelle la méthode show() de l'objet courant
-        // En argument, on fournit le fichier de Vue
-        // Par convention, chaque fichier de vue sera dans un sous-dossier du nom du Controller
         $this->show('main/home', [
             'categories' => $categories,
             'products' => $products
