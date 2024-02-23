@@ -69,10 +69,8 @@ class AppUser extends CoreModel
         // Version + longue
         // $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, AppUser::class);
         // return $results;
-
     }
 
-    //! S06 E06 AM2
     /**
      * Méthode pour ajouter user dans la Table app_user en BDD
      * 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 // namespace App\Routes;
 
 use App\Controllers\AppUserController;
@@ -11,7 +11,7 @@ $router->map(
         'method' => 'login',
         'controller' => AppUserController::class // '\App\Controllers\AppUserController'
     ],
-    'user-login'// acces public
+    'user-login' // acces public
 );
 
 // Traitement du form user
@@ -65,9 +65,8 @@ $router->map(
     'GET',
     '/logout',
     [
-      'method' => 'logout',
-      'controller' => AppUserController::class // '\App\Controllers\AppUserController'
+        'method' => 'logout',
+        'controller' => AppUserController::class // '\App\Controllers\AppUserController'
     ],
     'user-logout'
-  );
-  
+);

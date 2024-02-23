@@ -2,37 +2,31 @@
     <a href="<?= $router->generate('category-list') ?>" class="btn btn-success float-end">Retour</a>
     <!-- <h2>Ajouter une catégorie</h2> -->
 
-    <!-- On va gérer un affichage dynamique pour le libellé h2 -->
+    <!-- Gérer un affichage dynamique pour le libellé h2 -->
     <!-- Objectif : savoir si on est en mode create ou update -->
-    <!-- Comment savoir cela ? -->
     <!-- En mode create, ce template ne récupère aucune donnée -->
     <!-- En mode update, ce template récupère une catégorie (et éventuellement une catégorie id) -->
-    <!-- On va donc gérer la condition en fonction de la catégorie reçue ou pas -->
+    <!-- Donc gérer la condition en fonction de la catégorie reçue ou pas -->
 
     <?php if (empty($categoryId)) : ?>
-        <!-- Si on arrive ici avec Bouton Ajouter $categoryId est vide -->
-        <!-- ce h2 est alors affiché -->
+        <!-- Si j'arrive ici avec Bouton Ajouter, $categoryId est vide -->
         <h2>Ajouter une catégorie</h2>
     <?php else : ?>
-        <!-- Sinon on arrive ici avec Bouton Valider/Submit => $categoryId est renseigné -->
-        <!-- cet autre h2 est alors affiché -->
+        <!-- Sinon Bouton Valider/Submit => $categoryId est renseigné -->
         <h2>Modifier la catégorie</h2>
     <?php endif; ?>
 
-
     <!-- 2 attributs sont à indiquer dans la balise <form> -->
     <!-- action : fournit l'URL de redirection au submit du formulaire -->
-    <!-- si action est vide ('') alors au submit, on restera sur la page actuelle -->
+    <!-- si action est vide ('') alors au submit, on reste sur la page actuelle -->
     <!-- method : fournit la méthode HTTP utilisée (GET ou POST) -->
     <form action="" method="POST" class="mt-5">
         <div class="mb-3">
             <label for="name" class="form-label">Nom</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="Nom de la catégorie" value="<?= $category->getName() ?>"  required autocomplete="off">
             <!-- L'attribut name permet de récupérer la valeur de l'input qui sera saisie -->
-            <!-- La méthode est 'POST' ==> on retrouvera les données dans l'array associatif $_POST -->
-            <!-- Par ex, pour l'input suivant subtitle, on récupèrera la données via 
-                $_POST['subtitle'] -->
-
+            <!-- La méthode est 'POST' => on retrouvera les données dans l'array associatif $_POST -->
+            <!-- ex, pour input subtitle, récupèrer la données via $_POST['subtitle'] -->
             <!-- for permet de créer Focus pour entrer dans champ input -->
         </div>
         <div class="mb-3">

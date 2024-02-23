@@ -1,20 +1,12 @@
 <?php
 
 namespace App\Models;
-
-// Classe mère de tous les Models
-// On centralise ici toutes les propriétés et méthodes utiles pour TOUS les Models
+// classe abstraite = classe qui a une ou plusieurs méthodes non implémentées ici
+// Ces méthodes devront être codées dans les classes filles
+// Si une classe fille veut hériter de CoreModel mais n'implemente pas une méthode de CoreModel => 
+// On aura une erreur
+//TODO  abstract class CoreModel
 class CoreModel
-
-
-//! V2 : On ajoute le mot-clé abstract pour indiquer que CoreModel
-//! est une classe abstraite
-//! classe abstraite = classe qui a une ou plusieurs méthodes non implémentées (cad pas codées ici)
-//! Ces méthodes devront être codées dans les classes filles
-//! Si une classe fille veut hériter de CoreModel mais n'implemente pas une méthode de CoreModel => 
-//! On aura une erreur
-//TODO Abstract vu en Bonus
-//? abstract class CoreModel
 {
     /**
      * @var int
@@ -29,13 +21,13 @@ class CoreModel
      */
     protected $updated_at;
 
-    //! On déclare ici la (ou les) méthode(s) abstraites
-    //! Les classes enfants devront implémenter ces méthdes là
+    //* On déclare ici la (ou les) méthode(s) abstraites
+    //* Les classes enfants devront implémenter ces méthdes là
     // J'indique que toute classe qui hérite de CoreModel DOIT IMPERATIVEMENT
     // implémenter une méthode find qui doit etre statique
     // Attention, elle n'oblige rien au niveau du CONTENU de la méthode
-    //TODO abstract static public function find($id);
-    //TODO => Maintenant il faut implémenter find($id) dans CHAQUE Model
+    //? abstract static public function find($id);
+    //? => Maintenant il faut implémenter find($id) dans CHAQUE Model
     // abstract static function find( $id );
     // abstract static function findAll();
     // abstract function insert();

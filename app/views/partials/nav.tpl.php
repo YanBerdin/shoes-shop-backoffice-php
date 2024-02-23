@@ -1,19 +1,16 @@
 <?php
-//TODO Recherches Perso Affichage Conditionnel
 // dump($viewData); 
-dump($_SESSION);
-//dump($_SESSION['userObject']->getRole()) ; 
+// dump($_SESSION);
+// dump($_SESSION['userObject']->getRole()) ; 
 ?>
 
 <!-- Bonus : gestion de la classe active -->
 <!-- Plusieurs manières de faire -->
-<!-- Copyright Christelle -->
 <!-- <a class="nav-link <?php // echo $viewName === "main/home" ? "active" : ""
                         ?>" href="<?php // echo $router->generate('main-home') 
                                     ?>"> -->
 
-<!-- Copyright Erwann -->
-<?php //TODO (strpos($currentPage, 'product') !== false) ? "active" : ""; 
+<?php // (strpos($currentPage, 'product') !== false) ? "active" : ""; 
 ?>
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">

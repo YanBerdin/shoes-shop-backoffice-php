@@ -6,48 +6,38 @@ use App\Utils\Database;
 use PDO;
 
 /**
- * Un modèle représente une table (un entité) dans notre base
- *
- * Un objet issu de cette classe réprésente un enregistrement dans cette table
+ * Modèle = table (entité) dans BDD
+ * Un objet issu de cette classe = un enregistrement dans cette table
  */
 class Type extends CoreModel
 {
-    // Les propriétés représentent les champs
-    // Attention il faut que les propriétés aient le même nom (précisément) que les colonnes de la table
-
     /**
      * @var string
      */
     private $name;
 
     /**
-     * Méthode permettant de récupérer un enregistrement de la table Type en fonction d'un id donné
+     * Méthode de récupération d'un enregistrement de la table Type en fonction d'un id
      *
      * @param int $typeId ID du type
      * @return Type
      */
     public function find($typeId)
     {
-        // se connecter à la BDD
         $pdo = Database::getPDO();
 
-        // écrire notre requête
         $sql = 'SELECT * FROM `type` WHERE `id` =' . $typeId;
 
-        // exécuter notre requête
         $pdoStatement = $pdo->query($sql);
 
-        // un seul résultat => fetchObject
-        //? $type = $pdoStatement->fetchObject('App\Models\Type');
-        //? Autre manière ( self::class ); (Pierre Oclock)
+        // 1 seul résultat => fetchObject
         $type = $pdoStatement->fetchObject(self::class);
 
-        // retourner le résultat
         return $type;
     }
 
     /**
-     * Méthode permettant de récupérer tous les enregistrements de la table type
+     * Méthode de récupération de tous les enregistrements de la table type
      *
      * @return Type[]
      */

@@ -57,8 +57,6 @@ $router->map(
     'category-update'  // Dans ACL
 );
 
-
-//? S06 E07
 // Route pour afficher le formulaire de gestion des catégories
 $router->map(
     'GET',
@@ -70,7 +68,6 @@ $router->map(
     'category-manage' // Dans ACL
 );
 
-//? S06 E07
 // Route pour faire le traitement du formulaire de gestion des catégories
 $router->map(
     'POST',

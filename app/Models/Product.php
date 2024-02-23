@@ -8,7 +8,6 @@ use App\Models\CoreModel;
 
 /**
  * Une instance de Product = un produit dans la base de données
- * Product hérite de CoreModel
  */
 class Product extends CoreModel
 {
@@ -51,42 +50,28 @@ class Product extends CoreModel
     private $type_id;
 
     /**
-     * Méthode permettant de récupérer un enregistrement de la table Product en fonction d'un id donné
+     * Méthode de récupération d'un enregistrement de la table Product en fonction de son id
      *
      * @param int $productId ID du produit
      * @return Product
      */
     public function find($productId)
     {
-        // récupérer un objet PDO = connexion à la BDD
         $pdo = Database::getPDO();
-
-        // on écrit la requête SQL pour récupérer le produit
-        //? Interpolation = injection SQL
-        // $sql = '
-        //     SELECT *
-        //     FROM product
-        //     WHERE id = ' . $productId;
-
 
         $sql = "SELECT *
         FROM product
         WHERE id =:id";
 
-        // query ? exec ?
-        // On fait de la LECTURE = une récupration => query()
-        // si on avait fait une modification, suppression, ou un ajout => exec
-        // $pdoStatement = $pdo->query($sql);
-
-
-        //! Requete préparée
+        //* query ? exec ?
+        // LECTURE = récupration => query()
+        // Modification, suppression, ajout => exec()
         $pdoStatement = $pdo->prepare($sql);
 
-        // Executer la requete
         $pdoStatement->execute([':id' => $productId]);
 
-        // fetchObject() pour récupérer un seul résultat
-        // si j'en avais eu plusieurs => fetchAll
+        // fetchObject() = récupérer 1 seul résultat
+        // si plusieurs => fetchAll
         $result = $pdoStatement->fetchObject('App\Models\Product');
 
         return $result;
@@ -120,15 +105,9 @@ class Product extends CoreModel
      */
     public static function findAllHomepage()
     {
-        // On peut appeler directement getPDO() sur la classe Database 
-        // car getPDO() est une méthode statique (définie par : public static function ...)
         $pdo = Database::getPDO();
 
-        // Sinon, on aurait dû faire :
-        // $database = new Database();
-        // $database->getPDO();
-
-        //? Interpolation = injection SQL
+        // Interpolation => injection SQL
         $sql = 'SELECT *
             FROM `product`
             ORDER BY `id`
@@ -140,9 +119,6 @@ class Product extends CoreModel
         //     FROM `product`
         //     ORDER BY `id`
         //     LIMIT :limit';
-
-        //! Requete préparée
-        // $pdoStatement = $pdo->prepare($sql);
 
         // Executer la requete (on pourrait aussi utiliser bindvalue cf hier)
         //TODO Marche Pas => Voir Alec
@@ -158,46 +134,22 @@ class Product extends CoreModel
     }
 
     /**
-     * Méthode permettant d'ajouter un enregistrement dans la table category
+     * Méthode d'ajout d'un enregistrement dans la table category
      * L'objet courant doit contenir toutes les données à ajouter : 1 propriété => 1 colonne dans la table
      *
      * @return bool
      */
     public function insert()
     {
-        // Récupération de l'objet PDO représentant la connexion à la DB
         $pdo = Database::getPDO();
 
-        // V2 : on a récupéré la méthode déjà codée dans le model Category
-
-        // On passe maintenant (V2) sur deux requêtes pour ne pas avoir 1 seule requête contenant la query string et les données
-        // - 1ère requête : prepare()
-        // - 2nd requête : execute()
-        // Important pour se prémunir des injections SQL
-        // @see https://www.php.net/manual/fr/pdo.prepared-statements.php
-        // @see https://portswigger.net/web-security/sql-injection (exemples avec SELECT)
-        // @see https://stackoverflow.com/questions/681583/sql-injection-on-insert (exemples avec INSERT INTO)
-
-        // Version avec marqueurs nommés (un marqueur nommé sera de la forme : ':string')
-        // Les marqueurs seront remplacés par des données que l'on récupérera via la 2nde requête (execute)
         $sql = 'INSERT INTO `product`
             (`name`, `description`, `picture`, `price`, `rate`, `status`, `category_id`, `brand_id`, `type_id`)
             VALUES (:name, :description, :picture, :price, :rate, :status, :category_id, :brand_id, :type_id)
         ';
-        
-        //? Version sans backtick
-        // $sql = 'INSERT INTO `product`
-        //     (name, description, picture, price, rate, status, category_id, brand_id, type_id)
-        //     VALUES (:name, :description, :picture, :price, :rate, :status, :category_id, :brand_id, :type_id)
-        // ';
 
-
-        // Execution de la requête d'insertion (exec, pas query)
-        // $insertedRows = $pdo->exec($sql);
-        // V2 : on utilise la méthode prepare() pour faire des requêtes préparées
         $query = $pdo->prepare($sql);
 
-        // On exécute la requête préparée en passant les données attendues
         // Les données attendues sont passées via un array associatif
         $query->execute([
             ':name' => $this->name,
@@ -211,22 +163,15 @@ class Product extends CoreModel
             ':type_id' => $this->type_id,
         ]);
 
-        // Si au moins une ligne ajoutée
-        // if ($insertedRows > 0) {
-        // V2 : on n'utilise plus $pdo->exec($sql) mais une requête préparée
-        // => on n'a plus accès à insertedRows
-        // On va utilser la méthode rowCount() sur la query
-        // On vérifie si la requête a retourné 1 résultat (cad si on a bien inséré 1 novelle catégorie dans la table category)
+        // Vérifier si la requête a retourné 1 résultat
+        // (cad si 1 catégorie est insérée dans la table category)
         if ($query->rowCount() > 0) {
-            // Alors on récupère l'id auto-incrémenté généré par MySQL
+            // Récupérer l'id auto-incrémenté généré par MySQL
             $this->id = $pdo->lastInsertId();
 
-            // On retourne VRAI car l'ajout a parfaitement fonctionné
             return true;
-            // => l'interpréteur PHP sort de cette fonction car on a retourné une donnée
         }
-
-        // Si on arrive ici, c'est que quelque chose n'a pas bien fonctionné => FAUX
+        // Sinon
         return false;
     }
 
