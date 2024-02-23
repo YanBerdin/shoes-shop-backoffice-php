@@ -34,7 +34,7 @@ class CategoryController extends CoreController
     }
 
     /**
-     * Créer ou modifier en BDD une catégorie
+     * Créer ou modifier une catégorie en BDD
      *
      * @param int | null $categoryId
      * @return void
@@ -151,7 +151,7 @@ class CategoryController extends CoreController
     }
 
     /**
-     * Méthode pour mettre à jour une catégorie (existante)
+     * Méthode pour MAJ une catégorie
      *
      * @return void
      */
@@ -161,12 +161,12 @@ class CategoryController extends CoreController
         $category = Category::find($categoryId);
         $this->show('category/category-add-update', [
             'category' => $category,
-            'categoryId' => $categoryId // récupérer $categoryId pour gestion dynamique de l'affichage du <h2> dans le template
+            'categoryId' => $categoryId
         ]);
     }
 
     /**
-     * Afficher le formulaire
+     * Méthode pour afficher formulaire de gestion des catégories
      *
      * @return void
      */
@@ -181,25 +181,21 @@ class CategoryController extends CoreController
     }
 
     /**
-     * Selects the home page for the CategoryController.
+     * Méthode pour sélectionner 5 catégories à présenter sur la page d'accueil
      */
     public function homeSelect()
     {
         //dump($_POST['emplacement']);
 
-        // On récupère les données postées
+        // Récupèrer les données postées
         $emplacements = filter_input(INPUT_POST, 'emplacement', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
-        // On appelle une méthode du Model Category
-        // pour exécuter la requête de mise à jour
-        // On doit mettre à jour la valeur du home_order de CHAQUE categorie
+        // MAJ la valeur du home_order de CHAQUE categorie
         // $emplacements est un array contenant des int (id)
         Category::updateHomeOrder($emplacements);
 
-        // Redirection vers la liste des catégories
         header("Location: " . $this->router->generate("category-list"));
 
-        // exit() apres Redirection
         exit();
     }
 }

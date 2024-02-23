@@ -166,8 +166,7 @@ require_once '../app/Routes/ProductRouter.php';
 // );
 
 
-//! Inclusion des routes liées aux catégories depuis un autre fichier
-// pour ranger
+//* Inclusion des routes liées aux catégories depuis un autre fichier
 require_once '../app/Routes/AppUserRouter.php';
 
 // Affichage du form user

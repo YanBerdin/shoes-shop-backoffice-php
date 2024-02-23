@@ -11,7 +11,7 @@ use App\Models\Type;
 class ProductController extends CoreController
 {
     /**
-     * Liste tous les produits
+     * Méthode d'affichage de la liste tous les produits
      *
      * @return void
      */
@@ -25,7 +25,7 @@ class ProductController extends CoreController
     }
 
     /**
-     * Ajoute un nouveau produit
+     *  Méthode d'affichage du formulaire d'ajout un nouveau produit en BDD
      */
     public function addProduct()
     {
@@ -46,7 +46,7 @@ class ProductController extends CoreController
     }
 
     /**
-     * Crée un nouveau produit.
+     * Méthode de traitement du formulaire de création d'un produit.
      *
      * @return void
      */

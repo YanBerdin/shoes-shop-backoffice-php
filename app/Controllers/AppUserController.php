@@ -8,7 +8,7 @@ use App\Controllers\CoreController;
 
 class AppUserController extends CoreController
 {
-    // Affichage du formulaire
+    // Affichage du formulaire de connexion
     public function login()
     {
         $this->show('user/login');
@@ -77,16 +77,14 @@ class AppUserController extends CoreController
     }
 
     /**
-     * Récupèrer la liste de tous les users
+     * Méthode pour afficher la liste de tous les users
      * 
      * @return void
      */
     public function userList()
     {
-        // Récupèrer tous les users
         $users = AppUser::findAll();
 
-        // Appeller show() en lui transmettant la liste ds users
         $this->show('user/user-list', [
             'users' => $users
         ]);
@@ -106,7 +104,7 @@ class AppUserController extends CoreController
     }
 
     /**
-     * Creates a new user.
+     * Méthode de création d'un user
      *
      * @return void
      */
@@ -173,7 +171,7 @@ class AppUserController extends CoreController
                 $errorList[] = '⛔ Création refusée ⛔ Merci de renseigner un statut valide';
             }
 
-            //TODO Vérifier la complexité du mot de passe
+            // Vérifier la complexité du mot de passe
             // $uppercase = preg_match('@[A-Z]@', $password);
             // $lowercase = preg_match('@[a-z]@', $password);
             // $number = preg_match('@[0-9]@', $password);
@@ -200,7 +198,7 @@ class AppUserController extends CoreController
 
                 //* Attention : password saisi en clair dans le formulaire
                 // Hasher le password avant de l'insérer en BDD
-                // Rappel : en BDD, tous nos password doivent être hashés
+                // Rappel : en BDD, le password doit être hashé
                 // A la saisie du form, récuèrer le password clair, le hasher
                 // et comparer le hash au password de la BDD
                 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);  // (PASSWORD_DEFAULT ou PASSWORD_BCRYPT)

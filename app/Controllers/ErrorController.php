@@ -6,7 +6,7 @@ namespace App\Controllers;
 class ErrorController extends CoreController
 {
     /**
-     * Méthode gérant l'affichage de la page 404
+     * Affichage de la page 404
      *
      * @return void
      */
@@ -17,7 +17,7 @@ class ErrorController extends CoreController
     }
 
     /**
-     * Méthode gérant l'affichage de la page 403
+     * Affichage de la page 403
      *
      * @return void
      */

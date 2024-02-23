@@ -11,20 +11,13 @@ class CoreController
      * Constructeur : systématiquement et automatiqueent appelé
      * (à l'appel de la classe ou lors d'une nouvelle isntanciation)
      */
-    // public function __construct()
     public function __construct($router, $match)
     {
-        // propriétés protected => tout les Controllers qui héritent de CoreController
-        // hériteront également de ces propriétés
+        // protected => accès propriétés de CoreController
         $this->router = $router;
         $this->match  = $match;
 
-        // On définit une liste des permissions
-        // ACL : Access Control List
-        // https://fr.wikipedia.org/wiki/Access_Control_List
-
-        //* Pas de route "publique" comme Login
-        // Rappel Nom de la Route (PAS CHEMIN)
+        // Rappel Nom de la Route (PAS CHEMIN) Pas de route "publique"
         $acl = [
             'category-add-update' => ['admin', 'catalog-manager'],
             'category-create' => ['admin', 'catalog-manager'],
@@ -39,20 +32,17 @@ class CoreController
             'category-select' => ['admin', 'catalog-manager']
         ];
 
-        // Récupèrer le nom de la route
         $routeName = $match['name'];
 
         if (array_key_exists($routeName, $acl)) {
-            // Récupèrer la liste des rôles autorisés
+            // liste rôles autorisés
             $authorizedRoles = $acl[$routeName];
-
-            // check
             $this->checkAuthorization($authorizedRoles);
         }
     }
 
     /**
-     * Méthode permettant d'afficher du code HTML en se basant sur les views
+     * Afficher du code HTML via les views
      *
      * @param string $viewName Nom du fichier de vue
      * @param array $viewData Tableau des données à transmettre aux vues
@@ -94,26 +84,24 @@ class CoreController
 
 
     /**
-     * Méthode "helper" qui sera appellée dans les Controllers
-     * Verifie si dans la SESSION on a un userId
-     * pour vérifier si le user peut accéder à la page demandée
+     * Verifie si un userId est dans la SESSION
+     * Vérifie si le user peut accéder à la page demandée
      *
      * @return void
      */
     protected function checkAuthorization($authorizedRoles = [])
     {
-        // Si le user est connecté
+        // Si user connecté
         if (isset($_SESSION['userId'])) {
-            // Récupèrer le user via la session pour avoir accès à son rôle
+            // Récupèrer user ds la session
             $user = $_SESSION['userObject'];
 
             // Récupèrer son rôle
             $role = $user->getRole();
 
-            // Vérifier si son rôle permet d'accéder à la page demandée
             // => vérification à partir d'un array des rôles autorisés
             if (in_array($role, $authorizedRoles)) {
-                // si son rôle le permet
+                // si son rôle ok
                 return true;
             } else {
                 // sinon => 403 "Forbidden"
@@ -121,18 +109,15 @@ class CoreController
                 http_response_code(403);
                 echo 'Oups, une erreur 403, Accès => Refusé';
 
-                // Envoyer un header d’erreur cf Ajax Kourou
+                // Envoyer un header d’erreur
                 header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden', true, 403);
-                
-                //* stopper l'exécution du script
-                // Sinon affiche quand même la page demandée (category-list) 
-                exit();
 
-                // Amélioration possible : créer un template 403 
-                // $this->show( "error/err403" );
+                //* stopper l'exécution du script
+                // Sinon affiche quand même la page 
+                exit();
             }
         } else {
-            // Si le user n'est pas connecté
+            // Si le user pas connecté
             // Redirection vers page de connexion
             header("Location: " . $this->router->generate("user-login"));
 
