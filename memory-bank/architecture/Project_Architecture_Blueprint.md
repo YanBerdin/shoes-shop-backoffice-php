@@ -33,8 +33,6 @@ Conclusion de détection : projet PHP monolithique, MVC, patterns Active Record 
 
 ## 4. Visualisation (textuelle)
 
-N'ayant pas d'outils graphiques embarqués, voici des diagrammes textuels à plusieurs niveaux :
-
 Architecture globale (niveau 1) :
 
 - Client (navigateur)
@@ -143,7 +141,7 @@ Risques identifiés :
 - Protocoles externes : HTTP via routes pour UI; pas d'API exposée par défaut (mais pattern REST-like présent pour controllers).
 - Versioning : aucune stratégie d'API versioning observée.
 
-## 10. Patterns d'implémentation observés
+## 10. Patterns d'implémentation
 
 - PSR-4 autoloading (`App\`)
 - Front Controller + AltoRouter dispatch
@@ -159,7 +157,7 @@ Recommandations d'amélioration :
 
 ## 11. Tests
 
-- Observations : aucun dossier `tests/` détecté.
+- Observations : aucun dossier `tests/`.
 - Recommandations :
   - Ajouter tests unitaires pour Models et Services (PHPUnit).
   - Ajouter tests d'intégration pour routes critiques.

@@ -1,38 +1,58 @@
-# Project Architecture Blueprint
+# `Projet Shoes Shop - BackOffice`
 
-But : fournir une référence d'architecture complète et actionnable pour le projet "Shoes Shop BackOffice" afin de garantir la cohérence architecturale, faciliter les ajouts de fonctionnalités et supporter les revues et la maintenance.
+Backoffice pour la gestion complète d'une boutique de chaussures en ligne (Shoes Shop), permettant la gestion des produits, catégories, types, marques, commandes et utilisateurs, avec contrôle d'accès par rôles.
+
+## Problèmes résolus
+
+- Centralisation de la gestion des données produits, catégories, types, marques
+- Suivi et gestion des commandes
+- Gestion des droits d'accès selon le rôle
+- Amélioration de la productivité et réduction des erreurs manuelles
+
+## Objectifs d'expérience utilisateur
+
+- Interface claire, navigation rapide
+- Sécurité des accès et des données
+- Simplicité des opérations courantes (CRUD)
+- Feedback utilisateur sur les actions
+
+## `Description du projet`
+
+Le BackOffice de Shoes Shop est une application web conçue pour **administrer cette boutique** en ligne : [https://github.com/YanBerdin/shoes-shop-frontoffice-php]
 
 ## 1. Résumé exécutif
 
-Le projet est une application web PHP monolithique organisée selon le pattern MVC (Model-View-Controller) avec un Front Controller (`public/index.php`). Les dépendances sont gérées par Composer. Le routeur est AltoRouter, la présentation est assurée par des templates PHP (`.tpl.php`) et les règles de sécurité et de réécriture sont gérées via des fichiers `.htaccess`.
+Le projet est une application web PHP monolithique organisée selon le pattern MVC (Model-View-Controller) avec un Front Controller (`public/index.php`).
 
-Ce document explique la topologie architecturale observée, les composants principaux, les patterns d'implémentation et donne des prescriptions claires pour étendre et maintenir le code.
+Les dépendances sont gérées par Composer.
+Le routeur est AltoRouter, la présentation est assurée par des templates PHP (`.tpl.php`) et les règles de sécurité et de réécriture sont gérées via des fichiers `.htaccess`.
 
 ## 2. Technologies et patterns
 
-- Langage : PHP (version compatible avec les dépendances observées).
-- Gestion des dépendances : Composer (`composer.json`, `vendor/`).
-- Routage : AltoRouter (package vendor/altorouter).
-- Organisation : Architecture MVC, PSR-4 (namespace `App\` => dossier `app/`).
-- Front Controller : `public/index.php` comme point d'entrée unique.
-- Templates : vues PHP (`app/views/*.tpl.php`).
-- Base de données : Accès via un utilitaire `App\Utils\Database` (PDO probable) et modèles Active Record.
-- Sécurité / Accès : `.htaccess` pour protection de répertoires. Contrôle d'accès centralisé via `CoreController` (ACL / rôles).
-- Débogage : Symfony var-dumper présent dans `vendor`.
-
-Conclusion de détection : projet PHP monolithique, MVC, patterns Active Record + Singleton pour la DB, routage centralisé.
+- **Langage** : PHP >=7.x.
+- **Gestion des dépendances** : Composer (`composer.json`, `vendor/`).
+- **Routage** : AltoRouter (package vendor/altorouter).
+- Bootstrap 5.1 (UI)
+- Font Awesome 4.7 (icônes)
+- **Organisation** : Architecture MVC, PSR-4 (namespace `App\` => dossier `app/`).
+- **Front Controller** : `public/index.php` comme point d'entrée unique.
+- **Templates** : vues PHP (`app/views/*.tpl.php`).
+- **Base de données MySQL** : Accès via un utilitaire `App\Utils\Database` (PDO) et modèles Active Record.
+- **Sécurité / Accès** : `.htaccess` pour protection de répertoires. Contrôle d'accès centralisé via `CoreController` (ACL / rôles).
+- **Débogage** : Symfony var-dumper présent dans `vendor`.
 
 ## 3. Vue d'ensemble architecturale
 
-- Approche : Monolithe organisé en couches (presentation / controllers / models / utils). Les vues restent découplées du code métier et sont rendues par les controllers.
-- Principes guidant le design : séparation des préoccupations (MVC), simplicité pour CRUD, sécurité par isolation (fichiers non publics protégés), conventions PSR-4 pour autoload.
-- Frontières :
+- **Approche** : Monolithe organisé en couches (presentation / controllers / models / utils). Les vues restent découplées du code métier et sont rendues par les controllers.
+- **Principes guidant le design** : séparation des préoccupations (MVC), simplicité pour CRUD, sécurité par isolation (fichiers non publics protégés), conventions PSR-4 pour autoload.
+- **Frontières** :
   - Public / web root (`public/`) contient uniquement le Front Controller et les assets.
   - Code applicatif (`app/`) non accessible directement par HTTP.
   - Vendor / Composer pour dépendances externes.
 
 ## 4. Visualisation
 
+```md
 ├── 📁 app/
 │   ├── 📁 Controllers/
 │   │   ├── 📄 .htaccess
@@ -118,8 +138,9 @@ Conclusion de détection : projet PHP monolithique, MVC, patterns Active Record 
 ├── 📄 composer.json
 ├── 🔒 composer.lock 🚫 (auto-hidden)
 └── 🐚 import-external-repo.sh
+```
 
-Architecture globale (niveau 1) :
+### Architecture globale (niveau 1)
 
 - Client (navigateur)
   -> HTTP
@@ -130,7 +151,7 @@ Architecture globale (niveau 1) :
   -> Modèles (`App\Models\*`) via `App\Utils\Database`
   -> Vues (`app/views/*`) retournées au client
 
-Composants et interactions (niveau 2) :
+### Composants et interactions (niveau 2)
 
 - Router (AltoRouter)
   - Mappe l'URL vers la paire controller/method
@@ -145,7 +166,8 @@ Composants et interactions (niveau 2) :
 - Views (.tpl.php)
   - Templates PHP, fragmentés en `layout/`, `partials/`, et dossiers par domaine
 
-Flux de données (exemple création produit) :
+### Flux de données (exemple création produit)
+
 Client -> POST /product/create -> ProductController::create()
 ProductController::create() -> validation -> Product model -> Database -> INSERT
 -> redirection ou rendu de la vue de confirmation
@@ -182,50 +204,50 @@ Pour chaque composant : rôle, structure interne, interactions, patterns d'évol
 
 ## 6. Couches et dépendances
 
-- Couche présentation (views) : dépend des controllers (uni-directionnel).
-- Couche application (controllers) : dépend des modèles et utils.
-- Couche domaine/persistante (models) : dépend de Utils/Database.
+- **Couche présentation** (views) : dépend des controllers (uni-directionnel).
+- **Couche application** (controllers) : dépend des modèles et utils.
+- **Couche domaine/persistante** (models) : dépend de Utils/Database.
 
-Règles observées : dépendances dirigées top-down (views <- controllers <- models <- utils). Pas d'injection de dépendance lourde; le code utilise héritage et appels statiques.
+Dépendances dirigées top-down (views <- controllers <- models <- utils). Pas d'injection de dépendance lourde; le code utilise héritage et appels statiques.
 
 Risques identifiés :
 
-- Potentielles violations si des views incluent des accès DB directement (non observées mais à surveiller).
+- Potentielles violations si de nouvelles views incluent des accès DB directement.
 - Absence d'un conteneur DI rend les tests unitaires plus difficiles.
 
 ## 7. Data architecture
 
-- Modèle de domaine : entités classiques (Product, Category, Brand, Type, AppUser).
-- Accès aux données : méthodes statiques / instance sur modèles et `Database` pour exécution SQL.
-- Recommandations : si les requêtes complexes se multiplient, introduire des Repository classes et mapper DTOs pour séparations.
-- Validation des données : majoritairement dans controllers; envisager déplacer règles dans un service de validation réutilisable.
-- Caching : aucun mécanisme de cache observé.
+- **Modèle de domaine** : entités classiques (Product, Category, Brand, Type, AppUser).
+- **Accès aux données** : méthodes statiques / instance sur modèles et `Database` pour exécution SQL.
+- **Recommandations** : si les requêtes complexes se multiplient, introduire des Repository classes et mapper DTOs pour séparations.
+- **Validation des données** : majoritairement dans controllers; envisager déplacer règles dans un service de validation réutilisable.
+- **Caching** : aucun mécanisme de cache.
 
 ## 8. Cross-cutting concerns
 
-- Authentification & Autorisation
+- **Authentification & Autorisation**
   - Implémentation : centralisée dans `CoreController` (vérification de session / rôle).
   - Recommandation : formaliser une couche Auth service et centraliser les checks via middleware-like hooks.
 
-- Gestion d'erreurs & résilience
+- **Gestion d'erreurs & résilience**
   - Implémentation : `ErrorController` pour affichage d'erreurs 403/404.
   - Recommandation : capturer exceptions globalement dans Front Controller et logger les erreurs.
 
-- Logging & monitoring
+- **Logging & monitoring**
   - Observations : pas de solution de logging explicite (pas de Monolog trouvé). Recommander d'ajouter un logger (Monolog) et d'instrumenter erreurs/évènements critiques.
 
-- Validation
+- **Validation**
   - Observations : validations présentes côté controller. Recommander extraction vers des validateurs réutilisables.
 
-- Configuration
+- **Configuration**
   - `app/config.ini.dist` fourni ; la pratique recommandée est de ne pas versionner `config.ini` (actuellement `.dist` + copier localement).
   - Recommandation : utiliser variables d'environnement pour secrets (DB), ou un loader sécurisé.
 
 ## 9. Communication et API
 
-- Communication interne : appels directs PHP (méthodes) — pas de microservices.
-- Protocoles externes : HTTP via routes pour UI; pas d'API exposée par défaut (mais pattern REST-like présent pour controllers).
-- Versioning : aucune stratégie d'API versioning observée.
+- **Communication interne** : appels directs PHP (méthodes) — pas de microservices.
+- **Protocoles externes** : HTTP via routes pour UI; pas d'API exposée par défaut (mais pattern REST-like présent pour controllers).
+- **Versioning** : aucune stratégie d'API versioning.
 
 ## 10. Patterns d'implémentation observés
 
@@ -236,15 +258,15 @@ Risques identifiés :
 - Templates PHP (no template engine externe)
 - .htaccess pour protection et rewrite
 
-Recommandations d'amélioration :
+**Recommandations d'amélioration** :
 
 - Introduire une couche Service entre Controllers et Models pour séparer logique métier et persistance.
 - Introduire un conteneur léger DI (p.ex. PHP-DI) pour faciliter le test et l'injection d'un logger, DB, etc.
 
 ## 11. Tests
 
-- Observations : aucun dossier `tests/` détecté.
-- Recommandations :
+- **Observations** : aucun dossier `tests/`.
+- **Recommandations** :
   - Ajouter tests unitaires pour Models et Services (PHPUnit).
   - Ajouter tests d'intégration pour routes critiques.
   - Mettre en place un job CI simple (composer install + phpunit).
@@ -267,7 +289,7 @@ Recommandations d'amélioration :
 
 ## 14. Extensibilité et évolution
 
-Principes pour étendre sans casser l'architecture :
+**Principes pour étendre sans casser l'architecture** :
 
 - Ajout de domaine / feature :
   - Créer `app/Models/[Domain].php` pour la représentation des données.
@@ -275,9 +297,9 @@ Principes pour étendre sans casser l'architecture :
   - Créer `app/Routes/[Domain]Router.php` pour regrouper les routes du domaine.
   - Créer `app/views/[domain]/` avec les templates `list.tpl.php`, `add-update.tpl.php`.
 
-- Pour fonctionnalités complexes : déplacer logique métier dans des services (`app/Services/`) et utiliser des Repositories pour accès DB.
+- **Pour fonctionnalités complexes** : déplacer logique métier dans des services (`app/Services/`) et utiliser des Repositories pour accès DB.
 
-- Migration progressive vers tests : commencer par ajouter tests pour nouveaux composants, fixer une politique de couverture minimale pour code critique.
+- **Migration progressive vers tests** : commencer par ajouter tests pour nouveaux composants, fixer une politique de couverture minimale pour code critique.
 
 ## 15. Exemples d'implémentation (extraits représentatifs)
 
@@ -319,7 +341,7 @@ Recommandation : ajouter `exit;` après `header('Location: ...')` et vérifier l
 
 ## 17. Guide pour nouveaux développements
 
-- Workflow recommandé pour ajouter une fonctionnalité CRUD :
+- **Workflow recommandé pour ajouter une fonctionnalité CRUD** :
   1. Créer/mettre à jour Model
   2. Créer Controller (héritant CoreController)
   3. Ajouter routes dans `app/Routes/*Router.php` ou nouveau fichier router
@@ -327,7 +349,7 @@ Recommandation : ajouter `exit;` après `header('Location: ...')` et vérifier l
   5. Ajouter tests unitaires pour Model et integration pour controller
   6. Mettre à jour navigation (`app/views/partials/nav.tpl.php`) si visible par l'UI
 
-- Pièges courants :
+- **Pièges courants** :
   - Eviter d'ajouter du SQL dans les templates.
   - Ne pas effectuer d'echo direct avant les appels à `header()`.
   - Centraliser la validation pour éviter duplication.
@@ -342,7 +364,7 @@ Recommandation : ajouter `exit;` après `header('Location: ...')` et vérifier l
 
 ## 19. Annexes
 
-- Emplacement des fichiers clés :
+- **Emplacement des fichiers clés** :
   - Front Controller : `public/index.php`
   - Routes : `app/Routes/` (CategoryRouter.php, ProductRouter.php, AppUserRouter.php)
   - Controllers : `app/Controllers/` (CoreController.php, ProductController.php...)
@@ -359,13 +381,5 @@ composer install
 # Lancer serveur de dev
 php -S 0.0.0.0:8080 -t public
 ```
-
-## Conclusion
-
-Ce blueprint synthétise l'architecture actuelle et fournit des prescriptions pragmatiques pour améliorer la testabilité, la résilience et la maintenabilité. Pour aller plus loin, je peux :
-
-- générer une checklist PR spécifique (lint/tests/migrations),
-- proposer une migration progressive vers DI/Services avec tâches concrètes,
-- ajouter exemples de tests PHPUnit et config CI.
 
 ---

@@ -42,7 +42,7 @@ The Shoes Shop BackOffice is a PHP web application following the **Model-View-Co
 
 ## 2. Directory Visualization
 
-```
+```md
 shoes-shop-backoffice-php/
 ├── .git/                           # Git version control metadata
 ├── .gitignore                      # Git ignore rules
@@ -170,7 +170,7 @@ shoes-shop-backoffice-php/
 
 **Purpose**: Web server document root containing only publicly accessible files.
 
-**Security Architecture**: 
+**Security Architecture**:
 
 - Front Controller pattern with single entry point
 - Asset isolation from application logic
@@ -314,7 +314,7 @@ shoes-shop-backoffice-php/
 ### **Content Statistics**
 
 - **Controllers**: 6 controller classes (+ 1 base class)
-- **Models**: 6 model classes (+ 1 base class) 
+- **Models**: 6 model classes (+ 1 base class)
 - **Router Files**: 3 modular router files
 - **View Directories**: 6 feature-based view folders
 - **Documentation Files**: 5 technical documentation files
@@ -421,7 +421,8 @@ shoes-shop-backoffice-php/
 ## 10. Structure Templates
 
 ### **New Feature Template**
-```
+
+```bash
 /app/Models/[Domain].php                    # Business entity
 /app/Controllers/[Domain]Controller.php     # Business logic
 /app/Routes/[Domain]Router.php              # Route definitions
@@ -432,6 +433,7 @@ shoes-shop-backoffice-php/
 ```
 
 ### **New Controller Template**
+
 ```php
 <?php
 namespace App\Controllers;
@@ -474,6 +476,7 @@ class [Domain]Controller extends CoreController
 ```
 
 ### **New Model Template**
+
 ```php
 <?php
 namespace App\Models;
@@ -508,6 +511,7 @@ class [Domain] extends CoreModel
 ```
 
 ### **New Router Template**
+
 ```php
 <?php
 
@@ -537,7 +541,8 @@ $router->map(
 ```
 
 ### **New View Template Structure**
-```
+
+```bash
 /app/views/[domain]/
 ├── list.tpl.php              # Entity listing template
 ├── add-update.tpl.php        # Form template (add/edit)

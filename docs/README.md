@@ -21,7 +21,6 @@ Il comprend 3 pages :
 
 A partir de ces 3 exemples produire le reste, aidé des Wireframes fournis.
 
-
 ## `Pour installer cette app, suivez les étapes suivantes :`
 
 1. Assurez-vous d'avoir PHP, MySQL, Composer et un serveur web (comme Apache) installés sur votre machine.
@@ -35,7 +34,7 @@ A partir de ces 3 exemples produire le reste, aidé des Wireframes fournis.
 
 Navigation principale :
 
-- Accueil 
+- Accueil
 - Produits
 - Catégories
 - Types
@@ -74,4 +73,3 @@ Zone réservée aux administrateurs _métier_ et techniques du site.
 - [User stories](docs/user_stories.md)
 - [Intégration HTML/CSS](docs/html-css/)
 - [Routes](docs/routes.md)
-

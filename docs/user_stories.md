@@ -1,7 +1,5 @@
 # User stories
 
-Fiche récap : https://kourou.oclock.io/ressources/fiche-recap/user-stories/
-
 ## Catalogue (S05)
 
 | En tant que | Je veux | Afin de (si besoin/nécessaire) |

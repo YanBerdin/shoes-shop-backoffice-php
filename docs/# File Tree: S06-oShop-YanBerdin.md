@@ -1,5 +1,8 @@
 # File Tree: S06-oShop-YanBerdin
 
+Here is the file tree for the project `S06-oShop-YanBerdin`, illustrating its structure and key components:
+
+```md
 ├── 📁 app/
 │   ├── 📁 Controllers/
 │   │   ├── 📄 .htaccess
@@ -85,5 +88,6 @@
 ├── 📄 composer.json
 ├── 🔒 composer.lock 🚫 (auto-hidden)
 └── 🐚 import-external-repo.sh
+```
 
 ---
