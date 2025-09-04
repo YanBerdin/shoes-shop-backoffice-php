@@ -1,6 +1,9 @@
 # `Projet Shoes Shop - BackOffice`
 
-Backoffice pour la gestion complète d'une boutique de chaussures en ligne (Shoes Shop), permettant la gestion des produits, catégories, types, marques, commandes et utilisateurs, avec contrôle d'accès par rôles.
+## `Description du projet`
+
+> [!NOTE]
+> Backoffice pour la gestion complète d'une boutique de chaussures en ligne [Shoes Shop](https://github.com/YanBerdin/shoes-shop-frontoffice-php), permettant la gestion des produits, catégories, types, marques, commandes et utilisateurs, avec contrôle d'accès par rôles.
 
 ## Problèmes résolus
 
@@ -15,10 +18,6 @@ Backoffice pour la gestion complète d'une boutique de chaussures en ligne (Shoe
 - Sécurité des accès et des données
 - Simplicité des opérations courantes (CRUD)
 - Feedback utilisateur sur les actions
-
-## `Description du projet`
-
-Le BackOffice de Shoes Shop est une application web conçue pour **administrer cette boutique** en ligne : [https://github.com/YanBerdin/shoes-shop-frontoffice-php]
 
 ## 1. Résumé exécutif
 
@@ -210,10 +209,12 @@ Pour chaque composant : rôle, structure interne, interactions, patterns d'évol
 
 Dépendances dirigées top-down (views <- controllers <- models <- utils). Pas d'injection de dépendance lourde; le code utilise héritage et appels statiques.
 
-Risques identifiés :
-
-- Potentielles violations si de nouvelles views incluent des accès DB directement.
-- Absence d'un conteneur DI rend les tests unitaires plus difficiles.
+> [!WARNING]
+> **Risques identifiés** :
+>
+> Potentielles violations si de nouvelles views incluent des accès DB directement.
+>
+> Absence d'un conteneur DI rend les tests unitaires plus difficiles.
 
 ## 7. Data architecture
 
@@ -265,7 +266,7 @@ Risques identifiés :
 
 ## 11. Tests
 
-- **Observations** : aucun dossier `tests/`.
+- **TODO** : créer dossier `tests/`.
 - **Recommandations** :
   - Ajouter tests unitaires pour Models et Services (PHPUnit).
   - Ajouter tests d'intégration pour routes critiques.
@@ -280,12 +281,15 @@ Risques identifiés :
 
 ## 13. Sécurité
 
-- Fichiers `.htaccess` présents pour empêcher l'accès direct aux dossiers sensitifs.
-- Recommandations de sécurité immédiates :
-  - Stocker secrets hors du repo (variables d'environnement ou vault).
-  - Valider et échapper toutes les sorties HTML (prévenir XSS).
-  - Préparer toutes les requêtes SQL via PDO prepared statements (prévenir injection SQL).
-  - Forcer HTTPS au niveau serveur / redirections.
+> [!IMPORTANT]
+> Fichiers `.htaccess` présents pour empêcher l'accès direct aux dossiers sensitifs.
+>
+> **Recommandations de sécurité immédiates** :
+>
+> - Stocker secrets hors du repo (variables d'environnement ou vault).
+> - Valider et échapper toutes les sorties HTML (prévenir XSS).
+> - Préparer toutes les requêtes SQL via PDO prepared statements (prévenir injection SQL).
+> - Forcer HTTPS au niveau serveur / redirections.
 
 ## 14. Extensibilité et évolution
 
@@ -302,8 +306,6 @@ Risques identifiés :
 - **Migration progressive vers tests** : commencer par ajouter tests pour nouveaux composants, fixer une politique de couverture minimale pour code critique.
 
 ## 15. Exemples d'implémentation (extraits représentatifs)
-
-Note : Exemples abrégés, extraits d'un pattern observé.
 
 - Modèle : méthode `findAll()` typique
 
@@ -332,9 +334,9 @@ Recommandation : ajouter `exit;` après `header('Location: ...')` et vérifier l
 
 ## 16. Architectural Governance
 
-- Documentation : maintenir ce blueprint (fichier `docs/Project_Architecture_Blueprint.md`) et `docs/routes.md` à jour.
-- Revue : ajouter une checklist de revue PR axée architecture (nouvelles dépendances, changements DB, migrations).
-- Contrôles automatisés :
+- **Processus de décision** : documenter les décisions majeures (choix de patterns, nouvelles dépendances) dans `docs/architecture-decisions.md`.
+- **Revue** : ajouter une checklist de revue PR axée architecture (nouvelles dépendances, changements DB, migrations).
+- **Contrôles automatisés** :
   - `composer validate`
   - linters PHP (p.ex. PHP_CodeSniffer) pour respecter conventions
   - tests unitaires dans CI
